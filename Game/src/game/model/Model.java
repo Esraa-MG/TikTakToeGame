@@ -38,6 +38,8 @@ public class Model {
         }
     }
     
+    
+    // exit network
     public void exitNetworkMode()
     {
         if(player!=null)
