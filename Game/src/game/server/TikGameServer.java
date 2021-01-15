@@ -19,7 +19,7 @@ import java.util.logging.Logger;
  *
  * @author moutaz hegazy
  */
-public class TikGameServer{
+/*public class TikGameServer{
     
     ServerSocket serverSocket;
     
@@ -43,9 +43,7 @@ public class TikGameServer{
            
         }
     }
-    /**
-     * @param args the command line arguments
-     */
+
     public static void main(String[] args) {
         new TikGameServer();
     }
@@ -167,13 +165,13 @@ class PlayerSocket extends Thread
         }
     }
     
-    /*private synchronized void setPlayerWith(char ch)
+    private synchronized void setPlayerWith(char ch)
     {
         if(allowChoice)
         {
             mark = ch;
         }
-    }*/
+    }
     
     private void sendToAll(String str)
     {
@@ -197,5 +195,5 @@ class GameSockets
 {
     PlayerSocket player1;
     PlayerSocket player2;
-}
+}*/
 

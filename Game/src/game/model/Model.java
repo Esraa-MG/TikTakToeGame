@@ -5,13 +5,16 @@
  */
 package game.model;
 
+import game.server.GameServer;
+
 /**
  *
  * @author moutaz hegazy
  */
 public class Model {
     
-    Player player;
+    private Player player;
+    private GameServer server;
 
     
     //handling network mode
@@ -38,6 +41,10 @@ public class Model {
         }
     }
     
+    public String getHostIP()
+    {
+        return player.getIP();
+    }
     
     // exit network
     public void exitNetworkMode()
@@ -56,7 +63,21 @@ public class Model {
             player.askResetGame();
         }
     }
+    // end of network mode functions 
+//------------------------------------------------------------------
+    
+    
+    // server configuration methods.
+    public void startServer()
+    {
+        server = new GameServer();
+    }
+    
+    public void closeServer()
+    {
+        server.shutDown();
+        server = null;
+    }
+ //-------------------------------------------------------------------
 }
 
-// end of network mode functions 
-//------------------------------------------------------------------

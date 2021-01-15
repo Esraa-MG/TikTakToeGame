@@ -10,7 +10,9 @@ import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
+import java.net.InetAddress;
 import java.net.Socket;
+import java.net.UnknownHostException;
 import java.util.StringTokenizer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -27,7 +29,7 @@ import javafx.application.Platform;
  */
 public class Player {
     
-    private String PlayMark;
+    private String playMark;
     
     private Socket pSocket;
     private BufferedReader br;
@@ -39,8 +41,7 @@ public class Player {
     private String tryPattern = "[1-9]:[XO]";
     private Pattern prn = Pattern.compile(tryPattern);
     private boolean inTurn;
-    
-                    
+                        
     
     public Player(SETVIEW set)
     {
@@ -82,13 +83,6 @@ public class Player {
                     }else{
                         switch(msg)
                         {
-                            case "X" :
-                                PlayMark = "X";
-                                break;
-                                
-                            case "O" :
-                                PlayMark = "O";
-                                break;
                             case "askReset" :
                                 sendMsg("reset");
                                 break;
@@ -103,8 +97,14 @@ public class Player {
                                 break;
                             case "startToken" :
                                 inTurn = true;
+                                playMark = "X";
                                 break;
-                                    
+                                
+                            case "playSecond" :
+                                inTurn = false;
+                                playMark = "O";
+                                break;    
+                                
                             default : 
                                 break;
                         }
@@ -160,7 +160,7 @@ public class Player {
                 break;
             case "Xwin" :
                 gameOn = false;
-                if(PlayMark == "X")
+                if(playMark == "X")
                 {
                     System.out.println("I Win");
                 }else{
@@ -169,7 +169,7 @@ public class Player {
                 break;
             case "Owin" :
                 gameOn = false;
-                if(PlayMark == "O")
+                if(playMark == "O")
                 {
                     System.out.println("I Win");
                 }else{
@@ -184,6 +184,16 @@ public class Player {
         }
     }
     
+    public String getIP()
+    {
+        try {
+            return InetAddress.getLocalHost().getHostAddress();
+        } catch (UnknownHostException ex) {
+            Logger.getLogger(Player.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return "notFound";
+    }
+    
     private Components parseString(String str)
     {
         Components c = new Components();
@@ -195,7 +205,7 @@ public class Player {
     
     public String getPlayerMark()
     {
-        return PlayMark;
+        return playMark;
     }
     
     private class Components
