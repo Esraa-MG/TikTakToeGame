@@ -33,7 +33,7 @@ public class GameServer {
         }
         new Thread(()->{
             System.out.println("server on");
-            while(this.connected < 2 || this.isOn)
+            while(this.connected < 2 && this.isOn)
             {
                 try {
                     Socket s = serverSocket.accept();
