@@ -6,11 +6,9 @@
 package game;
 
 
+
 import game.model.Model;
-import game.model.Player;
 import game.model.SETVIEW;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -21,7 +19,7 @@ import javafx.stage.Stage;
  *
  * @author ESRAA
  */
-public class Game extends Application {
+public class Game extends Application{
     
     StartUI StrUi;
     SecondPage ScndUi;
@@ -230,12 +228,10 @@ public class Game extends Application {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        launch(args); 
+        //launch(args); 
+        Model model = new Model();
+        model.startServer();
+        
     }
-    
-    
-   
-
-   
-    
+  
 }

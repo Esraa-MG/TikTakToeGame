@@ -14,58 +14,60 @@ import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-
 /**
  *
  * @author moutaz hegazy
  */
-public class TikGameServer{
+public class GameServer {
+        private ServerSocket serverSocket;
+        private volatile boolean isOn = true;
+        private volatile int connected = 0;
+        
     
-    ServerSocket serverSocket;
-    
-    public TikGameServer()
+    public GameServer()
     {
         try {
             serverSocket = new ServerSocket(13135);
         } catch (IOException ex) {
             ex.printStackTrace();
         }
-        while(true)
-        {
-            try {
-                Socket s = serverSocket.accept();
-                new PlayerSocket(s);
-                System.out.println("ACCEPTED");
+        new Thread(()->{
+            System.out.println("server on");
+            while(this.connected < 2 && this.isOn)
+            {
+                try {
+                    Socket s = serverSocket.accept();
+                    new PlayerSocket(s);
+                    this.connected++;
+                    System.out.println("ACCEPTED");
                 
-            } catch (IOException ex) {
-                Logger.getLogger(TikGameServer.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (IOException ex) {
+                    Logger.getLogger(GameServer.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
-           
-        }
-    }
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        new TikGameServer();
+            System.out.println("server down");
+        }).start();
     }
     
+    public void shutDown()
+    {
+        this.isOn = false;
+    }
 }
-
 
 class PlayerSocket extends Thread
 {
-    BufferedReader br;
-    PrintStream ps;
+    private BufferedReader br;
+    private PrintStream ps;
     
-    boolean reset;
+    private boolean reset;
     
-    boolean allowChoice = true;
-    String mark ;
-    boolean alive = true;
+    private boolean isFirst;
+    private String mark ;
+    private volatile boolean alive = true;
     
     //static ArrayList<PlayerSocket> players = new ArrayList<PlayerSocket>();
-    static GameSockets players = new GameSockets();
+    private static GameSockets players = new GameSockets();
     
     public PlayerSocket(Socket s)
     {
@@ -83,6 +85,7 @@ class PlayerSocket extends Thread
         {
             players.player1 = this;
             players.player1.mark = "X";
+            players.player1.isFirst = true;
             System.out.println("player1 connected");
             send(mark);
             start();
@@ -90,6 +93,7 @@ class PlayerSocket extends Thread
         {
             players.player2 = this;
             players.player2.mark = "O";
+            players.player2.isFirst = false;
             System.out.println("player2 connected");
             send(mark);
             players.player1.send("startToken");
@@ -106,7 +110,6 @@ class PlayerSocket extends Thread
                 String str = br.readLine();
                 System.out.println(str);
                 checkMsg(str);
-                //sendToAll(str);
                 
             } catch (IOException ex) {
                 Logger.getLogger(PlayerSocket.class.getName()).log(Level.SEVERE, null, ex);
@@ -119,9 +122,6 @@ class PlayerSocket extends Thread
     {
         switch (str)
         {
-            case "setX":
-                //setPlayerWith('x');
-                break;
                 
             case "1":
             case "2":
@@ -139,6 +139,17 @@ class PlayerSocket extends Thread
                 reset = true;
                 if(players.player1.reset && players.player2.reset)
                 {
+                    players.player1.isFirst = !players.player1.isFirst;
+                    players.player2.isFirst = !players.player2.isFirst;
+                    if( players.player1.isFirst)
+                    {
+                        players.player1.send("startToken");
+                        players.player2.send("playSecond");
+                    }else
+                    {
+                        players.player2.send("startToken");
+                        players.player1.send("playSecond");
+                    }
                     sendToAll("doReset");
                     players.player1.reset = false;
                     players.player2.reset = false;
@@ -198,4 +209,3 @@ class GameSockets
     PlayerSocket player1;
     PlayerSocket player2;
 }
-
