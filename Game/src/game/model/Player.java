@@ -5,6 +5,8 @@
  */
 package game.model;
 
+import gameDB.GameDao;
+import gameDB.GameRecord;
 import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.IOException;
@@ -31,6 +33,8 @@ public class Player {
     
     private String playMark;
     
+    private String playerName;
+    
     private Socket pSocket;
     private BufferedReader br;
     private boolean gameOn;
@@ -41,12 +45,22 @@ public class Player {
     private String tryPattern = "[1-9]:[XO]";
     private Pattern prn = Pattern.compile(tryPattern);
     private boolean inTurn;
+    private boolean allowSave;
+    private String opName;
+    
+    private GameRecord gameRec;
+    private GameDao gameDao;
                         
     
     public Player(SETVIEW set)
     {
         gameOn = true;
         delegate = set;
+        if(allowSave)
+        {
+            gameRec = new GameRecord();
+            gameDao = new GameDao();
+        }
         try {
             pSocket = new Socket("127.0.0.1",13135);
             ps = new PrintStream(pSocket.getOutputStream());
@@ -73,6 +87,10 @@ public class Player {
                             String ret = model.selectCell(c.i, c.ch);  
                             if(ret != "isMarked")
                             {
+                                if(allowSave)
+                                {
+                                    gameRec.addGameMove(c.i, c.ch);
+                                }
                                 Platform.runLater(()->{
                                     delegate.setView(c.i, c.ch);
                                 });
@@ -104,8 +122,36 @@ public class Player {
                                 inTurn = false;
                                 playMark = "O";
                                 break;    
+                             
+                            case "getName1"    :
+                                sendMsg("Name1:"+playerName);
+                                break;
+                            case "getName2"    :
+                                sendMsg("Name2:"+playerName);
+                                break;   
+                            
+                            case "allowSave"    :
+                                allowSave = true;
+                                break;
+                                
+                            case "save"    :
+                                if(allowSave)
+                                {
+                                    //saving logic.
+                                    gameDao.insertGame(playerName,opName , gameRec);
+                                    
+                                }
+                                break;
                                 
                             default : 
+                                if(msg.contains("Name"))
+                                {
+                                    String name = msg.substring(5,msg.length());
+                                    if(!name.equalsIgnoreCase(playerName))
+                                    {
+                                        opName = name;
+                                    }
+                                }
                                 break;
                         }
                     }
@@ -119,6 +165,16 @@ public class Player {
        th.start();
     }
     
+    
+    public String getOponentName()
+    {
+        return opName;
+    }
+    
+    public void setPlayerName(String str)
+    {
+        playerName = str;
+    }
     // cell : int from(1-9) marks the cell number pressed on ui.
     public void markCell(int cell)
     {
@@ -126,6 +182,11 @@ public class Player {
         {
             sendMsg(new Integer(cell).toString());
         }
+    }
+    
+    public void requestSave()
+    {
+        sendMsg("reqSave");
     }
     
     public void askResetGame()

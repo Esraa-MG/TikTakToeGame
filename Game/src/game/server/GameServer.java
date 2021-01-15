@@ -61,6 +61,7 @@ class PlayerSocket extends Thread
     private PrintStream ps;
     
     private boolean reset;
+    private String playerName;
     
     private boolean isFirst;
     private String mark ;
@@ -93,7 +94,10 @@ class PlayerSocket extends Thread
         {
             players.player2 = this;
             players.player2.mark = "O";
+            players.player1.send("getName1");
+            players.player2.send("getName2");
             players.player2.isFirst = false;
+            players.player1.send("allowSave");
             System.out.println("player2 connected");
             send(mark);
             players.player1.send("startToken");
@@ -134,7 +138,11 @@ class PlayerSocket extends Thread
             case "9":
                 sendToAll(str+":"+mark);
                 break;
-                
+            
+            case "reqSave" :
+                sendToAll("save");
+                break;
+            
             case "reset" :
                 reset = true;
                 if(players.player1.reset && players.player2.reset)
@@ -174,6 +182,16 @@ class PlayerSocket extends Thread
                 break;
                 
             default:
+                if(str.contains("Name1"))
+                { 
+                    players.player1.playerName = str.substring(6,str.length());
+                    sendToAll("Name:"+str);
+                    
+                }else if(str.contains("Name2"))
+                {
+                    players.player2.playerName = str.substring(6,str.length());
+                    sendToAll("Name:"+str);
+                }
                 break;
         }
     }
