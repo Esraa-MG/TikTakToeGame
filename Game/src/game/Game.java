@@ -11,6 +11,7 @@ import game.model.GameModel;
 import game.model.Model;
 import game.model.SETVIEW;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
@@ -20,7 +21,7 @@ import javafx.stage.Stage;
  *
  * @author ESRAA
  */
-public class Game extends Application{
+public class Game extends Application implements SETVIEW{
     
     StartUI StrUi;
     SecondPage ScndUi;
@@ -28,6 +29,9 @@ public class Game extends Application{
     GameControl3 GameCon3;
     ConnectNetwork ConnNet;
     Model mod;
+    GameUI networkGame;
+    private String localIP = "127.0.0.1";
+
     
     
  
@@ -49,7 +53,7 @@ public class Game extends Application{
     @Override
     public void start(Stage stage) throws Exception {
         
-     
+        networkGame = new GameUI();
         StrUi = new StartUI();
         ScndUi = new SecondPage();
         Page3Ui = new Page3UI();
@@ -76,20 +80,71 @@ public class Game extends Application{
         
        
         
-        
-        stage.setScene(start);
+        if(mode ==1)
+        {
+            stage.setScene(Game);
+        }else{
+            stage.setScene(start);
+        }
         
         ConnNet.button0.setOnAction(((event) -> {
            
+              mod.startServer();
+              mod.startNeworkGame(this, localIP);
+              mod.setPlayerName(ConnNet.textField.getText());
+              ConnNet.label0.setText(mod.getHostIP());
+              ConnNet.button0.setDisable(true);
+              //stage.setScene(Game);
               
           
         }));
-       
-        GameUi.button.setOnAction(((event) -> {
+        
+        ConnNet.button1.setOnAction(((event) -> {
            
               
+              mod.startNeworkGame(this, ConnNet.textField0.getText());
+              mod.setPlayerName(ConnNet.textField.getText());
+              ConnNet.button0.setDisable(true);
+               //stage.setScene(Game);
           
         }));
+        
+        ConnNet.enterButton.setOnAction((event)->{
+            
+            Scene ntScene = new Scene(networkGame);
+            stage.setScene(ntScene);
+        });
+       
+        networkGame.button.setOnAction(((event) -> {  
+              mod.markCell(1);
+        }));
+        networkGame.button0.setOnAction(((event) -> {  
+              mod.markCell(2);
+        }));
+        networkGame.button1.setOnAction(((event) -> {  
+              mod.markCell(3);
+        }));
+        networkGame.button2.setOnAction(((event) -> {  
+              mod.markCell(4);
+        }));
+        networkGame.button3.setOnAction(((event) -> {  
+              mod.markCell(5);
+        }));
+        networkGame.button4.setOnAction(((event) -> {  
+              mod.markCell(6);
+        }));
+        networkGame.button5.setOnAction(((event) -> {  
+              mod.markCell(7);
+        }));
+        networkGame.button6.setOnAction(((event) -> {  
+              mod.markCell(8);
+        }));
+        networkGame.button7.setOnAction(((event) -> {  
+              mod.markCell(9);
+        }));
+        networkGame.reset.setOnAction((value)->{
+            mod.resetGame();
+        });
         
         //start page contol
         
@@ -136,7 +191,7 @@ public class Game extends Application{
         //online page control
         
     
-        ConnNet.button1.setOnAction(new EventHandler<ActionEvent>() {
+        /*ConnNet.button1.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
                 
@@ -147,7 +202,7 @@ public class Game extends Application{
                 
                 
             }
-        });
+        });*/
         
         
         
@@ -272,6 +327,64 @@ public class Game extends Application{
         //Model model = new Model();
         //model.startServer();
         
+    }
+
+    @Override
+    public void setView(int at, char mark) {
+        String tryMark = new Character(mark).toString();
+        switch (at)
+        {
+            case 1:
+                networkGame.button.setText(tryMark);
+                break;
+            
+            case 2:
+                networkGame.button0.setText(tryMark);
+                break;
+            case 3:
+                networkGame.button1.setText(tryMark);
+                break;
+            case 4:
+                networkGame.button2.setText(tryMark);
+                break;
+            case 5:
+                networkGame.button3.setText(tryMark);
+                break;
+             case 6:
+                networkGame.button4.setText(tryMark);
+                break;
+            case 7:
+                networkGame.button5.setText(tryMark);
+                break;
+            case 8:
+                networkGame.button6.setText(tryMark);
+                break;
+            case 9:
+                networkGame.button7.setText(tryMark);
+                break;  
+            default:break;
+        }
+    }
+
+    @Override
+    public void resetScreen() {
+        networkGame.button.setText(" ");
+        networkGame.button0.setText(" ");
+        networkGame.button1.setText(" ");
+        networkGame.button2.setText(" ");
+        networkGame.button3.setText(" ");
+        networkGame.button4.setText(" ");
+        networkGame.button5.setText(" ");
+        networkGame.button6.setText(" ");
+        networkGame.button7.setText(" ");  
+    }
+    
+    @Override
+    public void enterGame()
+    {
+        
+        ConnNet.enterButton.setDisable(false);
+          
     }
   
 }

@@ -12,4 +12,5 @@ package game.model;
 public interface SETVIEW {
     public void setView(int at,char mark);
     public void resetScreen();
+    public void enterGame();
 }
