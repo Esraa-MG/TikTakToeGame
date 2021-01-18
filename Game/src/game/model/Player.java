@@ -47,12 +47,12 @@ public class Player {
     private boolean inTurn;
     private boolean allowSave;
     private String opName;
-    
+ 
     private GameRecord gameRec;
     private GameDao gameDao;
                         
     
-    public Player(SETVIEW set)
+    public Player(SETVIEW set,String ip)
     {
         gameOn = true;
         delegate = set;
@@ -62,7 +62,8 @@ public class Player {
             gameDao = new GameDao();
         }
         try {
-            pSocket = new Socket("127.0.0.1",13135);
+            pSocket = new Socket(ip,13135);
+            System.out.println(ip);
             ps = new PrintStream(pSocket.getOutputStream());
             br = new BufferedReader(new InputStreamReader(pSocket.getInputStream()));
             model = new GameModel();
@@ -89,7 +90,7 @@ public class Player {
                             {
                                 if(allowSave)
                                 {
-                                    gameRec.addGameMove(c.i, c.ch);
+                                    //gameRec.addGameMove(c.i, c.ch);
                                 }
                                 Platform.runLater(()->{
                                     delegate.setView(c.i, c.ch);
@@ -143,6 +144,12 @@ public class Player {
                                 }
                                 break;
                                 
+                            case "enterGame" :
+                                Platform.runLater(()->{
+                                    delegate.enterGame();
+                                });
+                                break;
+                                
                             default : 
                                 if(msg.contains("Name"))
                                 {
@@ -150,6 +157,7 @@ public class Player {
                                     if(!name.equalsIgnoreCase(playerName))
                                     {
                                         opName = name;
+                                        System.out.println("opName: "+ opName);
                                     }
                                 }
                                 break;
@@ -165,7 +173,6 @@ public class Player {
        th.start();
     }
     
-    
     public String getOponentName()
     {
         return opName;
@@ -174,6 +181,7 @@ public class Player {
     public void setPlayerName(String str)
     {
         playerName = str;
+        System.out.println("NAME :"+this.playerName);
     }
     // cell : int from(1-9) marks the cell number pressed on ui.
     public void markCell(int cell)
