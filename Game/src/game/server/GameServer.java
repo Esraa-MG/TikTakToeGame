@@ -99,8 +99,6 @@ class PlayerSocket extends Thread
             players.player2.isFirst = false;
             players.player1.send("allowSave");
             System.out.println("player2 connected");
-            players.player1.send("enterGame");
-            players.player2.send("enterGame");
             send(mark);
             players.player1.send("startToken");
             start();

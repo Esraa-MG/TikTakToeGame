@@ -15,19 +15,13 @@ public class Model {
     
     private Player player;
     private GameServer server;
-   
 
     
     //handling network mode
     // functions of network mode.    
-    public void startNeworkGame(SETVIEW delegate,String ip)
+    public void startNeworkGame(SETVIEW delegate)
     {
-        player = new Player(delegate,ip);
-    }
-    
-    public void setPlayerName(String name)
-    {
-        player.setPlayerName(name);
+        player = new Player(delegate);
     }
     
     public String getPlayerMark()
@@ -37,11 +31,6 @@ public class Model {
             return player.getPlayerMark();
         }
         return "";
-    }
-    
-    public void resetGame()
-    {
-        player.askResetGame();
     }
     
     public void markCell(int cellNumber)
