@@ -7,6 +7,7 @@ package game;
 
 
 
+import game.model.GameModel;
 import game.model.Model;
 import game.model.SETVIEW;
 import javafx.application.Application;
@@ -25,6 +26,9 @@ public class Game extends Application{
     SecondPage ScndUi;
     Page3UI Page3Ui;
     GameControl3 GameCon3;
+    ConnectNetwork ConnNet;
+    Model mod;
+    
     
  
     String[] playersArr;
@@ -36,14 +40,20 @@ public class Game extends Application{
     String result;
     
     int mode = 0;
+    
+    public void init()
+    {
+        mod = new Model();
+    }
 
     @Override
     public void start(Stage stage) throws Exception {
         
-      
+     
         StrUi = new StartUI();
         ScndUi = new SecondPage();
         Page3Ui = new Page3UI();
+        ConnNet = new ConnectNetwork();
         GameCon3 = new GameControl3();
         
         GameUi = new GameUI();
@@ -59,12 +69,27 @@ public class Game extends Application{
         Scene start = new Scene(StrUi);
         Scene second = new Scene(ScndUi);
         Scene third = new Scene(Page3Ui);
+        Scene thirdOnline = new Scene(ConnNet);
         Scene Game = new Scene(GameCon3.GameUi);
         
         
         
+       
+        
         
         stage.setScene(start);
+        
+        ConnNet.button0.setOnAction(((event) -> {
+           
+              
+          
+        }));
+       
+        GameUi.button.setOnAction(((event) -> {
+           
+              
+          
+        }));
         
         //start page contol
         
@@ -91,7 +116,7 @@ public class Game extends Application{
          StrUi.Online.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
-                    stage.setScene(third);
+                    stage.setScene(thirdOnline);
      
             }
         });
@@ -108,7 +133,22 @@ public class Game extends Application{
         });
         
         
-        //third page control
+        //online page control
+        
+    
+        ConnNet.button1.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent e) {
+                
+                   playersArr[0] = Page3Ui.player1.getText();
+                   playersArr[1] = Page3Ui.player2.getText();
+             
+                    stage.setScene(Game);
+                
+                
+            }
+        });
+        
         
         
         //back button
@@ -228,9 +268,9 @@ public class Game extends Application{
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        //launch(args); 
-        Model model = new Model();
-        model.startServer();
+        launch(args); 
+        //Model model = new Model();
+        //model.startServer();
         
     }
   
