@@ -27,7 +27,7 @@ public class TikTakToeGameHard extends Application {
     Point p;
     char ch;
     String result;
-
+    int check =0;
     boolean stopGame = false;
     ArrayList<Button> box;
 
@@ -53,126 +53,111 @@ public class TikTakToeGameHard extends Application {
         box.add(gui.button7);
 
         Scene scene = new Scene(gui);
-        
+
+        ch = 'O';
+        for (Button l : box) {
+
+            l.setOnAction((event) -> {
+                if (l.getText() == "") {
+                    if (game == 1) {
+                        l.setText(new Character(ch).toString());
+
+                        int i = box.indexOf(l);
+                        int n1, n2;
+                        int x = 0;
+                        int y = 0;
+                        Point userMove = null;
+                        if (i == 0) {
+                            userMove = new Point(0, 0);
+                            n1 = 0;
+                            n2 = 0;
+                            y = b.SetVal(userMove);
+                            x = b.CompMove2(y);
+                        } else if (i == 1) {
+                            userMove = new Point(0, 1);
+                            n1 = 0;
+                            n2 = 1;
+                            y = b.SetVal(userMove);
+                            x = b.CompMove2(y);
+                        } else if (i == 2) {
+                            userMove = new Point(0, 2);
+                            n1 = 0;
+                            n2 = 2;
+                            y = b.SetVal(userMove);
+                            x = b.CompMove2(y);
+                        } else if (i == 3) {
+                            userMove = new Point(1, 0);
+                            n1 = 1;
+                            n2 = 0;
+                            y = b.SetVal(userMove);
+                            x = b.CompMove2(y);
+                        } else if (i == 4) {
+                            userMove = new Point(1, 1);
+                            n1 = 1;
+                            n2 = 1;
+                            y = b.SetVal(userMove);
+                            x = b.CompMove2(y);
+                        } else if (i == 5) {
+                            userMove = new Point(1, 2);
+                            n1 = 1;
+                            n2 = 2;
+                            y = b.SetVal(userMove);
+                            x = b.CompMove2(y);
+                        } else if (i == 6) {
+                            userMove = new Point(2, 0);
+                            n1 = 2;
+                            n2 = 0;
+                            y = b.SetVal(userMove);
+                            x = b.CompMove2(y);
+                        } else if (i == 7) {
+                            userMove = new Point(2, 1);
+                            n1 = 2;
+                            n2 = 1;
+                            y = b.SetVal(userMove);
+                            x = b.CompMove2(y);
+                        } else if (i == 8) {
+
+                            userMove = new Point(2, 2);
+                            n1 = 2;
+                            n2 = 2;
+                            y = b.SetVal(userMove);
+                            x = b.CompMove2(y);
+                        }
+                        b.PlaceMove(userMove, Board.PLAYER_X);//for back end
+
+                        //  try {
+                        //          TimeUnit.SECONDS.sleep(1);        
+                        //     } catch (InterruptedException ex) {
+                        //         Logger.getLogger(TikTakToeGame3.class.getName()).log(Level.SEVERE, null, ex);
+                        //      }
+                        setSwitch2(x);
+
+                        if (b.hasPlayerWon(Board.PLAYER_O)) {
+                            System.out.println("You Won");
+                            check=1;
+                            game = -10;
+
+                        } else if (b.hasPlayerWon(Board.PLAYER_X)) {
+                            System.out.println("You Lost");
+                            check=-1;
+                            game = -10;
+
+                        } else if (b.isGameOver()) {
+                            System.out.println("Draw!");
+                            check=2;
+                            game = -10;
+
+                        }
+                    }
+                }
+
+            });
+
+        }
 
         
-       ch='O';
-       for(Button l:box){
-           
-           
-          l.setOnAction((event) -> {
-              if(l.getText()==""){
-              if(game==1) {
-             l.setText(new Character(ch).toString());
-               
-            int i=box.indexOf(l);
-            int n1,n2;
-            int x=0;
-            int y=0;
-            Point userMove=null;
-            if(i==0){
-             userMove = new Point(0,0);
-             n1=0;
-             n2=0;
-              y = b.SetVal(userMove);
-              x= b.CompMove2(y);
-            }else if(i==1){
-                userMove = new Point(0,1);
-                 n1=0;
-                 n2=1;
-                  y = b.SetVal(userMove);
-                  x= b.CompMove2(y);
-            }else if(i==2){
-                userMove = new Point(0,2);
-                n1=0;
-                 n2=2;
-                  y = b.SetVal(userMove);
-                 x= b.CompMove2(y);
-            }
-            else if(i==3){
-                 userMove = new Point(1,0);
-                 n1=1;
-                 n2=0;
-                  y = b.SetVal(userMove);
-                 x= b.CompMove2(y);
-            } else if(i==4){
-                userMove = new Point(1,1);
-                n1=1;
-                 n2=1;
-                  y = b.SetVal(userMove);
-                  x= b.CompMove2(y);
-            } 
-            else if(i==5){
-                userMove = new Point(1,2);
-                n1=1;
-                 n2=2;
-                 y = b.SetVal(userMove);
-                 x= b.CompMove2(y);
-            }
-            else if(i==6){
-                 userMove = new Point(2,0);
-                 n1=2;
-                 n2=0;
-                 y = b.SetVal(userMove);
-                 x= b.CompMove2(y);
-            }
-            else if(i==7){
-                  userMove = new Point(2,1);
-                  n1=2;
-                 n2=1;
-                 y = b.SetVal(userMove);
-                 x= b.CompMove2(y);
-            }
-            else if(i==8){
-               
-                  userMove = new Point(2,2);
-                  n1=2;
-                 n2=2;
-                 y = b.SetVal(userMove);
-                  x= b.CompMove2(y);
-            }
-            b.PlaceMove(userMove , Board.PLAYER_X);//for back end
-            
-           //  try {
-            //          TimeUnit.SECONDS.sleep(1);        
-             //     } catch (InterruptedException ex) {
-             //         Logger.getLogger(TikTakToeGame3.class.getName()).log(Level.SEVERE, null, ex);
-            //      }
-            
-           
-            setSwitch2(x); 
-                  
-         
-           if(b.hasPlayerWon(Board.PLAYER_O))
-            {
-                System.out.println("You Won");
-                game=-10;
-               
-            }
-           
-            
-        else if(b.hasPlayerWon(Board.PLAYER_X))
-        {
-            System.out.println("You Lost");
-            game=-10;
-            
-        }
-            
-        else if(b.isGameOver())
-        {
-            System.out.println("Draw!");
-            game=-10;
-            
-        }
-              }
-              }
-        
-           });
-       
-       }
-         
-        
-       /* 
+    
+        /* 
         ch = 'X';
         for (Button l : box) {
 
@@ -270,8 +255,7 @@ public class TikTakToeGameHard extends Application {
             });
 
         }
-        */
-
+         */
         gui.reset.setOnAction((event) -> {
             game = 1;
             Board.board = new int[3][3];
@@ -292,14 +276,13 @@ public class TikTakToeGameHard extends Application {
         stage.setScene(scene);
         stage.show();
     }
-    
 
     public static void main(String[] args) {
         launch(args);
 
     }
-    
-/*
+
+    /*
     public int CompMove(int x, int y) {
         int z = 0;
 
@@ -338,8 +321,7 @@ public class TikTakToeGameHard extends Application {
         return z;
     }
     
-    */
-
+     */
     public void setSwitch(int x) {
         switch (x) {
             case 1:
@@ -371,7 +353,6 @@ public class TikTakToeGameHard extends Application {
                 break;
         }
     }
-    
 
     public void setSwitch2(int x) {
         switch (x) {
@@ -404,5 +385,14 @@ public class TikTakToeGameHard extends Application {
                 break;
         }
     }
+    
+    //if return 0->no thing
+    //if return 1->won
+    //if return -1->lost
+    //if return 2->draw
+        public int checkGame()
+        {
+            return check;
+        }
 
 }
