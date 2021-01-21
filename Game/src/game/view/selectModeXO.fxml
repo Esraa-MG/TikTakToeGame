@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <ImageView fx:id="background" fitHeight="500.0" fitWidth="730.0" layoutX="-21.0" pickOnBounds="true">
+         <image>
+            <Image url="@pic/backgroundxo.PNG" />
+         </image>
+         <effect>
+            <GaussianBlur radius="4.61" />
+         </effect>
+      </ImageView>
+      <ImageView fx:id="sideimage" fitHeight="159.0" fitWidth="228.0" layoutX="38.0" layoutY="149.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@pic/Captur11e.PNG" />
+         </image>
+         <effect>
+            <DropShadow blurType="GAUSSIAN" height="107.3" radius="50.2325" spread="0.28" width="95.63" />
+         </effect>
+      </ImageView>
+      <Button fx:id="online" layoutX="367.0" layoutY="280.0" mnemonicParsing="false" prefHeight="67.0" prefWidth="243.0" style="-fx-background-color: #adcbe6; -fx-background-radius: 2000;" text="Online Mode" textFill="#a12828">
+         <font>
+            <Font name="Berlin Sans FB Bold" size="25.0" />
+         </font>
+      </Button>
+      <Button fx:id="single" layoutX="367.0" layoutY="47.0" mnemonicParsing="false" prefHeight="67.0" prefWidth="243.0" style="-fx-background-color: #adbce6; -fx-background-radius: 2000;" text="Single Mode" textFill="#a12828">
+         <font>
+            <Font name="Berlin Sans FB Bold" size="25.0" />
+         </font>
+      </Button>
+      <Button fx:id="twoplayer" layoutX="367.0" layoutY="157.0" mnemonicParsing="false" prefHeight="67.0" prefWidth="243.0" style="-fx-background-color: adbce6; -fx-background-radius: 2000;" text="Two Player Mode" textFill="#a12828">
+         <font>
+            <Font name="Berlin Sans FB Demi Bold" size="25.0" />
+         </font>
+      </Button>
+      <Button fx:id="archive" layoutX="367.0" layoutY="391.0" mnemonicParsing="false" prefHeight="67.0" prefWidth="243.0" style="-fx-background-color: adbce6; -fx-background-radius: 2000;" text="Archive" textFill="#a12828">
+         <font>
+            <Font name="Berlin Sans FB Bold" size="25.0" />
+         </font>
+      </Button>
+      <ImageView fx:id="back" fitHeight="97.0" fitWidth="59.0" layoutX="28.0" layoutY="410.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@pic/backarrow2.png" />
+         </image>
+         <effect>
+            <DropShadow height="98.74" radius="48.0925" spread="0.38" width="95.63" />
+         </effect>
+      </ImageView>
+   </children>
+</AnchorPane>

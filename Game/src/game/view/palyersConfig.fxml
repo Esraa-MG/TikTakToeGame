@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <ImageView fx:id="background" fitHeight="509.0" fitWidth="724.0" layoutX="-13.0" pickOnBounds="true">
+         <image>
+            <Image url="@pic/backgroundxo.PNG" />
+         </image>
+         <effect>
+            <GaussianBlur radius="13.06" />
+         </effect>
+      </ImageView>
+      <ImageView fx:id="back" fitHeight="97.0" fitWidth="59.0" layoutX="30.0" layoutY="407.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@pic/backarrow2.png" />
+         </image>
+         <effect>
+            <DropShadow height="104.96" radius="54.3125" spread="0.4" width="114.29" />
+         </effect>
+      </ImageView>
+      <ImageView fitHeight="110.0" fitWidth="101.0" layoutX="300.0" layoutY="49.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@pic/vs.png" />
+         </image>
+      </ImageView>
+      <Label fx:id="player1label" layoutX="30.0" layoutY="40.0" prefHeight="47.0" prefWidth="137.0" style="-fx-background-color: #d3d3d3; -fx-background-radius: 2000;" text="Player 1" textFill="#0a5b68">
+         <font>
+            <Font name="Book Antiqua Bold Italic" size="35.0" />
+         </font>
+      </Label>
+      <Label fx:id="palyer2label" layoutX="528.0" layoutY="40.0" prefHeight="47.0" prefWidth="137.0" style="-fx-background-color: #d3d3d3; -fx-background-radius: 2000;" text="Player 2" textFill="#0a5b68">
+         <font>
+            <Font name="Book Antiqua Bold Italic" size="35.0" />
+         </font>
+      </Label>
+      <TextField fx:id="player1text" layoutX="14.0" layoutY="119.0" prefHeight="47.0" prefWidth="200.0" style="-fx-background-color: #d3d3d3; -fx-background-radius: 5000;" text="player1">
+         <font>
+            <Font name="Baskerville Old Face" size="20.0" />
+         </font>
+      </TextField>
+      <TextField fx:id="player2text" layoutX="465.0" layoutY="119.0" prefHeight="47.0" prefWidth="200.0" style="-fx-background-color: #d3d3d3; -fx-background-radius: 5000;" text="player2">
+         <font>
+            <Font name="Baskerville Old Face" size="20.0" />
+         </font>
+      </TextField>
+      <RadioButton fx:id="palyer1x" layoutX="80.0" layoutY="198.0" mnemonicParsing="false" style="-fx-background-radius: 2000;" text="X" textAlignment="CENTER" textFill="#ff4c4c">
+         <toggleGroup>
+            <ToggleGroup fx:id="palyer1" />
+         </toggleGroup>
+      </RadioButton>
+      <RadioButton fx:id="palyer1o" layoutX="79.0" layoutY="235.0" mnemonicParsing="false" style="-fx-background-radius: 2000;" text="O" textAlignment="CENTER" textFill="#ff4c4c" toggleGroup="$palyer1" />
+      <RadioButton fx:id="palyer2o" layoutX="534.0" layoutY="243.0" mnemonicParsing="false" style="-fx-background-radius: 2000;" text="O" textAlignment="CENTER" textFill="#ff4c4c">
+         <toggleGroup>
+            <ToggleGroup fx:id="palyer2" />
+         </toggleGroup>
+      </RadioButton>
+      <RadioButton fx:id="palyer2x" layoutX="535.0" layoutY="206.0" mnemonicParsing="false" style="-fx-background-radius: 2000;" text="X" textAlignment="CENTER" textFill="#ff4c4c" toggleGroup="$palyer2" />
+      <ImageView fx:id="start" fitHeight="128.0" fitWidth="163.0" layoutX="393.0" layoutY="338.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@pic/start.png" />
+         </image>
+         <effect>
+            <DropShadow height="62.2" radius="26.7125" spread="0.1" width="46.65" />
+         </effect>
+      </ImageView>
+   </children>
+</AnchorPane>
