@@ -4,19 +4,19 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <ImageView fitHeight="516.0" fitWidth="710.0" opacity="0.78" pickOnBounds="true">
+      <ImageView fitHeight="613.0" fitWidth="916.0" opacity="0.78" pickOnBounds="true">
          <image>
             <Image url="@pic/back1.jpg" />
          </image>
       </ImageView>
-      <ImageView fx:id="snake" fitHeight="110.0" fitWidth="120.0" layoutX="134.0" layoutY="126.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="snake" fitHeight="118.0" fitWidth="106.0" layoutX="209.0" layoutY="133.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@pic/snake.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="110.0" fitWidth="138.0" layoutX="437.0" layoutY="126.0" pickOnBounds="true" preserveRatio="true" fx:id="xo">
+      <ImageView fitHeight="118.0" fitWidth="116.0" layoutX="587.0" layoutY="133.0" pickOnBounds="true" preserveRatio="true" fx:id="xo">
          <image>
             <Image url="@pic/xo.png" />
          </image>

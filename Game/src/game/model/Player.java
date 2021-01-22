@@ -42,7 +42,7 @@ public class Player {
     private PrintStream ps;
     private Thread th; 
     private SETVIEW delegate;
-    private String tryPattern = "[1-9]:[XO]";
+    private final String tryPattern = "[1-9]:[XO]";
     private Pattern prn = Pattern.compile(tryPattern);
     private boolean inTurn;
     private boolean allowSave;
@@ -52,26 +52,52 @@ public class Player {
     private GameDao gameDao;
                         
     
-    public Player(SETVIEW set,String ip)
+    public Player(SETVIEW set)
     {
         gameOn = true;
         delegate = set;
-        if(allowSave)
-        {
-            gameRec = new GameRecord();
-            gameDao = new GameDao();
-        }
+        model = new GameModel();
+    }
+    
+    
+    public boolean connectToIP(String ip)
+    {
         try {
             pSocket = new Socket(ip,13135);
             System.out.println(ip);
             ps = new PrintStream(pSocket.getOutputStream());
             br = new BufferedReader(new InputStreamReader(pSocket.getInputStream()));
-            model = new GameModel();
+            this.fireThread();
+            return true;
+            
         } catch (IOException ex) {
-            ex.printStackTrace();
+            System.out.println("IN THE CATCH");
+            br = null;
+            ps = null;
+            //pSocket.close();
+            pSocket = null;
+            return false;
+            //ex.printStackTrace();
         }
-        
-       th = new Thread(()->{
+    }
+    
+    
+    public void closeSocket()
+    {
+        br = null;
+        ps = null;
+        try {
+            pSocket.close();
+            pSocket = null;
+            System.out.println("socket closed");
+        } catch (IOException ex) {
+            Logger.getLogger(Player.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void fireThread()
+    {
+        th = new Thread(()->{
            boolean thContinue = true;
             while(thContinue)
             {
@@ -90,7 +116,7 @@ public class Player {
                             {
                                 if(allowSave)
                                 {
-                                    //gameRec.addGameMove(c.i, c.ch);
+                                    gameRec.addGameMove(c.i, c.ch);
                                 }
                                 Platform.runLater(()->{
                                     delegate.setView(c.i, c.ch);
@@ -112,6 +138,7 @@ public class Player {
                                 thContinue = false;
                                 br = null;
                                 ps = null;
+                                pSocket.close();
                                 pSocket = null;
                                 break;
                             case "startToken" :
@@ -132,15 +159,19 @@ public class Player {
                                 break;   
                             
                             case "allowSave"    :
-                                allowSave = true;
+                                //allowSave = true;
                                 break;
                                 
                             case "save"    :
                                 if(allowSave)
                                 {
                                     //saving logic.
-                                    gameDao.insertGame(playerName,opName , gameRec);
-                                    
+                                    if(playMark == "X")
+                                    {
+                                        gameDao.insertGame(playerName,opName , gameRec);
+                                    }else{
+                                        gameDao.insertGame(opName,playerName , gameRec);
+                                    }    
                                 }
                                 break;
                                 
@@ -148,12 +179,14 @@ public class Player {
                                 Platform.runLater(()->{
                                     delegate.enterGame();
                                 });
+                                System.out.println(playerName + ": should enter");
                                 break;
                                 
                             default : 
                                 if(msg.contains("Name"))
                                 {
                                     String name = msg.substring(5,msg.length());
+                                    //System.out.println("opName: "+ name + "plyaerName" + playerName);
                                     if(!name.equalsIgnoreCase(playerName))
                                     {
                                         opName = name;
@@ -165,12 +198,27 @@ public class Player {
                     }
                     
                 } catch (IOException ex) {
-                    Logger.getLogger(Player.class.getName()).log(Level.SEVERE, null, ex);
+                    //Logger.getLogger(Player.class.getName()).log(Level.SEVERE, null, ex);
+                    break;
                 }
             }
-            System.out.println("out of while");
+            System.out.println(playerName+".player : out of while");
         });
        th.start();
+    }
+    
+    public void allowSave()
+    {
+        allowSave = true;
+        gameRec = new GameRecord();
+        gameDao = new GameDao();
+    }
+    
+    public void disableSave()
+    {
+        allowSave = false;
+        gameRec = null;
+        gameDao = null;
     }
     
     public String getOponentName()
@@ -182,6 +230,11 @@ public class Player {
     {
         playerName = str;
         System.out.println("NAME :"+this.playerName);
+    }
+    
+    public String getPlayerName()
+    {
+        return playerName ;
     }
     // cell : int from(1-9) marks the cell number pressed on ui.
     public void markCell(int cell)
@@ -231,8 +284,14 @@ public class Player {
                 gameOn = false;
                 if(playMark == "X")
                 {
+                    Platform.runLater(() -> {
+                        delegate.runWinnigAnimation();
+                    });
                     System.out.println("I Win");
                 }else{
+                    Platform.runLater(() -> {
+                        delegate.runLosingAnimation();
+                    });
                     System.out.println("I Lose");
                 }
                 break;
@@ -240,12 +299,21 @@ public class Player {
                 gameOn = false;
                 if(playMark == "O")
                 {
+                    Platform.runLater(() -> {
+                        delegate.runWinnigAnimation();
+                    });
                     System.out.println("I Win");
                 }else{
+                    Platform.runLater(() -> {
+                        delegate.runLosingAnimation();
+                    });
                     System.out.println("I Lose");
                 }
                 break;
             case "draw" :
+                Platform.runLater(() -> {
+                        delegate.runDrawAnimation();
+                    });
                 gameOn = false;
                 break;
             default:

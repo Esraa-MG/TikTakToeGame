@@ -6,6 +6,7 @@
 package game.control;
 
 import game.model.GameModel;
+import game.view.GameUi;
 import javafx.animation.RotateTransition;
 import javafx.animation.ScaleTransition;
 import javafx.animation.TranslateTransition;
@@ -42,246 +43,38 @@ public class GameControl3 {
 
     int[] buttonPressed = {0, 0, 0, 0, 0, 0, 0, 0, 0};
     ImageView[] img = {gameUi.r1c1, gameUi.r2c1, gameUi.r3c1,
-                        gameUi.r1c2, gameUi.r2c2, gameUi.r3c2, gameUi.r1c3, gameUi.r2c3, gameUi.r3c3};
-    
+        gameUi.r1c2, gameUi.r2c2, gameUi.r3c2, gameUi.r1c3, gameUi.r2c3, gameUi.r3c3};
+
     int i;
 
     public void controlGame() {
         symbol = 'X';
-        
-        for (i=0; i<9; i++)
-        {
+
+        for (i = 0; i < 9; i++) {
             final int index = i;
             img[i].addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-            if (buttonPressed[index] == 0) {
-                if (!stopGame) {
-                    if (symbol == 'X') {
-                        img[index].setImage(new Image(getClass().getClassLoader().getResource("game/pic/x.jpg").toExternalForm()));
-                    } else {
-                        img[index].setImage(new Image(getClass().getClassLoader().getResource("game/pic/o.png").toExternalForm()));
-                    }
+                if (buttonPressed[index] == 0) {
+                    if (!stopGame) {
+                        if (symbol == 'X') {
+                            img[index].setImage(new Image(getClass().getClassLoader().getResource("game/pic/x.jpg").toExternalForm()));
+                        } else {
+                            img[index].setImage(new Image(getClass().getClassLoader().getResource("game/pic/o.png").toExternalForm()));
+                        }
 
-                    result = GameMod.selectCell(index+1, symbol);
-                    System.out.println(result);
-                    if (result == "Xwin" || result == "Owin" || result == "draw") {
-                        showScore();
-                        stopGame = true;
+                        result = GameMod.selectCell(index + 1, symbol);
+                        System.out.println(result);
+                        if (result == "Xwin" || result == "Owin" || result == "draw") {
+                            showScore();
+                            stopGame = true;
+                        }
+                        winAnimation();
+                        changeSymbol();
                     }
-                    winAnimation();
-                    changeSymbol();
                 }
-            }
 
-            buttonPressed[index] = 1;
-        });
+                buttonPressed[index] = 1;
+            });
         }
-
-//        gameUi.r1c1.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-//            if (buttonPressed[0] == 0) {
-//                if (!stopGame) {
-//                    if (symbol == 'X') {
-//                        gameUi.r1c1.setImage(new Image(getClass().getClassLoader().getResource("game/pic/x.jpg").toExternalForm()));
-//                    } else {
-//                        gameUi.r1c1.setImage(new Image(getClass().getClassLoader().getResource("game/pic/o.png").toExternalForm()));
-//                    }
-//
-//                    result = GameMod.selectCell(1, symbol);
-//                    System.out.println(result);
-//                    if (result == "Xwin" || result == "Owin" || result == "draw") {
-//                        showScore();
-//                        stopGame = true;
-//                    }
-//                    winAnimation();
-//                    changeSymbol();
-//                }
-//            }
-//
-//            buttonPressed[0] = 1;
-//        });
-//
-//        gameUi.r2c1.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-//            if (buttonPressed[1] == 0) {
-//                if (!stopGame) {
-//                    if (symbol == 'X') {
-//                        gameUi.r2c1.setImage(new Image(getClass().getClassLoader().getResource("game/pic/x.jpg").toExternalForm()));
-//                    } else {
-//                        gameUi.r2c1.setImage(new Image(getClass().getClassLoader().getResource("game/pic/o.png").toExternalForm()));
-//                    }
-//
-//                    result = GameMod.selectCell(2, symbol);
-//                    System.out.println(result);
-//                    if (result == "Xwin" || result == "Owin" || result == "draw") {
-//                        showScore();
-//                        stopGame = true;
-//                    }
-//                    winAnimation();
-//                    changeSymbol();
-//                }
-//            }
-//
-//            buttonPressed[1] = 1;
-//        });
-//
-//        gameUi.r3c1.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-//            if (buttonPressed[2] == 0) {
-//                if (!stopGame) {
-//                    if (symbol == 'X') {
-//                        gameUi.r3c1.setImage(new Image(getClass().getClassLoader().getResource("game/pic/x.jpg").toExternalForm()));
-//                    } else {
-//                        gameUi.r3c1.setImage(new Image(getClass().getClassLoader().getResource("game/pic/o.png").toExternalForm()));
-//                    }
-//
-//                    result = GameMod.selectCell(3, symbol);
-//                    System.out.println(result);
-//                    if (result == "Xwin" || result == "Owin" || result == "draw") {
-//                        showScore();
-//                        stopGame = true;
-//                    }
-//                    winAnimation();
-//                    changeSymbol();
-//                }
-//            }
-//
-//            buttonPressed[2] = 1;
-//        });
-//
-//        gameUi.r1c2.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-//            if (buttonPressed[3] == 0) {
-//                if (!stopGame) {
-//                    if (symbol == 'X') {
-//                        gameUi.r1c2.setImage(new Image(getClass().getClassLoader().getResource("game/pic/x.jpg").toExternalForm()));
-//                    } else {
-//                        gameUi.r1c2.setImage(new Image(getClass().getClassLoader().getResource("game/pic/o.png").toExternalForm()));
-//                    }
-//
-//                    result = GameMod.selectCell(4, symbol);
-//                    System.out.println(result);
-//                    if (result == "Xwin" || result == "Owin" || result == "draw") {
-//                        showScore();
-//                        stopGame = true;
-//                    }
-//                    winAnimation();
-//                    changeSymbol();
-//                }
-//            }
-//
-//            buttonPressed[3] = 1;
-//        });
-//
-//        gameUi.r2c2.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-//            if (buttonPressed[4] == 0) {
-//                if (!stopGame) {
-//                    if (symbol == 'X') {
-//                        gameUi.r2c2.setImage(new Image(getClass().getClassLoader().getResource("game/pic/x.jpg").toExternalForm()));
-//                    } else {
-//                        gameUi.r2c2.setImage(new Image(getClass().getClassLoader().getResource("game/pic/o.png").toExternalForm()));
-//                    }
-//
-//                    result = GameMod.selectCell(5, symbol);
-//                    System.out.println(result);
-//                    if (result == "Xwin" || result == "Owin" || result == "draw") {
-//                        showScore();
-//                        stopGame = true;
-//                    }
-//                    winAnimation();
-//                    changeSymbol();
-//                }
-//            }
-//
-//            buttonPressed[4] = 1;
-//        });
-//
-//        gameUi.r3c2.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-//            if (buttonPressed[5] == 0) {
-//                if (!stopGame) {
-//                    if (symbol == 'X') {
-//                        gameUi.r3c2.setImage(new Image(getClass().getClassLoader().getResource("game/pic/x.jpg").toExternalForm()));
-//                    } else {
-//                        gameUi.r3c2.setImage(new Image(getClass().getClassLoader().getResource("game/pic/o.png").toExternalForm()));
-//                    }
-//
-//                    result = GameMod.selectCell(6, symbol);
-//                    System.out.println(result);
-//                    if (result == "Xwin" || result == "Owin" || result == "draw") {
-//                        showScore();
-//                        stopGame = true;
-//                    }
-//                    winAnimation();
-//                    changeSymbol();
-//                }
-//            }
-//
-//            buttonPressed[5] = 1;
-//        });
-//
-//        gameUi.r1c3.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-//            if (buttonPressed[6] == 0) {
-//                if (!stopGame) {
-//                    if (symbol == 'X') {
-//                        gameUi.r1c3.setImage(new Image(getClass().getClassLoader().getResource("game/pic/x.jpg").toExternalForm()));
-//                    } else {
-//                        gameUi.r1c3.setImage(new Image(getClass().getClassLoader().getResource("game/pic/o.png").toExternalForm()));
-//                    }
-//
-//                    result = GameMod.selectCell(7, symbol);
-//                    System.out.println(result);
-//                    if (result == "Xwin" || result == "Owin" || result == "draw") {
-//                        showScore();
-//                        stopGame = true;
-//                    }
-//                    winAnimation();
-//                    changeSymbol();
-//                }
-//            }
-//
-//            buttonPressed[6] = 1;
-//        });
-//
-//        gameUi.r2c3.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-//            if (buttonPressed[7] == 0) {
-//                if (!stopGame) {
-//                    if (symbol == 'X') {
-//                        gameUi.r2c3.setImage(new Image(getClass().getClassLoader().getResource("game/pic/x.jpg").toExternalForm()));
-//                    } else {
-//                        gameUi.r2c3.setImage(new Image(getClass().getClassLoader().getResource("game/pic/o.png").toExternalForm()));
-//                    }
-//
-//                    result = GameMod.selectCell(8, symbol);
-//                    System.out.println(result);
-//                    if (result == "Xwin" || result == "Owin" || result == "draw") {
-//                        showScore();
-//                        stopGame = true;
-//                    }
-//                    winAnimation();
-//                    changeSymbol();
-//                }
-//            }
-//
-//            buttonPressed[7] = 1;
-//        });
-//
-//        gameUi.r3c3.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-//            if (buttonPressed[8] == 0) {
-//                if (!stopGame) {
-//                    if (symbol == 'X') {
-//                        gameUi.r3c3.setImage(new Image(getClass().getClassLoader().getResource("game/pic/x.jpg").toExternalForm()));
-//                    } else {
-//                        gameUi.r3c3.setImage(new Image(getClass().getClassLoader().getResource("game/pic/o.png").toExternalForm()));
-//                    }
-//
-//                    result = GameMod.selectCell(9, symbol);
-//                    System.out.println(result);
-//                    if (result == "Xwin" || result == "Owin" || result == "draw") {
-//                        showScore();
-//                        stopGame = true;
-//                    }
-//                    winAnimation();
-//                    changeSymbol();
-//                }
-//            }
-//
-//            buttonPressed[8] = 1;
-//        });
 
         //restart control
         gameUi.reset.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {

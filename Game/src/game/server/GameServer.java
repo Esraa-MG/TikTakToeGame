@@ -52,6 +52,13 @@ public class GameServer {
     public void shutDown()
     {
         this.isOn = false;
+        try {
+            serverSocket.close();
+            serverSocket = null;
+            System.out.println("serverSocket out");
+        } catch (IOException ex) {
+            Logger.getLogger(GameServer.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }
 
@@ -97,12 +104,13 @@ class PlayerSocket extends Thread
             players.player1.send("getName1");
             players.player2.send("getName2");
             players.player2.isFirst = false;
-            players.player1.send("allowSave");
+            //players.player1.send("allowSave");
             System.out.println("player2 connected");
             players.player1.send("enterGame");
             players.player2.send("enterGame");
             send(mark);
             players.player1.send("startToken");
+            players.player2.send("playSecond");
             start();
         }else{}
         
@@ -114,14 +122,14 @@ class PlayerSocket extends Thread
         {
             try {
                 String str = br.readLine();
-                System.out.println(str);
+                //System.out.println(str);
                 checkMsg(str);
                 
             } catch (IOException ex) {
                 Logger.getLogger(PlayerSocket.class.getName()).log(Level.SEVERE, null, ex);
             } 
         }
-        System.out.println("out of while");
+        System.out.println(this.playerName+".client : out of while");
     }
     
     private void checkMsg(String str)
@@ -153,10 +161,14 @@ class PlayerSocket extends Thread
                     players.player2.isFirst = !players.player2.isFirst;
                     if( players.player1.isFirst)
                     {
+                        players.player1.mark = "X";
+                        players.player2.mark = "O";   
                         players.player1.send("startToken");
                         players.player2.send("playSecond");
                     }else
                     {
+                        players.player1.mark = "O";
+                        players.player2.mark = "X";
                         players.player2.send("startToken");
                         players.player1.send("playSecond");
                     }
@@ -176,6 +188,7 @@ class PlayerSocket extends Thread
                     players.player1.send("closeGame");
                     this.alive = false;
                     players.player1 = null;
+                    System.out.println("server channel out");
                 }else{
                     players.player2.send("closeGame");
                     this.alive = false;
@@ -187,12 +200,13 @@ class PlayerSocket extends Thread
                 if(str.contains("Name1"))
                 { 
                     players.player1.playerName = str.substring(6,str.length());
-                    sendToAll("Name:"+str);
+                    
+                    sendToAll("Name:"+ players.player1.playerName);
                     
                 }else if(str.contains("Name2"))
                 {
                     players.player2.playerName = str.substring(6,str.length());
-                    sendToAll("Name:"+str);
+                    sendToAll("Name:"+ players.player2.playerName);
                 }
                 break;
         }

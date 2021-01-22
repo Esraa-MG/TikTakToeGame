@@ -7,9 +7,9 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <ImageView fx:id="background" fitHeight="500.0" fitWidth="721.0" layoutX="-8.0" pickOnBounds="true">
+      <ImageView fx:id="background" fitHeight="600.0" fitWidth="911.0" layoutX="-8.0" pickOnBounds="true">
          <image>
             <Image url="@pic/backgroundxo.PNG" />
          </image>
@@ -17,12 +17,12 @@
             <GaussianBlur radius="20.76" />
          </effect>
       </ImageView>
-      <ImageView fx:id="board" fitHeight="302.0" fitWidth="663.0" layoutX="16.0" layoutY="112.0" pickOnBounds="true">
+      <ImageView fx:id="board" fitHeight="318.0" fitWidth="828.0" layoutX="36.0" layoutY="180.0" pickOnBounds="true">
          <image>
-            <Image url="@pic/board3.jpg" />
+            <Image url="@../pic/board3.jpg" />
          </image>
       </ImageView>
-      <ImageView fx:id="back" fitHeight="97.0" fitWidth="57.0" layoutX="14.0" layoutY="429.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="back" fitHeight="97.0" fitWidth="57.0" layoutX="36.0" layoutY="508.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@pic/backarrow2.png" />
          </image>
@@ -30,74 +30,138 @@
             <DropShadow height="120.51" radius="56.644999999999996" spread="0.21" width="108.07" />
          </effect>
       </ImageView>
-      <ImageView fx:id="record" fitHeight="74.0" fitWidth="102.0" layoutX="313.0" layoutY="421.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="record" fitHeight="66.0" fitWidth="70.0" layoutX="420.0" layoutY="514.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@pic/record.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="reset" fitHeight="57.0" fitWidth="74.0" layoutX="622.0" layoutY="429.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="reset" fitHeight="57.0" fitWidth="74.0" layoutX="800.0" layoutY="514.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@pic/reset.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="r1c1" fitHeight="66.0" fitWidth="144.0" layoutX="64.0" layoutY="136.0" pickOnBounds="true" />
-      <ImageView fx:id="r2c1" fitHeight="66.0" fitWidth="144.0" layoutX="71.0" layoutY="230.0" pickOnBounds="true" />
-      <ImageView fx:id="r3c1" fitHeight="66.0" fitWidth="144.0" layoutX="71.0" layoutY="324.0" pickOnBounds="true" />
-      <ImageView fx:id="r1c2" fitHeight="66.0" fitWidth="144.0" layoutX="276.0" layoutY="136.0" pickOnBounds="true" />
-      <ImageView fx:id="r2c2" fitHeight="66.0" fitWidth="144.0" layoutX="276.0" layoutY="230.0" pickOnBounds="true" />
-      <ImageView fx:id="r3c2" fitHeight="66.0" fitWidth="144.0" layoutX="281.0" layoutY="324.0" pickOnBounds="true" />
-      <ImageView fx:id="r1c3" fitHeight="66.0" fitWidth="144.0" layoutX="490.0" layoutY="136.0" pickOnBounds="true" />
-      <ImageView fx:id="r2c3" fitHeight="66.0" fitWidth="144.0" layoutX="490.0" layoutY="230.0" pickOnBounds="true" />
-      <ImageView fx:id="r3c3" fitHeight="66.0" fitWidth="144.0" layoutX="490.0" layoutY="324.0" pickOnBounds="true" />
-      <ImageView fx:id="player1icon" fitHeight="49.0" fitWidth="42.0" layoutX="22.0" layoutY="14.0" pickOnBounds="true">
+      <ImageView fx:id="r1c1" fitHeight="66.0" fitWidth="144.0" layoutX="105.0" layoutY="209.0" pickOnBounds="true" />
+      <ImageView fx:id="r2c1" fitHeight="66.0" fitWidth="144.0" layoutX="115.0" layoutY="306.0" pickOnBounds="true" />
+      <ImageView fx:id="r3c1" fitHeight="66.0" fitWidth="144.0" layoutX="115.0" layoutY="409.0" pickOnBounds="true" />
+      <ImageView fx:id="r1c2" fitHeight="66.0" fitWidth="144.0" layoutX="375.0" layoutY="209.0" pickOnBounds="true" />
+      <ImageView fx:id="r2c2" fitHeight="66.0" fitWidth="144.0" layoutX="375.0" layoutY="306.0" pickOnBounds="true" />
+      <ImageView fx:id="r3c2" fitHeight="66.0" fitWidth="144.0" layoutX="376.0" layoutY="409.0" pickOnBounds="true" />
+      <ImageView fx:id="r1c3" fitHeight="66.0" fitWidth="144.0" layoutX="653.0" layoutY="209.0" pickOnBounds="true" />
+      <ImageView fx:id="r2c3" fitHeight="66.0" fitWidth="144.0" layoutX="632.0" layoutY="306.0" pickOnBounds="true" />
+      <ImageView fx:id="r3c3" fitHeight="66.0" fitWidth="144.0" layoutX="643.0" layoutY="409.0" pickOnBounds="true" />
+      <ImageView fx:id="player1icon" fitHeight="49.0" fitWidth="42.0" layoutX="22.0" layoutY="34.0" pickOnBounds="true">
          <image>
             <Image url="@pic/person.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="player2icon" fitHeight="49.0" fitWidth="42.0" layoutX="622.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="player2icon" fitHeight="49.0" fitWidth="42.0" layoutX="803.0" layoutY="34.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@pic/person.png" />
          </image>
       </ImageView>
-      <Label fx:id="player1label" alignment="CENTER" layoutX="78.0" layoutY="14.0" prefHeight="47.0" prefWidth="137.0" style="-fx-background-color: #d3d3d3; -fx-background-radius: 2000;" text="Player 1" textFill="#0a5b68">
+      <Label fx:id="player1label" alignment="CENTER" layoutX="83.0" layoutY="36.0" prefHeight="45.0" prefWidth="250.0" style="-fx-background-color: #d3d3d3; -fx-background-radius: 2000;" text="Player 1" textFill="#0a5b68">
          <font>
             <Font name="Book Antiqua Bold Italic" size="35.0" />
          </font>
       </Label>
-      <Label fx:id="player2label" alignment="CENTER" layoutX="469.0" layoutY="14.0" prefHeight="47.0" prefWidth="137.0" style="-fx-background-color: #d3d3d3; -fx-background-radius: 2000;" text="Player 2" textFill="#0a5b68">
+      <Label fx:id="player2label" alignment="CENTER" layoutX="526.0" layoutY="41.0" prefHeight="45.0" prefWidth="250.0" style="-fx-background-color: #d3d3d3; -fx-background-radius: 2000;" text="Player 2" textFill="#0a5b68">
+         <font>
+            <Font name="Book Antiqua Bold Italic" size="32.0" />
+         </font>
+      </Label>
+      <Label fx:id="player1score" alignment="CENTER" layoutX="29.0" layoutY="105.0" prefHeight="40.0" prefWidth="70.0" style="-fx-background-color: #d3d3d3; -fx-background-radius: 2000;" text="0" textFill="#0a5b68" wrapText="true">
          <font>
             <Font name="Book Antiqua Bold Italic" size="35.0" />
          </font>
       </Label>
-      <Label fx:id="player1score" alignment="CENTER" layoutX="22.0" layoutY="61.0" prefHeight="42.0" prefWidth="57.0" style="-fx-background-color: #d3d3d3; -fx-background-radius: 2000;" text="0" textFill="#0a5b68" wrapText="true">
+      <Label fx:id="player2score" alignment="CENTER" layoutX="776.0" layoutY="105.0" prefHeight="40.0" prefWidth="70.0" style="-fx-background-color: #d3d3d3; -fx-background-radius: 2000;" text="0" textAlignment="CENTER" textFill="#0a5b68" wrapText="true">
          <font>
             <Font name="Book Antiqua Bold Italic" size="35.0" />
          </font>
       </Label>
-      <Label fx:id="player2score" alignment="CENTER" layoutX="615.0" layoutY="61.0" prefHeight="42.0" prefWidth="57.0" style="-fx-background-color: #d3d3d3; -fx-background-radius: 2000;" text="0" textAlignment="CENTER" textFill="#0a5b68" wrapText="true">
+      <Label alignment="CENTER" layoutX="497.0" layoutY="524.0" prefHeight="47.0" prefWidth="156.0" style="-fx-background-color: #d3d3d3; -fx-background-radius: 2000;" text="X WINS" textFill="#0a5b68" visible="false" fx:id="xwins">
          <font>
             <Font name="Book Antiqua Bold Italic" size="35.0" />
          </font>
       </Label>
-      <Label layoutX="288.0" layoutY="367.0" prefHeight="47.0" prefWidth="137.0" style="-fx-background-color: #d3d3d3; -fx-background-radius: 2000;" text="X WINS" textFill="#0a5b68" visible="false" fx:id="xwins">
+      <Label fx:id="owins" alignment="CENTER" layoutX="497.0" layoutY="519.0" prefHeight="47.0" prefWidth="156.0" style="-fx-background-color: #d3d3d3; -fx-background-radius: 2000;" text="O WINS" textFill="#0a5b68" visible="false">
          <font>
             <Font name="Book Antiqua Bold Italic" size="35.0" />
          </font>
       </Label>
-      <Label fx:id="owins" layoutX="299.0" layoutY="357.0" prefHeight="47.0" prefWidth="137.0" style="-fx-background-color: #d3d3d3; -fx-background-radius: 2000;" text="O WINS" textFill="#0a5b68" visible="false">
-         <font>
-            <Font name="Book Antiqua Bold Italic" size="35.0" />
-         </font>
-      </Label>
-      <ImageView fx:id="clap" fitHeight="318.0" fitWidth="345.0" layoutX="182.0" layoutY="91.0" pickOnBounds="true" preserveRatio="true" visible="false">
+      <ImageView fx:id="clap" fitHeight="318.0" fitWidth="309.0" layoutX="321.0" layoutY="157.0" pickOnBounds="true" preserveRatio="true" visible="false">
          <image>
             <Image url="@pic/clap4.gif" />
          </image>
       </ImageView>
-      <Label fx:id="draw" layoutX="298.0" layoutY="377.0" prefHeight="47.0" prefWidth="137.0" style="-fx-background-color: #d3d3d3; -fx-background-radius: 2000;" text="DRAW" textFill="#0a5b68" visible="false">
+      <Label fx:id="draw" alignment="CENTER" layoutX="497.0" layoutY="519.0" prefHeight="47.0" prefWidth="156.0" style="-fx-background-color: #d3d3d3; -fx-background-radius: 2000;" text="DRAW" textFill="#0a5b68" visible="false">
          <font>
             <Font name="Book Antiqua Bold Italic" size="35.0" />
          </font>
       </Label>
+      <ImageView fx:id="dance" fitHeight="266.0" fitWidth="338.0" layoutX="278.0" layoutY="192.0" pickOnBounds="true" visible="false">
+         <image>
+            <Image url="@../pic/celebrate.gif" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="cry" fitHeight="234.0" fitWidth="304.0" layoutX="295.0" layoutY="222.0" pickOnBounds="true" visible="false">
+         <image>
+            <Image url="@../pic/4tyl.gif" />
+         </image>
+      </ImageView>
+      <Label fx:id="player1label1" alignment="CENTER" layoutX="304.0" layoutY="97.0" prefHeight="45.0" prefWidth="250.0" style="-fx-background-color: #90ee90; -fx-background-radius: 2000;" text="Your Turn" textFill="#005127" visible="false">
+         <font>
+            <Font name="Book Antiqua Bold Italic" size="35.0" />
+         </font>
+      </Label>
+      <AnchorPane disable="true" layoutX="208.0" layoutY="157.0" prefHeight="200.0" prefWidth="496.0" visible="false">
+         <children>
+            <ImageView fx:id="saveback" fitHeight="209.0" fitWidth="503.0" pickOnBounds="true">
+               <image>
+                  <Image url="@../pic/Captu11re.PNG" />
+               </image>
+               <effect>
+                  <GaussianBlur />
+               </effect>
+            </ImageView>
+            <Label fx:id="question" alignment="CENTER" layoutX="120.0" layoutY="27.0" prefHeight="45.0" prefWidth="250.0" style="-fx-background-color: #d3d3d3; -fx-background-radius: 2000;" text="Save Game?" textFill="#0a5b68">
+               <font>
+                  <Font name="Book Antiqua Bold Italic" size="35.0" />
+               </font>
+            </Label>
+            <Button fx:id="no" layoutX="88.0" layoutY="113.0" mnemonicParsing="false" style="-fx-background-color: #adbce6; -fx-background-radius: 2000;" text="Yes">
+               <font>
+                  <Font name="System Bold" size="29.0" />
+               </font>
+            </Button>
+            <Button fx:id="yes" layoutX="310.0" layoutY="113.0" mnemonicParsing="false" prefHeight="63.0" prefWidth="97.0" style="-fx-background-color: #adbce6; -fx-background-radius: 2000;" text="No">
+               <font>
+                  <Font name="System Bold" size="29.0" />
+               </font>
+            </Button>
+         </children>
+      </AnchorPane>
+      <AnchorPane disable="true" layoutX="295.0" layoutY="206.0" prefHeight="200.0" prefWidth="389.0" visible="false">
+         <children>
+            <ImageView fitHeight="200.0" fitWidth="406.0" layoutX="-10.0" pickOnBounds="true">
+               <image>
+                  <Image url="@../pic/Captu11re.PNG" />
+               </image>
+               <effect>
+                  <GaussianBlur />
+               </effect>
+            </ImageView>
+            <Label fx:id="player1label2" alignment="CENTER" layoutX="20.0" layoutY="22.0" prefHeight="49.0" prefWidth="346.0" style="-fx-background-color: #d3d3d3; -fx-background-radius: 2000;" text="Please Connect DataBase" textFill="#0a5b68">
+               <font>
+                  <Font name="Book Antiqua Bold Italic" size="24.0" />
+               </font>
+            </Label>
+            <Button layoutX="166.0" layoutY="100.0" mnemonicParsing="false" style="-fx-background-radius: 2000; -fx-background-color: #90ee90;" text="OK">
+               <font>
+                  <Font name="System Bold" size="24.0" />
+               </font>
+            </Button>
+         </children>
+      </AnchorPane>
    </children>
 </AnchorPane>

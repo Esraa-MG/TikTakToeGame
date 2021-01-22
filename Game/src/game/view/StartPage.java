@@ -1,4 +1,4 @@
-package game.control;
+package game.view;
 
 import javafx.scene.text.*;
 import javafx.scene.paint.*;
@@ -27,11 +27,12 @@ public class StartPage extends AnchorPane {
         gameTime = new Label();
 
         setId("AnchorPane");
-        setPrefHeight(500.0);
-        setPrefWidth(700.0);
+        setPrefHeight(600.0);
+        setPrefWidth(900.0);
 
-        background.setFitHeight(523.0);
-        background.setFitWidth(700.0);
+        background.setFitHeight(700.0);
+        background.setFitWidth(903.0);
+        background.setLayoutY(-8.0);
         background.setOpacity(0.59);
         background.setPickOnBounds(true);
         background.setImage(new Image(getClass().getClassLoader().getResource("game/pic/back2.jpg").toExternalForm()));
@@ -40,14 +41,14 @@ public class StartPage extends AnchorPane {
 
         moving.setFitHeight(164.0);
         moving.setFitWidth(200.0);
-        moving.setLayoutX(-135.0);
-        moving.setLayoutY(331.0);
+        moving.setLayoutX(-144.0);
+        moving.setLayoutY(443.0);
         moving.setPickOnBounds(true);
         moving.setPreserveRatio(true);
         moving.setImage(new Image(getClass().getClassLoader().getResource("game/pic/moving.png").toExternalForm()));
 
-        start.setLayoutX(427.0);
-        start.setLayoutY(418.0);
+        start.setLayoutX(470.0);
+        start.setLayoutY(525.0);
         start.setMnemonicParsing(false);
         start.setPrefHeight(47.0);
         start.setPrefWidth(128.0);
@@ -58,8 +59,8 @@ public class StartPage extends AnchorPane {
         start.setVisible(false);
         start.setFont(new Font("Bell MT Bold", 34.0));
 
-        gameTime.setLayoutX(230.0);
-        gameTime.setLayoutY(366.0);
+        gameTime.setLayoutX(450.0);
+        gameTime.setLayoutY(558.0);
         gameTime.setPrefHeight(65.0);
         gameTime.setPrefWidth(248.0);
         gameTime.setStyle("-fx-background-radius: 2000;");

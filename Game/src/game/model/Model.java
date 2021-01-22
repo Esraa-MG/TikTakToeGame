@@ -15,19 +15,85 @@ public class Model {
     
     private Player player;
     private GameServer server;
+    private boolean connectionStatus;
    
 
     
     //handling network mode
     // functions of network mode.    
-    public void startNeworkGame(SETVIEW delegate,String ip)
+    public void startNeworkGame(SETVIEW delegate)
     {
-        player = new Player(delegate,ip);
+        player = new Player(delegate);
+         
+    }
+    
+    public String getPlayerName()
+    {
+        if (connectionStatus)
+        {
+            return player.getPlayerName();
+        }
+        else
+        {
+            return " ";
+        }
+    }
+    
+    public String getOponentName()
+    {
+        if (connectionStatus)
+        {
+            return player.getOponentName();
+        }
+        else
+        {
+            return " ";
+        }
+    }
+    
+    public boolean connectToIP(String ip)
+    {
+        connectionStatus = player.connectToIP(ip);
+        return connectionStatus;  
+    }
+    
+    public void openChannel()
+    {
+        if(connectionStatus)
+        {
+            player.fireThread();
+        }
+    }
+    
+    public void allowClientToSave()
+    {
+        if(player != null)
+        {
+            player.allowSave();
+        }
+    }
+    
+    public void disableSave()
+    {
+        if(connectionStatus)
+        {
+            player.disableSave();
+        }
     }
     
     public void setPlayerName(String name)
     {
         player.setPlayerName(name);
+    }
+    
+    public void closeSocket()
+    {
+        if(connectionStatus)
+        {
+            player.exitNetwork();
+            player.closeSocket();
+        }
+            
     }
     
     public String getPlayerMark()
@@ -60,11 +126,23 @@ public class Model {
     // exit network
     public void exitNetworkMode()
     {
-        if(player!=null)
+        if(connectionStatus)
         {
             player.exitNetwork();
         }
+        connectionStatus = false;
         player = null;
+    }
+    
+    public boolean isNetworkOn()
+    {
+        if(player != null)
+        {
+            return true;
+        }else
+        {
+            return false;
+        }
     }
     
     public void askResetGame()
@@ -86,7 +164,11 @@ public class Model {
     
     public void closeServer()
     {
-        server.shutDown();
+        if(server != null)
+        {
+            server.shutDown();
+            System.out.println("trying to shut server down");
+        }
         server = null;
     }
  //-------------------------------------------------------------------

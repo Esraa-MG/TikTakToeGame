@@ -1,4 +1,4 @@
-package game.control;
+package game.view;
 
 import javafx.scene.text.*;
 import javafx.scene.control.*;
@@ -13,8 +13,8 @@ public class SelectModeXO extends AnchorPane {
     protected final GaussianBlur gaussianBlur;
     protected final ImageView sideimage;
     protected final DropShadow dropShadow;
-    protected final Button online;
-    protected final Button single;
+    public final Button online;
+    public final Button single;
     public final Button twoplayer;
     protected final Button archive;
     public final ImageView back;
@@ -37,11 +37,11 @@ public class SelectModeXO extends AnchorPane {
         setMaxWidth(USE_PREF_SIZE);
         setMinHeight(USE_PREF_SIZE);
         setMinWidth(USE_PREF_SIZE);
-        setPrefHeight(500.0);
-        setPrefWidth(700.0);
+        setPrefHeight(600.0);
+        setPrefWidth(900.0);
 
-        background.setFitHeight(500.0);
-        background.setFitWidth(730.0);
+        background.setFitHeight(610.0);
+        background.setFitWidth(936.0);
         background.setLayoutX(-21.0);
         background.setPickOnBounds(true);
         background.setImage(new Image(getClass().getClassLoader().getResource("game/pic/backgroundxo.PNG").toExternalForm()));
@@ -49,10 +49,10 @@ public class SelectModeXO extends AnchorPane {
         gaussianBlur.setRadius(4.61);
         background.setEffect(gaussianBlur);
 
-        sideimage.setFitHeight(159.0);
-        sideimage.setFitWidth(228.0);
-        sideimage.setLayoutX(38.0);
-        sideimage.setLayoutY(149.0);
+        sideimage.setFitHeight(300.0);
+        sideimage.setFitWidth(300.0);
+        sideimage.setLayoutX(68.0);
+        sideimage.setLayoutY(191.0);
         sideimage.setPickOnBounds(true);
         sideimage.setPreserveRatio(true);
         sideimage.setImage(new Image(getClass().getClassLoader().getResource("game/pic/Captur11e.PNG").toExternalForm()));
@@ -64,8 +64,8 @@ public class SelectModeXO extends AnchorPane {
         dropShadow.setWidth(95.63);
         sideimage.setEffect(dropShadow);
 
-        online.setLayoutX(367.0);
-        online.setLayoutY(280.0);
+        online.setLayoutX(478.0);
+        online.setLayoutY(328.0);
         online.setMnemonicParsing(false);
         online.setPrefHeight(67.0);
         online.setPrefWidth(243.0);
@@ -74,8 +74,8 @@ public class SelectModeXO extends AnchorPane {
         online.setTextFill(javafx.scene.paint.Color.valueOf("#a12828"));
         online.setFont(new Font("Berlin Sans FB Bold", 25.0));
 
-        single.setLayoutX(367.0);
-        single.setLayoutY(47.0);
+        single.setLayoutX(471.0);
+        single.setLayoutY(64.0);
         single.setMnemonicParsing(false);
         single.setPrefHeight(67.0);
         single.setPrefWidth(243.0);
@@ -84,8 +84,8 @@ public class SelectModeXO extends AnchorPane {
         single.setTextFill(javafx.scene.paint.Color.valueOf("#a12828"));
         single.setFont(new Font("Berlin Sans FB Bold", 25.0));
 
-        twoplayer.setLayoutX(367.0);
-        twoplayer.setLayoutY(157.0);
+        twoplayer.setLayoutX(471.0);
+        twoplayer.setLayoutY(191.0);
         twoplayer.setMnemonicParsing(false);
         twoplayer.setPrefHeight(67.0);
         twoplayer.setPrefWidth(243.0);
@@ -94,8 +94,8 @@ public class SelectModeXO extends AnchorPane {
         twoplayer.setTextFill(javafx.scene.paint.Color.valueOf("#a12828"));
         twoplayer.setFont(new Font("Berlin Sans FB Demi Bold", 25.0));
 
-        archive.setLayoutX(367.0);
-        archive.setLayoutY(391.0);
+        archive.setLayoutX(478.0);
+        archive.setLayoutY(466.0);
         archive.setMnemonicParsing(false);
         archive.setPrefHeight(67.0);
         archive.setPrefWidth(243.0);
@@ -106,8 +106,8 @@ public class SelectModeXO extends AnchorPane {
 
         back.setFitHeight(97.0);
         back.setFitWidth(59.0);
-        back.setLayoutX(28.0);
-        back.setLayoutY(410.0);
+        back.setLayoutX(38.0);
+        back.setLayoutY(499.0);
         back.setPickOnBounds(true);
         back.setPreserveRatio(true);
         back.setImage(new Image(getClass().getClassLoader().getResource("game/pic/backarrow2.png").toExternalForm()));

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <ImageView fx:id="background" fitHeight="615.0" fitWidth="917.0" layoutX="-8.0" layoutY="-8.0" pickOnBounds="true">
+         <effect>
+            <GaussianBlur />
+         </effect>
+         <image>
+            <Image url="@../pic/backgroundxo.PNG" />
+         </image>
+      </ImageView>
+      <Button fx:id="join" layoutX="312.0" layoutY="270.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="212.0" style="-fx-background-color: #adbce6; -fx-background-radius: 2000;" text="Join " textFill="#a12828">
+         <font>
+            <Font name="Berlin Sans FB Bold" size="25.0" />
+         </font>
+      </Button>
+      <ImageView fx:id="start" fitHeight="150.0" fitWidth="200.0" layoutX="726.0" layoutY="436.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../pic/start.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="back" fitHeight="60.0" fitWidth="60.0" layoutX="14.0" layoutY="526.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../pic/backarrow2.png" />
+         </image>
+      </ImageView>
+      <Label fx:id="playerName" alignment="CENTER" layoutX="33.0" layoutY="68.0" prefHeight="47.0" prefWidth="359.0" style="-fx-background-color: #d3d3d3; -fx-background-radius: 2000;" text="Enter Your Name" textFill="#0a5b68">
+         <font>
+            <Font name="Book Antiqua Bold Italic" size="32.0" />
+         </font>
+      </Label>
+      <TextField fx:id="player" alignment="CENTER" layoutX="484.0" layoutY="74.0" prefHeight="47.0" prefWidth="359.0" style="-fx-background-color: #d3d3d3; -fx-background-radius: 5000;" text="player">
+         <font>
+            <Font name="Baskerville Old Face" size="20.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="TEXT" />
+         </cursor>
+      </TextField>
+      <TextField fx:id="ip" alignment="CENTER" layoutX="484.0" layoutY="173.0" prefHeight="47.0" prefWidth="359.0" style="-fx-background-color: #d3d3d3; -fx-background-radius: 5000;">
+         <font>
+            <Font name="Baskerville Old Face" size="20.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="TEXT" />
+         </cursor>
+      </TextField>
+      <Label fx:id="hostip" layoutX="33.0" layoutY="389.0" prefHeight="47.0" prefWidth="359.0" style="-fx-background-color: #d3d3d3; -fx-background-radius: 2000;" textFill="#0a5b68">
+         <font>
+            <Font name="Book Antiqua Bold Italic" size="30.0" />
+         </font>
+      </Label>
+      <Button fx:id="create" layoutX="312.0" layoutY="466.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="212.0" style="-fx-background-color: #adbce6; -fx-background-radius: 2000;" text="Create" textFill="#a12828">
+         <font>
+            <Font name="Berlin Sans FB Bold" size="25.0" />
+         </font>
+      </Button>
+      <Label fx:id="iplabel" alignment="CENTER" layoutX="33.0" layoutY="173.0" prefHeight="47.0" prefWidth="359.0" style="-fx-background-color: #d3d3d3; -fx-background-radius: 2000;" text="Enter Host IP" textFill="#0a5b68">
+         <font>
+            <Font name="Book Antiqua Bold Italic" size="32.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

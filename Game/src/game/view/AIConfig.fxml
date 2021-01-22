@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.GaussianBlur?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <ImageView fx:id="background" fitHeight="607.0" fitWidth="908.0" layoutX="-7.0" layoutY="-6.0" pickOnBounds="true" smooth="false">
+         <image>
+            <Image url="@../pic/backgroundxo.PNG" />
+         </image>
+         <effect>
+            <GaussianBlur radius="12.65" />
+         </effect>
+      </ImageView>
+      <ImageView fx:id="palyerphoto" fitHeight="133.0" fitWidth="130.0" layoutX="27.0" layoutY="59.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../pic/pe.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="back" fitHeight="69.0" fitWidth="67.0" layoutX="14.0" layoutY="514.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../pic/backarrow2.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="robotphoto" fitHeight="133.0" fitWidth="130.0" layoutX="721.0" layoutY="59.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../pic/robot.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="start" fitHeight="143.0" fitWidth="115.0" layoutX="721.0" layoutY="451.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../pic/start.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="vs" fitHeight="181.0" fitWidth="184.0" layoutX="377.0" layoutY="73.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../pic/vs.png" />
+         </image></ImageView>
+      <RadioButton fx:id="palyer1o" layoutX="79.0" layoutY="411.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="80.0" style="-fx-background-radius: 2000;" text="O" textAlignment="CENTER" textFill="#220ebc">
+         <toggleGroup>
+            <ToggleGroup fx:id="palyer1" />
+         </toggleGroup>
+         <font>
+            <Font name="System Bold" size="40.0" />
+         </font>
+      </RadioButton>
+      <RadioButton fx:id="palyer1x" layoutX="78.0" layoutY="317.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="80.0" style="-fx-background-radius: 2000;" text="X" textAlignment="CENTER" textFill="#220ebc" toggleGroup="$palyer1">
+         <font>
+            <Font name="System Bold" size="40.0" />
+         </font>
+      </RadioButton>
+      <TextField fx:id="playername" alignment="CENTER" layoutX="27.0" layoutY="219.0" prefHeight="47.0" prefWidth="200.0" style="-fx-background-color: #d3d3d3; -fx-background-radius: 5000;" text="player1">
+         <cursor>
+            <Cursor fx:constant="TEXT" />
+         </cursor>
+         <font>
+            <Font name="Baskerville Old Face" size="20.0" />
+         </font>
+      </TextField>
+      <TextField fx:id="robotname" alignment="CENTER" layoutX="679.0" layoutY="219.0" prefHeight="47.0" prefWidth="200.0" style="-fx-background-color: #d3d3d3; -fx-background-radius: 5000;" text="Robot">
+         <cursor>
+            <Cursor fx:constant="TEXT" />
+         </cursor>
+         <font>
+            <Font name="Baskerville Old Face" size="20.0" />
+         </font>
+      </TextField>
+   </children>
+</AnchorPane>
