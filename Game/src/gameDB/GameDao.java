@@ -5,6 +5,7 @@
  */
 package gameDB;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 /**
@@ -19,8 +20,10 @@ public class GameDao {
         ArrayList<GameArchive> gameArchives = null;
         try {
             gameArchives = gameArchiveDao.selectGameArchive();
-        } catch (Exception exception) {
-            exception.printStackTrace();
+        } catch (SQLException sqlException) {
+            sqlException.printStackTrace();
+        } catch (ClassNotFoundException classNotFoundException) {
+            classNotFoundException.printStackTrace();
         }
         return gameArchives;
     }
@@ -28,15 +31,17 @@ public class GameDao {
     public boolean insertGame(String playerX, String playerO, GameRecord gameRecord) {
 
         GameArchiveDao gameArchiveDao = new GameArchiveDao();
-        GameArchive gameArchive = new GameArchive("mo3taz", "kirolos");
+        GameArchive gameArchive = new GameArchive(playerX, playerO);
         GameMoveDao gameMoveDao = new GameMoveDao();
         try {
             int idGame = gameArchiveDao.insertGameArchive(gameArchive);
             gameRecord.setId(idGame);
             gameMoveDao.insertGameMove(gameRecord);
             return true;
-        } catch (Exception exception) {
-            exception.printStackTrace();
+        } catch (SQLException sqlException) {
+            sqlException.printStackTrace();
+        } catch (ClassNotFoundException classNotFoundException) {
+            classNotFoundException.printStackTrace();
         }
         return false;
     }
@@ -47,8 +52,10 @@ public class GameDao {
         GameRecord gameRecord = null;
         try {
             gameRecord = gameMoveDao.selectGameMove(idGame);
-        } catch (Exception exception) {
-            exception.printStackTrace();
+        } catch (SQLException sqlException) {
+            sqlException.printStackTrace();
+        } catch (ClassNotFoundException classNotFoundException) {
+            classNotFoundException.printStackTrace();
         }
         return gameRecord;
     }
