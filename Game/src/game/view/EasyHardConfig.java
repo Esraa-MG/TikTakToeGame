@@ -10,9 +10,9 @@ public class EasyHardConfig extends AnchorPane {
     protected final ImageView background;
     protected final GaussianBlur gaussianBlur;
     public final ImageView back;
-    protected final ImageView normal;
+    public final ImageView normal;
     protected final DropShadow dropShadow;
-    protected final ImageView hard;
+    public final ImageView hard;
     protected final DropShadow dropShadow0;
 
     public EasyHardConfig() {

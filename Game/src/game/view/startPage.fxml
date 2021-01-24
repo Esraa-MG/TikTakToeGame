@@ -12,7 +12,7 @@
 
 <AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.FXMLDocumentController">
    <children>
-      <ImageView fx:id="background" fitHeight="700.0" fitWidth="903.0" layoutY="-8.0" opacity="0.59" pickOnBounds="true">
+      <ImageView fx:id="background" fitHeight="633.0" fitWidth="903.0" layoutY="-8.0" opacity="0.59" pickOnBounds="true">
          <image>
             <Image url="@pic/back2.jpg" />
          </image>

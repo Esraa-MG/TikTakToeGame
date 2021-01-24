@@ -16,6 +16,44 @@ public class Model {
     private Player player;
     private GameServer server;
     private boolean connectionStatus;
+    
+    private Board gameBoard;
+    private volatile String gameType;
+    //private SETVIEW viewDelegate;
+   
+    
+    //AI game methods
+    public void AI_startAIGame(String type,SETVIEW del)
+    {
+        gameBoard = new Board(del);
+        gameType = type;
+        
+    }
+
+    public void AI_playerSelectedCell(int number)
+    {
+        int computerMove;
+        if(gameType == "Easy")
+        {
+            gameBoard.playerMove(number);
+        
+        }else{
+            
+           gameBoard.CompMove2(number);
+            
+        }
+    }
+    
+    
+    public void AI_resetGame()
+    {
+        gameBoard.resetGame();
+    }
+    
+    
+    // AI game methods End here. 
+    //--------------------------------------------------------
+    
    
 
     

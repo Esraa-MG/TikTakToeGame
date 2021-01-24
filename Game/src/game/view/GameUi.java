@@ -38,12 +38,12 @@ public class GameUi extends AnchorPane {
     public final ImageView dance;
     public final ImageView cry;
     public final Label player1label1;
-    protected final AnchorPane anchorPane;
+    public final AnchorPane anchorPane;
     protected final ImageView saveback;
     protected final GaussianBlur gaussianBlur0;
     protected final Label question;
-    protected final Button no;
-    protected final Button yes;
+    public final Button no;
+    public final Button yes;
     protected final AnchorPane anchorPane0;
     protected final ImageView imageView;
     protected final GaussianBlur gaussianBlur1;

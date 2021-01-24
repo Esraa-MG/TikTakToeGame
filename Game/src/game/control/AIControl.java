@@ -5,11 +5,9 @@
  */
 package game.control;
 
-import game.model.GameModel;
 import game.model.Model;
 import game.model.SETVIEW;
 import game.view.GameUi;
-import game.view.NetworkJoin;
 import javafx.animation.RotateTransition;
 import javafx.animation.ScaleTransition;
 import javafx.animation.TranslateTransition;
@@ -22,27 +20,21 @@ import javafx.util.Duration;
  *
  * @author ESRAA
  */
-public class OnlineControl implements SETVIEW {
+public class AIControl implements SETVIEW {
 
     public GameUi gameUi = new GameUi();
     public Model mod = new Model();
-    public NetworkJoin networkJoin ;
-    public String localIP = "127.0.0.1";
 
     int i;
     public int[] scoreArr = new int[2];
-   
+
+    public AIControl() {
+        scoreArr[0] = 0;
+        scoreArr[1] = 0;
+    }
 
     ImageView[] img = {gameUi.r1c1, gameUi.r2c1, gameUi.r3c1,
         gameUi.r1c2, gameUi.r2c2, gameUi.r3c2, gameUi.r1c3, gameUi.r2c3, gameUi.r3c3};
-
-    public OnlineControl() {
-        scoreArr[0] = 0;
-        scoreArr[1] = 0;
-        networkJoin = new NetworkJoin();
-        
-        
-    }
 
     @Override
     public void setView(int at, char mark) {
@@ -134,87 +126,74 @@ public class OnlineControl implements SETVIEW {
             default:
                 break;
         }
+
     }
 
     @Override
     public void resetScreen() {
         for (i = 0; i < 9; i++) {
             img[i].setImage(null);
-            gameUi.dance.setVisible(false);
-            gameUi.cry.setVisible(false);
-            gameUi.draw.setVisible(false);
         }
     }
 
     @Override
-    public void enterGame() {
-        networkJoin.start.setVisible(true);
-        
+    public void runWinnigAnimation(String name) {
+        gameUi.dance.setImage(new Image(getClass().getClassLoader()
+                .getResource("game/pic/win1.gif").toExternalForm()));
+        gameUi.dance.setVisible(true);
+
+        scoreArr[0]++;
+        gameUi.player1score.setText(String.valueOf(scoreArr[0]));
+    }
+
+    @Override
+    public void runLosingAnimation(String name) {
+
+        gameUi.cry.setImage(new Image(getClass()
+                .getClassLoader().getResource("game/pic/source.gif").toExternalForm()));
+        gameUi.cry.setVisible(true);
+        scoreArr[1]++;
+        gameUi.player2score.setText(String.valueOf(scoreArr[1]));
+    }
+
+    @Override
+    public void runDrawAnimation() {
+        gameUi.draw.setVisible(true);
+        drawAnimation();
     }
 
     @Override
     public void isMyTurn() {
-      gameUi.player1label1.setVisible(true);
-      gameUi.player1label1.setText("Your Turn");
-      
+        gameUi.player1label1.setVisible(true);
+        gameUi.player1label1.setText("Your Turn");
     }
 
     @Override
     public void isNotMyTurn() {
         gameUi.player1label1.setVisible(true);
-      gameUi.player1label1.setText("Waiting");
-    }
-    
-    
-    
-    @Override
-    public void runWinnigAnimation(String name)
-    {
-        gameUi.dance.setVisible(true);
-       
-         scoreArr[0] ++;
-         gameUi.player1score.setText(String.valueOf(scoreArr[0]));
-       
-        
-    }
-    
-    @Override
-    public void  runLosingAnimation(String name)
-    {
-        gameUi.cry.setVisible(true);
-        scoreArr[1] ++;
-            gameUi.player2score.setText(String.valueOf(scoreArr[1]));
-    }
-    
-    @Override
-    public void runDrawAnimation()
-    {
-        gameUi.draw.setVisible(true);
-            drawAnimation();
+        gameUi.player1label1.setText("Waiting");
     }
 
     public void controlGame() {
         for (i = 0; i < 9; i++) {
             final int index = i;
             img[index].addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-                mod.markCell(index + 1);
+                mod.AI_playerSelectedCell(index + 1);
             });
         }
 
         gameUi.reset.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-           // resetScreen();
-            mod.resetGame();
+            // resetScreen();
+            mod.AI_resetGame();
+
             gameUi.cry.setVisible(false);
             gameUi.dance.setVisible(false);
             gameUi.draw.setVisible(false);
-            
-        });
-        
 
+        });
     }
-    
-    
-     public void drawAnimation() {
+
+    public void drawAnimation() {
         //game time animation
         //psition 
         TranslateTransition transition = new TranslateTransition();
@@ -242,4 +221,5 @@ public class OnlineControl implements SETVIEW {
         rotateTransition.play();
 
     }
+
 }

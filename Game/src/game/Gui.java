@@ -5,6 +5,7 @@
  */
 package game;
 
+import game.control.AIControl;
 import game.control.GameControl3;
 import game.view.GameChoicePage;
 import game.control.OnlineControl;
@@ -15,6 +16,7 @@ import game.model.SETVIEW;
 import game.view.AIConfig;
 import game.view.EasyHardConfig;
 import game.view.NetworkJoin;
+import game.view.Replay;
 import javafx.util.Duration;
 import javafx.animation.*;
 import javafx.application.Application;
@@ -39,11 +41,12 @@ public class Gui extends Application {
     OnlineControl onlineControl;
     EasyHardConfig easyHardConfig;
     AIConfig aiConfig;
-
+    Replay replay;
 
     GameControl3 gameCon3;
-
+    AIControl aiControl;
     String[] playersArr;
+    String aiMode;
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -57,26 +60,27 @@ public class Gui extends Application {
         gameChoice = new GameChoicePage();
         startXO = new SelectModeXO();
         playCon = new PalyersConfig();
-        easyHardConfig = new EasyHardConfig() ;
-        aiConfig = new  AIConfig();
+        easyHardConfig = new EasyHardConfig();
+        aiConfig = new AIConfig();
+        replay = new Replay();
 
         onlineControl = new OnlineControl();
-
-       
-
+        aiControl = new AIControl();
         gameCon3 = new GameControl3();
 
         Scene startScene = new Scene(start);
         Scene gameChoiceScene = new Scene(gameChoice);
-       
+
         Scene startXOScene = new Scene(startXO);
         Scene playConScene = new Scene(playCon);
         Scene AIConfigScene = new Scene(aiConfig);
         Scene easyHardScene = new Scene(easyHardConfig);
-       
+        Scene onlineGameScene = new Scene(onlineControl.gameUi);
         Scene networkJoinScene = new Scene(onlineControl.networkJoin);
-     
+        Scene replayScene = new Scene(replay);
+
         Scene gameScene = new Scene(gameCon3.gameUi);
+        Scene AIGameScene = new Scene(aiControl.gameUi);
 
         //game time animation
         //psition 
@@ -121,7 +125,7 @@ public class Gui extends Application {
 
         //game choice page control
         gameChoice.snake.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-           
+
         });
 
         gameChoice.xo.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
@@ -140,7 +144,7 @@ public class Gui extends Application {
         });
 
         startXO.single.setOnAction(((event) -> {
-            stage.setScene(AIConfigScene);
+            stage.setScene(easyHardScene);
         }));
 
         startXO.twoplayer.setOnAction(((event) -> {
@@ -148,20 +152,62 @@ public class Gui extends Application {
             stage.setScene(playConScene);
 
         }));
-        
-         aiConfig.start.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
 
-            stage.setScene(easyHardScene);
+        aiConfig.start.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+            if (aiMode.equals("Easy")) {
+                aiControl.mod.AI_startAIGame("Easy", aiControl);
+            } else {
+                aiControl.mod.AI_startAIGame("Hard", aiControl);
+            }
+
+            stage.setScene(AIGameScene);
+            aiControl.controlGame();
+            aiControl.gameUi.player1label.setText(aiConfig.playername.getText());
+            aiControl.gameUi.player2label.setText("Robot");
+            aiControl.gameUi.player1score.setText(String.valueOf(aiControl.scoreArr[0]));
+            aiControl.gameUi.player2score.setText(String.valueOf(aiControl.scoreArr[1]));
+
         });
-         aiConfig.back.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+        aiConfig.back.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
 
             stage.setScene(startXOScene);
         });
-         
-         easyHardConfig.back.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
 
+        easyHardConfig.back.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+
+            stage.setScene(startXOScene);
+        });
+
+        easyHardConfig.normal.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+            aiMode = "Easy";
+            stage.setScene(AIConfigScene);
+
+        });
+
+        easyHardConfig.hard.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+            aiMode = "Hard";
             stage.setScene(AIConfigScene);
         });
+
+        aiControl.gameUi.back.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+
+            aiControl.gameUi.anchorPane.setVisible(true);
+            aiControl.gameUi.anchorPane.setDisable(false);
+        });
+
+        aiControl.gameUi.yes.setOnAction(((event) -> {
+            stage.setScene(startXOScene);
+            aiBack();
+            aiControl.gameUi.anchorPane.setVisible(false);
+            aiControl.gameUi.anchorPane.setDisable(true);
+        }));
+
+        aiControl.gameUi.no.setOnAction(((event) -> {
+            stage.setScene(startXOScene);
+            aiBack();
+            aiControl.gameUi.anchorPane.setVisible(false);
+            aiControl.gameUi.anchorPane.setDisable(true);
+        }));
 
         //create button
         onlineControl.networkJoin.create.setOnAction(((event) -> {
@@ -177,6 +223,7 @@ public class Gui extends Application {
 
             }
         }));
+
         //join button
         onlineControl.networkJoin.join.setOnAction(((event) -> {
             if (onlineControl.mod.isNetworkOn()) {
@@ -192,19 +239,52 @@ public class Gui extends Application {
 
         }));
         //start game
-            onlineControl.networkJoin.start.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+        onlineControl.networkJoin.start.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
             onlineControl.gameUi.player1label.setText(onlineControl.mod.getPlayerName());
             onlineControl.gameUi.player2label.setText(onlineControl.mod.getOponentName());
             System.out.println("game1 " + onlineControl.mod.getPlayerName());
             System.out.println("game1 " + onlineControl.mod.getOponentName());
-            Scene onlineGameScene = new Scene(onlineControl.gameUi);
+
             stage.setScene(onlineGameScene);
             onlineControl.controlGame();
+            onlineControl.networkJoin.create.setDisable(false);
+            onlineControl.networkJoin.hostip.setText(" ");
+            onlineControl.networkJoin.ip.setText(" ");
+            onlineControl.networkJoin.start.setVisible(false);
+            // onlineControl.networkJoin.start.setDisable(true);
+        });
+        onlineControl.gameUi.back.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+
+            onlineControl.gameUi.anchorPane.setVisible(true);
+            onlineControl.gameUi.anchorPane.setDisable(false);
 
         });
-           onlineControl.gameUi.back.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> { 
-               stage.setScene(networkJoinScene);
-           });
+        onlineControl.gameUi.yes.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                onlineControl.gameUi.anchorPane.setVisible(false);
+                onlineControl.gameUi.anchorPane.setDisable(true);
+                stage.setScene(startXOScene);
+                onlineBack();
+            }
+        });
+        onlineControl.gameUi.no.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                onlineControl.gameUi.anchorPane.setVisible(false);
+                onlineControl.gameUi.anchorPane.setDisable(true);
+                stage.setScene(startXOScene);
+                onlineBack();
+            }
+        });
+
+        onlineControl.networkJoin.back.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+            stage.setScene(startXOScene);
+            onlineControl.mod.exitNetworkMode();
+            onlineControl.mod.closeSocket();
+            onlineControl.mod.closeServer();
+
+        });
 
         //players config scene control
         playCon.back.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
@@ -286,17 +366,29 @@ public class Gui extends Application {
 
         //back button control 
         gameCon3.gameUi.back.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-            stage.setScene(playConScene);
-            gameCon3.scoreArr[0] = 0;
-            gameCon3.scoreArr[1] = 0;
-            gameCon3.Reset();
+
+            gameCon3.gameUi.anchorPane.setVisible(true);
+            gameCon3.gameUi.anchorPane.setDisable(false);
+        });
+        gameCon3.gameUi.yes.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                stage.setScene(startXOScene);
+                twoPlayersBack();
+                gameCon3.gameUi.anchorPane.setVisible(false);
+                gameCon3.gameUi.anchorPane.setDisable(true);
+            }
         });
 
-        //easy hard config scene control
-//        easyHardConfig.back.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-//            stage.setScene(startXOScene);
-//
-//        });
+        gameCon3.gameUi.no.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                stage.setScene(startXOScene);
+                twoPlayersBack();
+                gameCon3.gameUi.anchorPane.setVisible(false);
+                gameCon3.gameUi.anchorPane.setDisable(true);
+            }
+        });
 
         stage.setScene(startScene);
 
@@ -311,4 +403,53 @@ public class Gui extends Application {
         launch(args);
     }
 
+    @Override
+    public void stop() throws Exception {
+        super.stop(); //To change body of generated methods, choose Tools | Templates.
+        onlineControl.mod.exitNetworkMode();
+        onlineControl.mod.closeServer();
+    }
+
+    public void twoPlayersBack() {
+        gameCon3.scoreArr[0] = 0;
+        gameCon3.scoreArr[1] = 0;
+        gameCon3.Reset();
+        playCon.player1text.setText("palyer 1 ");
+        playCon.player2text.setText("player 2 ");
+        gameCon3.gameUi.cry.setVisible(false);
+        gameCon3.gameUi.dance.setVisible(false);
+        gameCon3.gameUi.draw.setVisible(false);
+        playCon.palyer1o.setDisable(false);
+        playCon.palyer1x.setDisable(false);
+        playCon.palyer2o.setDisable(false);
+        playCon.palyer2x.setDisable(false);
+        playCon.palyer2o.setSelected(false);
+        playCon.palyer1o.setSelected(false);
+        playCon.palyer2x.setSelected(false);
+        playCon.palyer1x.setSelected(false);
+    }
+
+    public void aiBack() {
+        aiControl.resetScreen();
+        aiControl.scoreArr[0] = 0;
+        aiControl.scoreArr[1] = 0;
+        aiConfig.playername.setText("player 1 ");
+        aiControl.gameUi.cry.setVisible(false);
+        aiControl.gameUi.dance.setVisible(false);
+        aiControl.gameUi.draw.setVisible(false);
+    }
+
+    public void onlineBack() {
+        onlineControl.mod.exitNetworkMode();
+        onlineControl.mod.closeSocket();
+        onlineControl.mod.closeServer();
+        onlineControl.resetScreen();
+
+        onlineControl.scoreArr[0] = 0;
+        onlineControl.scoreArr[1] = 0;
+        onlineControl.networkJoin.player.setText("player ");
+        onlineControl.gameUi.cry.setVisible(false);
+        onlineControl.gameUi.dance.setVisible(false);
+        onlineControl.gameUi.draw.setVisible(false);
+    }
 }

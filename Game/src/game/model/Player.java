@@ -122,6 +122,18 @@ public class Player {
                                     delegate.setView(c.i, c.ch);
                                 });
                                 inTurn = !inTurn;
+                                if (inTurn)
+                                {
+                                    Platform.runLater(() -> {
+                                        delegate.isMyTurn();
+                                    });
+                                }
+                                else
+                                {
+                                    Platform.runLater(() -> {
+                                        delegate.isNotMyTurn();
+                                    });
+                                }
                                 checkGame(ret);
                             }
                         }
@@ -142,13 +154,19 @@ public class Player {
                                 pSocket = null;
                                 break;
                             case "startToken" :
-                                inTurn = true;
+                                inTurn = true; 
                                 playMark = "X";
+                                Platform.runLater(() -> {
+                                        delegate.isMyTurn();
+                                    });
                                 break;
                                 
                             case "playSecond" :
                                 inTurn = false;
                                 playMark = "O";
+                                Platform.runLater(() -> {
+                                        delegate.isNotMyTurn();
+                                    });
                                 break;    
                              
                             case "getName1"    :
@@ -285,12 +303,12 @@ public class Player {
                 if(playMark == "X")
                 {
                     Platform.runLater(() -> {
-                        delegate.runWinnigAnimation();
+                        delegate.runWinnigAnimation(playerName);
                     });
                     System.out.println("I Win");
                 }else{
                     Platform.runLater(() -> {
-                        delegate.runLosingAnimation();
+                        delegate.runLosingAnimation(playerName);
                     });
                     System.out.println("I Lose");
                 }
@@ -300,12 +318,12 @@ public class Player {
                 if(playMark == "O")
                 {
                     Platform.runLater(() -> {
-                        delegate.runWinnigAnimation();
+                        delegate.runWinnigAnimation(playerName);
                     });
                     System.out.println("I Win");
                 }else{
                     Platform.runLater(() -> {
-                        delegate.runLosingAnimation();
+                        delegate.runLosingAnimation(playerName);
                     });
                     System.out.println("I Lose");
                 }
@@ -345,10 +363,18 @@ public class Player {
         return playMark;
     }
     
+    public boolean isInTurn()
+    {
+        return inTurn;
+    }
+    
     private class Components
     {
         int i;
         char ch;
     }
+    
+    
+   
 }
 

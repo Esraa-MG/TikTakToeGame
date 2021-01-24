@@ -12,8 +12,10 @@ package game.model;
 public interface SETVIEW {
     public void setView(int at,char mark);
     public void resetScreen();
-    public void enterGame();
-    public void runWinnigAnimation();
-    public void runLosingAnimation();
+    default public void enterGame(){}
+    public void runWinnigAnimation(String name);
+    public void runLosingAnimation(String name);
     public void runDrawAnimation();
+    public void isMyTurn();
+    public void isNotMyTurn();
 }

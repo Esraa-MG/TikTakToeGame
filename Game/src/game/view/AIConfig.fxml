@@ -50,20 +50,7 @@
          <image>
             <Image url="@../pic/vs.png" />
          </image></ImageView>
-      <RadioButton fx:id="palyer1o" layoutX="79.0" layoutY="411.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="80.0" style="-fx-background-radius: 2000;" text="O" textAlignment="CENTER" textFill="#220ebc">
-         <toggleGroup>
-            <ToggleGroup fx:id="palyer1" />
-         </toggleGroup>
-         <font>
-            <Font name="System Bold" size="40.0" />
-         </font>
-      </RadioButton>
-      <RadioButton fx:id="palyer1x" layoutX="78.0" layoutY="317.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="80.0" style="-fx-background-radius: 2000;" text="X" textAlignment="CENTER" textFill="#220ebc" toggleGroup="$palyer1">
-         <font>
-            <Font name="System Bold" size="40.0" />
-         </font>
-      </RadioButton>
-      <TextField fx:id="playername" alignment="CENTER" layoutX="27.0" layoutY="219.0" prefHeight="47.0" prefWidth="200.0" style="-fx-background-color: #d3d3d3; -fx-background-radius: 5000;" text="player1">
+      <TextField fx:id="playername" alignment="CENTER" layoutX="27.0" layoutY="219.0" prefHeight="47.0" prefWidth="246.0" style="-fx-background-color: #d3d3d3; -fx-background-radius: 5000;" text="player1">
          <cursor>
             <Cursor fx:constant="TEXT" />
          </cursor>

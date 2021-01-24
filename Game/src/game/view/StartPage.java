@@ -30,7 +30,7 @@ public class StartPage extends AnchorPane {
         setPrefHeight(600.0);
         setPrefWidth(900.0);
 
-        background.setFitHeight(700.0);
+        background.setFitHeight(633.0);
         background.setFitWidth(903.0);
         background.setLayoutY(-8.0);
         background.setOpacity(0.59);
@@ -59,7 +59,7 @@ public class StartPage extends AnchorPane {
         start.setVisible(false);
         start.setFont(new Font("Bell MT Bold", 34.0));
 
-        gameTime.setLayoutX(450.0);
+        gameTime.setLayoutX(442.0);
         gameTime.setLayoutY(558.0);
         gameTime.setPrefHeight(65.0);
         gameTime.setPrefWidth(248.0);

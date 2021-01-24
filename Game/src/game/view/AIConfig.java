@@ -25,10 +25,7 @@ public class AIConfig extends AnchorPane {
     protected final ImageView robotphoto;
     public final ImageView start;
     protected final ImageView vs;
-    protected final RadioButton palyer1o;
-    protected final ToggleGroup palyer1;
-    protected final RadioButton palyer1x;
-    protected final TextField playername;
+    public final TextField playername;
     protected final TextField robotname;
 
     public AIConfig() {
@@ -40,9 +37,6 @@ public class AIConfig extends AnchorPane {
         robotphoto = new ImageView();
         start = new ImageView();
         vs = new ImageView();
-        palyer1o = new RadioButton();
-        palyer1 = new ToggleGroup();
-        palyer1x = new RadioButton();
         playername = new TextField();
         robotname = new TextField();
 
@@ -104,36 +98,11 @@ public class AIConfig extends AnchorPane {
         vs.setPreserveRatio(true);
         vs.setImage(new Image(getClass().getClassLoader().getResource("game/pic/vs.png").toExternalForm()));
 
-        palyer1o.setLayoutX(79.0);
-        palyer1o.setLayoutY(411.0);
-        palyer1o.setMnemonicParsing(false);
-        palyer1o.setPrefHeight(55.0);
-        palyer1o.setPrefWidth(80.0);
-        palyer1o.setStyle("-fx-background-radius: 2000;");
-        palyer1o.setText("O");
-        palyer1o.setTextAlignment(javafx.scene.text.TextAlignment.CENTER);
-        palyer1o.setTextFill(javafx.scene.paint.Color.valueOf("#220ebc"));
-
-        palyer1o.setToggleGroup(palyer1);
-        palyer1o.setFont(new Font("System Bold", 40.0));
-
-        palyer1x.setLayoutX(78.0);
-        palyer1x.setLayoutY(317.0);
-        palyer1x.setMnemonicParsing(false);
-        palyer1x.setPrefHeight(55.0);
-        palyer1x.setPrefWidth(80.0);
-        palyer1x.setStyle("-fx-background-radius: 2000;");
-        palyer1x.setText("X");
-        palyer1x.setTextAlignment(javafx.scene.text.TextAlignment.CENTER);
-        palyer1x.setTextFill(javafx.scene.paint.Color.valueOf("#220ebc"));
-        palyer1x.setToggleGroup(palyer1);
-        palyer1x.setFont(new Font("System Bold", 40.0));
-
         playername.setAlignment(javafx.geometry.Pos.CENTER);
         playername.setLayoutX(27.0);
         playername.setLayoutY(219.0);
         playername.setPrefHeight(47.0);
-        playername.setPrefWidth(200.0);
+        playername.setPrefWidth(246.0);
         playername.setStyle("-fx-background-color: #d3d3d3; -fx-background-radius: 5000;");
         playername.setText("player1");
         playername.setCursor(Cursor.TEXT);
@@ -155,8 +124,6 @@ public class AIConfig extends AnchorPane {
         getChildren().add(robotphoto);
         getChildren().add(start);
         getChildren().add(vs);
-        getChildren().add(palyer1o);
-        getChildren().add(palyer1x);
         getChildren().add(playername);
         getChildren().add(robotname);
 
