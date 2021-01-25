@@ -535,6 +535,7 @@ public class Gui extends Application {
                     replay.player1label.setText(gameArchives.get(index).getPlayerX());
                     replay.player2label.setText(gameArchives.get(index).getPlayerO());
                     replay.gameRecord = gameDao.selectGameRecord(gameArchives.get(index).getId());
+                    replay.i=0;
                 }
             });
         }

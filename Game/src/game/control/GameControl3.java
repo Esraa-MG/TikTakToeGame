@@ -208,7 +208,9 @@ public class GameControl3 {
         rotateTransition.play();
 
         scaleTransition.setOnFinished((e) -> {
-            gameUi.clap.setVisible(true);
+            if (stopGame) {
+                gameUi.clap.setVisible(true);
+            }
             gameUi.xwins.setVisible(false);
 
         });
@@ -241,7 +243,9 @@ public class GameControl3 {
         rotateTransition.play();
 
         scaleTransition.setOnFinished((e) -> {
-            gameUi.clap.setVisible(true);
+            if (stopGame) {
+                gameUi.clap.setVisible(true);
+            }
             gameUi.owins.setVisible(false);
         });
     }

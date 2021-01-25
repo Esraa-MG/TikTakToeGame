@@ -22,6 +22,7 @@ import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javafx.application.Platform;
+import javafx.scene.control.Alert;
 
 
 
@@ -224,8 +225,10 @@ public class Player {
                                             
                                         } catch (SQLException ex) {
                                            ex.printStackTrace();
+                                           dataBaseConnectionAlert();
                                         } catch (ClassNotFoundException ex) {
                                             ex.printStackTrace();
+                                            dataBaseConnectionAlert();
                                         }
                                     }else{
                                         try {
@@ -233,8 +236,10 @@ public class Player {
                                            
                                         } catch (SQLException ex) {
                                             ex.printStackTrace();
+                                            dataBaseConnectionAlert();
                                         } catch (ClassNotFoundException ex) {
                                             ex.printStackTrace();
+                                            dataBaseConnectionAlert();
                                         }
                                     }    
                                 }
@@ -422,6 +427,14 @@ public class Player {
         char ch;
     }
     
+    
+    void dataBaseConnectionAlert() {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("DataBase Connection Failed");
+        alert.setHeaderText("Please connect to database");
+        alert.setContentText("Ooops, there was an error in database connection!");
+        alert.showAndWait();
+    }
     
    
 }

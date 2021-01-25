@@ -36,7 +36,7 @@ public class Replay extends AnchorPane {
     protected final ImageView next;
 
     GameMove gameMove;
-    int i = 0;
+    public int i = 0;
     public final ImageView[] img;
 
     public Replay() {

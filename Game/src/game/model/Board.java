@@ -17,6 +17,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Platform;
+import javafx.scene.control.Alert;
 
 /**
  *
@@ -67,8 +68,10 @@ public class Board {
             gameDao.insertGame(playerName, "Robot", gameRecord);
         } catch (SQLException ex) {
             ex.printStackTrace();
+            dataBaseConnectionAlert();
         } catch (ClassNotFoundException ex) {
             ex.printStackTrace();
+            dataBaseConnectionAlert();
         }
     }
 
@@ -541,6 +544,14 @@ public class Board {
             //return numOfCell;
         }
         //return -1;
+    }
+    
+    void dataBaseConnectionAlert() {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("DataBase Connection Failed");
+        alert.setHeaderText("Please connect to database");
+        alert.setContentText("Ooops, there was an error in database connection!");
+        alert.showAndWait();
     }
 
 }
