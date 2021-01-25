@@ -5,7 +5,6 @@
  */
 package game.control;
 
-import game.model.GameModel;
 import game.model.Model;
 import game.model.SETVIEW;
 import game.view.GameUi;
@@ -39,7 +38,6 @@ public class OnlineControl implements SETVIEW {
         scoreArr[0] = 0;
         scoreArr[1] = 0;
         networkJoin = new NetworkJoin();
-
     }
 
     @Override
@@ -164,7 +162,6 @@ public class OnlineControl implements SETVIEW {
     public void isMyTurn() {
         gameUi.player1label1.setVisible(true);
         gameUi.player1label1.setText("Your Turn");
-
     }
 
     @Override
@@ -176,7 +173,6 @@ public class OnlineControl implements SETVIEW {
     @Override
     public void runWinnigAnimation(String name) {
         gameUi.dance.setVisible(true);
-
         scoreArr[0]++;
         gameUi.player1score.setText(String.valueOf(scoreArr[0]));
         gameUi.record.setVisible(true);
@@ -208,7 +204,6 @@ public class OnlineControl implements SETVIEW {
         }
 
         gameUi.reset.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-            // resetScreen();
             mod.resetGame();
             gameUi.cry.setVisible(false);
             gameUi.dance.setVisible(false);
@@ -218,13 +213,11 @@ public class OnlineControl implements SETVIEW {
 
         gameUi.record.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
             mod.requestSave();
-
         });
 
     }
 
     public void drawAnimation() {
-        //game time animation
         //psition 
         TranslateTransition transition = new TranslateTransition();
         transition.setDuration(Duration.seconds(4));
@@ -249,6 +242,5 @@ public class OnlineControl implements SETVIEW {
         transition.play();
         scaleTransition.play();
         rotateTransition.play();
-
     }
 }

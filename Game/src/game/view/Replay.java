@@ -2,13 +2,6 @@ package game.view;
 
 import gameDB.GameMove;
 import gameDB.GameRecord;
-import java.lang.*;
-import javafx.event.EventType;
-import javafx.scene.control.*;
-import javafx.scene.effect.*;
-import javafx.scene.image.*;
-import javafx.scene.layout.*;
-import javafx.scene.text.*;
 import javafx.scene.control.Label;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.effect.GaussianBlur;
@@ -68,7 +61,6 @@ public class Replay extends AnchorPane {
         player2label = new Label();
         next = new ImageView();
 
-        ImageView[] img;
         this.img = new ImageView[]{r1c1, r2c1, r3c1, r1c2, r2c2, r3c2, r1c3, r2c3, r3c3};
 
         setMaxHeight(USE_PREF_SIZE);
@@ -295,7 +287,6 @@ public class Replay extends AnchorPane {
                 }
                 i++;
             }
-
         });
 
         getChildren().add(background);

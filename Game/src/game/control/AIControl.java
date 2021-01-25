@@ -47,7 +47,7 @@ public class AIControl implements SETVIEW {
                     gameUi.r1c1.setImage(new Image(getClass().
                             getClassLoader().getResource("game/pic/x.jpg").toExternalForm()));
                 } else {
-                    
+
                     gameUi.r1c1.setImage(new Image(getClass()
                             .getClassLoader().getResource("game/pic/o.png").toExternalForm()));
                 }
@@ -153,7 +153,6 @@ public class AIControl implements SETVIEW {
 
     @Override
     public void runLosingAnimation(String name) {
-
         gameUi.cry.setImage(new Image(getClass()
                 .getClassLoader().getResource("game/pic/source.gif").toExternalForm()));
         gameUi.cry.setVisible(true);
@@ -192,22 +191,20 @@ public class AIControl implements SETVIEW {
         gameUi.reset.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
             // resetScreen();
             mod.AI_resetGame();
-
             gameUi.cry.setVisible(false);
             gameUi.dance.setVisible(false);
             gameUi.draw.setVisible(false);
 
         });
-        
-         gameUi.record.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-           mod.AI_saveGame();
-           gameUi.record.setVisible(false);
-            
+
+        gameUi.record.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+            mod.AI_saveGame();
+            gameUi.record.setVisible(false);
+
         });
     }
 
     public void drawAnimation() {
-        //game time animation
         //psition 
         TranslateTransition transition = new TranslateTransition();
         transition.setDuration(Duration.seconds(4));
@@ -232,7 +229,5 @@ public class AIControl implements SETVIEW {
         transition.play();
         scaleTransition.play();
         rotateTransition.play();
-
     }
-
 }

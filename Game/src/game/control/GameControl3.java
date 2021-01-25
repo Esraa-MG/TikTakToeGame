@@ -10,18 +10,14 @@ import game.view.GameUi;
 import gameDB.GameDao;
 import gameDB.GameRecord;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.animation.RotateTransition;
 import javafx.animation.ScaleTransition;
 import javafx.animation.TranslateTransition;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.text.Font;
 import javafx.util.Duration;
 
 /**
@@ -41,9 +37,7 @@ public class GameControl3 {
 
     public int[] scoreArr = new int[2];
     public char[] SymbolArr = new char[2];
-
     public String[] playersArr;
-
     public boolean recordFlag = true;
 
     public GameControl3() {
@@ -99,14 +93,12 @@ public class GameControl3 {
             });
         }
 
-        //restart control
+        //reset control
         gameUi.reset.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-
             symbol = 'X';
             Reset();
             gameRecord = new GameRecord();
             recordFlag = true;
-
         });
 
         gameUi.record.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
@@ -135,9 +127,7 @@ public class GameControl3 {
                     }
                 }
                 gameUi.record.setVisible(false);
-                
             }
-
         });
 
     }
@@ -147,7 +137,6 @@ public class GameControl3 {
         alert.setTitle("DataBase Connection Failed");
         alert.setHeaderText("Please connect to database");
         alert.setContentText("Ooops, there was an error in database connection!");
-
         alert.showAndWait();
     }
 
@@ -162,7 +151,6 @@ public class GameControl3 {
         for (int i = 0; i < 9; i++) {
             buttonPressed[i] = 0;
         }
-
     }
 
     public void changeSymbol() {
@@ -174,7 +162,6 @@ public class GameControl3 {
     }
 
     public void showScore() {
-
         if (result == "Xwin") {
             for (int i = 0; i < 2; i++) {
                 if (SymbolArr[i] == 'X') {
@@ -195,7 +182,6 @@ public class GameControl3 {
     }
 
     public void xwinAnimation() {
-        //game time animation
         //psition 
         TranslateTransition transition = new TranslateTransition();
         transition.setDuration(Duration.seconds(4));
@@ -229,7 +215,6 @@ public class GameControl3 {
     }
 
     public void owinAnimation() {
-        //game time animation
         //psition 
         TranslateTransition transition = new TranslateTransition();
         transition.setDuration(Duration.seconds(4));
@@ -262,7 +247,6 @@ public class GameControl3 {
     }
 
     public void drawAnimation() {
-        //game time animation
         //psition 
         TranslateTransition transition = new TranslateTransition();
         transition.setDuration(Duration.seconds(4));

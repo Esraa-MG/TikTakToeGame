@@ -54,10 +54,10 @@ public class Archive extends AnchorPane {
         label.setText("Empty Archive");
         label.setFont(new Font("Bell MT", 76.0));
 
-        back.setFitHeight(69.0);
-        back.setFitWidth(67.0);
-        back.setLayoutX(16.0);
-        back.setLayoutY(510.0);
+        back.setFitHeight(97.0);
+        back.setFitWidth(59.0);
+        back.setLayoutX(38.0);
+        back.setLayoutY(499.0);
         back.setPickOnBounds(true);
         back.setPreserveRatio(true);
         back.setImage(new Image(getClass().getClassLoader().getResource("game/pic/backarrow2.png").toExternalForm()));
