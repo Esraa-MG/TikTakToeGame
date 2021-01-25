@@ -61,11 +61,13 @@ public class GameMoveDao {
             preparedStatement = connection.prepareStatement(sql);
 
             for (int i = 0; i < gameRecord.getI(); i++) {
+                System.out.println(gameRecord.getGameMove()[i].getCellOrder() + " " + gameRecord.getGameMove()[i].getCellNumber());
                 preparedStatement.setInt(1, gameRecord.getId());
                 preparedStatement.setInt(2, gameRecord.getGameMove()[i].getCellOrder());
                 preparedStatement.setInt(3, gameRecord.getGameMove()[i].getCellNumber());
                 preparedStatement.setString(4, String.valueOf(gameRecord.getGameMove()[i].getCellType()));
                 preparedStatement.addBatch();
+                
             }
 
             preparedStatement.executeBatch();

@@ -50,6 +50,16 @@ public class Model {
         gameBoard.resetGame();
     }
     
+    public void AI_setPlayerName(String name)
+    {
+        gameBoard.setPlayerName(name);
+    }
+    public void AI_saveGame()
+    {
+        gameBoard.saveGame();
+    }
+    
+    
     
     // AI game methods End here. 
     //--------------------------------------------------------
@@ -188,6 +198,14 @@ public class Model {
         if(player != null)
         {
             player.askResetGame();
+        }
+    }
+    
+    public void requestSave()
+    {
+        if(connectionStatus)
+        {
+            player.requestSave();
         }
     }
     // end of network mode functions 

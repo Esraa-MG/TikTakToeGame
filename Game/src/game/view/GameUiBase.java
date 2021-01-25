@@ -7,47 +7,52 @@ import javafx.scene.image.*;
 import java.lang.*;
 import javafx.scene.layout.*;
 
-public class GameUi extends AnchorPane {
+public abstract class GameUiBase extends AnchorPane {
 
     protected final ImageView background;
     protected final GaussianBlur gaussianBlur;
     protected final ImageView board;
-    public final ImageView back;
+    protected final ImageView back;
     protected final DropShadow dropShadow;
-    public final ImageView record;
-    public final ImageView reset;
-    public final ImageView r1c1;
-    public final ImageView r2c1;
-    public final ImageView r3c1;
-    public final ImageView r1c2;
-    public final ImageView r2c2;
-    public final ImageView r3c2;
-    public final ImageView r1c3;
-    public final ImageView r2c3;
-    public final ImageView r3c3;
+    protected final ImageView record;
+    protected final ImageView reset;
+    protected final ImageView r1c1;
+    protected final ImageView r2c1;
+    protected final ImageView r3c1;
+    protected final ImageView r1c2;
+    protected final ImageView r2c2;
+    protected final ImageView r3c2;
+    protected final ImageView r1c3;
+    protected final ImageView r2c3;
+    protected final ImageView r3c3;
     protected final ImageView player1icon;
     protected final ImageView player2icon;
-    public final Label player1label;
-    public final Label player2label;
-    public final Label player1score;
-    public final Label player2score;
-    public final Label xwins;
-    public final Label owins;
-    public final ImageView clap;
-    public final Label draw;
-    public final ImageView dance;
-    public final ImageView cry;
-    public final Label player1label1;
-    public final AnchorPane anchorPane;
+    protected final Label player1label;
+    protected final Label player2label;
+    protected final Label player1score;
+    protected final Label player2score;
+    protected final Label xwins;
+    protected final Label owins;
+    protected final ImageView clap;
+    protected final Label draw;
+    protected final ImageView dance;
+    protected final ImageView cry;
+    protected final Label player1label1;
+    protected final AnchorPane anchorPane;
     protected final ImageView saveback;
     protected final GaussianBlur gaussianBlur0;
     protected final Label question;
-    public final Button yes;
-    public final Button no;
-     public final Label plmark;
-    public final Label opmark;
+    protected final Button no;
+    protected final Button yes;
+    protected final AnchorPane anchorPane0;
+    protected final ImageView imageView;
+    protected final GaussianBlur gaussianBlur1;
+    protected final Label player1label2;
+    protected final Button button;
+    protected final Label plmark;
+    protected final Label opmark;
 
-    public GameUi() {
+    public GameUiBase() {
 
         background = new ImageView();
         gaussianBlur = new GaussianBlur();
@@ -82,8 +87,13 @@ public class GameUi extends AnchorPane {
         saveback = new ImageView();
         gaussianBlur0 = new GaussianBlur();
         question = new Label();
-        yes = new Button();
         no = new Button();
+        yes = new Button();
+        anchorPane0 = new AnchorPane();
+        imageView = new ImageView();
+        gaussianBlur1 = new GaussianBlur();
+        player1label2 = new Label();
+        button = new Button();
         plmark = new Label();
         opmark = new Label();
 
@@ -98,7 +108,7 @@ public class GameUi extends AnchorPane {
         background.setFitWidth(911.0);
         background.setLayoutX(-8.0);
         background.setPickOnBounds(true);
-        background.setImage(new Image(getClass().getClassLoader().getResource("game/pic/backgroundxo.PNG").toExternalForm()));
+        background.setImage(new Image(getClass().getResource("pic/backgroundxo.PNG").toExternalForm()));
 
         gaussianBlur.setRadius(20.76);
         background.setEffect(gaussianBlur);
@@ -108,7 +118,7 @@ public class GameUi extends AnchorPane {
         board.setLayoutX(36.0);
         board.setLayoutY(180.0);
         board.setPickOnBounds(true);
-        board.setImage(new Image(getClass().getClassLoader().getResource("game/pic/board3.jpg").toExternalForm()));
+        board.setImage(new Image(getClass().getResource("../pic/board3.jpg").toExternalForm()));
 
         back.setFitHeight(97.0);
         back.setFitWidth(57.0);
@@ -116,7 +126,7 @@ public class GameUi extends AnchorPane {
         back.setLayoutY(508.0);
         back.setPickOnBounds(true);
         back.setPreserveRatio(true);
-        back.setImage(new Image(getClass().getClassLoader().getResource("game/pic/backarrow2.png").toExternalForm()));
+        back.setImage(new Image(getClass().getResource("pic/backarrow2.png").toExternalForm()));
 
         dropShadow.setHeight(120.51);
         dropShadow.setRadius(56.644999999999996);
@@ -130,16 +140,15 @@ public class GameUi extends AnchorPane {
         record.setLayoutY(514.0);
         record.setPickOnBounds(true);
         record.setPreserveRatio(true);
-        record.setImage(new Image(getClass().getClassLoader().getResource("game/pic/record.png").toExternalForm()));
-        record.setVisible(false);
-        
+        record.setImage(new Image(getClass().getResource("pic/record.png").toExternalForm()));
+
         reset.setFitHeight(57.0);
         reset.setFitWidth(74.0);
         reset.setLayoutX(800.0);
         reset.setLayoutY(514.0);
         reset.setPickOnBounds(true);
         reset.setPreserveRatio(true);
-        reset.setImage(new Image(getClass().getClassLoader().getResource("game/pic/reset.png").toExternalForm()));
+        reset.setImage(new Image(getClass().getResource("pic/reset.png").toExternalForm()));
 
         r1c1.setFitHeight(66.0);
         r1c1.setFitWidth(144.0);
@@ -200,7 +209,7 @@ public class GameUi extends AnchorPane {
         player1icon.setLayoutX(22.0);
         player1icon.setLayoutY(34.0);
         player1icon.setPickOnBounds(true);
-        player1icon.setImage(new Image(getClass().getClassLoader().getResource("game/pic/person.png").toExternalForm()));
+        player1icon.setImage(new Image(getClass().getResource("pic/person.png").toExternalForm()));
 
         player2icon.setFitHeight(49.0);
         player2icon.setFitWidth(42.0);
@@ -208,7 +217,7 @@ public class GameUi extends AnchorPane {
         player2icon.setLayoutY(34.0);
         player2icon.setPickOnBounds(true);
         player2icon.setPreserveRatio(true);
-        player2icon.setImage(new Image(getClass().getClassLoader().getResource("game/pic/person.png").toExternalForm()));
+        player2icon.setImage(new Image(getClass().getResource("pic/person.png").toExternalForm()));
 
         player1label.setAlignment(javafx.geometry.Pos.CENTER);
         player1label.setLayoutX(83.0);
@@ -282,7 +291,7 @@ public class GameUi extends AnchorPane {
         clap.setPickOnBounds(true);
         clap.setPreserveRatio(true);
         clap.setVisible(false);
-        clap.setImage(new Image(getClass().getClassLoader().getResource("game/pic/clap4.gif").toExternalForm()));
+        clap.setImage(new Image(getClass().getResource("pic/clap4.gif").toExternalForm()));
 
         draw.setAlignment(javafx.geometry.Pos.CENTER);
         draw.setLayoutX(497.0);
@@ -301,7 +310,7 @@ public class GameUi extends AnchorPane {
         dance.setLayoutY(192.0);
         dance.setPickOnBounds(true);
         dance.setVisible(false);
-        dance.setImage(new Image(getClass().getClassLoader().getResource("game/pic/celebrate.gif").toExternalForm()));
+        dance.setImage(new Image(getClass().getResource("../pic/celebrate.gif").toExternalForm()));
 
         cry.setFitHeight(234.0);
         cry.setFitWidth(304.0);
@@ -309,7 +318,7 @@ public class GameUi extends AnchorPane {
         cry.setLayoutY(222.0);
         cry.setPickOnBounds(true);
         cry.setVisible(false);
-        cry.setImage(new Image(getClass().getClassLoader().getResource("game/pic/4tyl.gif").toExternalForm()));
+        cry.setImage(new Image(getClass().getResource("../pic/4tyl.gif").toExternalForm()));
 
         player1label1.setAlignment(javafx.geometry.Pos.CENTER);
         player1label1.setLayoutX(304.0);
@@ -332,7 +341,7 @@ public class GameUi extends AnchorPane {
         saveback.setFitHeight(209.0);
         saveback.setFitWidth(503.0);
         saveback.setPickOnBounds(true);
-        saveback.setImage(new Image(getClass().getClassLoader().getResource("game/pic/Captu11re.PNG").toExternalForm()));
+        saveback.setImage(new Image(getClass().getResource("../pic/Captu11re.PNG").toExternalForm()));
 
         saveback.setEffect(gaussianBlur0);
 
@@ -342,36 +351,65 @@ public class GameUi extends AnchorPane {
         question.setPrefHeight(45.0);
         question.setPrefWidth(250.0);
         question.setStyle("-fx-background-color: #d3d3d3; -fx-background-radius: 2000;");
-        question.setText("Sure to exit?");
+        question.setText("Save Game?");
         question.setTextFill(javafx.scene.paint.Color.valueOf("#0a5b68"));
         question.setFont(new Font("Book Antiqua Bold Italic", 35.0));
 
-        yes.setLayoutX(88.0);
-        yes.setLayoutY(113.0);
-        yes.setMnemonicParsing(false);
-        yes.setStyle("-fx-background-color: #adbce6; -fx-background-radius: 2000;");
-        yes.setText("Yes");
-        yes.setFont(new Font("System Bold", 29.0));
-
-        no.setLayoutX(310.0);
+        no.setLayoutX(88.0);
         no.setLayoutY(113.0);
         no.setMnemonicParsing(false);
-        no.setPrefHeight(63.0);
-        no.setPrefWidth(97.0);
         no.setStyle("-fx-background-color: #adbce6; -fx-background-radius: 2000;");
-        no.setText("No");
+        no.setText("Yes");
         no.setFont(new Font("System Bold", 29.0));
 
-      
-       
-        
+        yes.setLayoutX(310.0);
+        yes.setLayoutY(113.0);
+        yes.setMnemonicParsing(false);
+        yes.setPrefHeight(63.0);
+        yes.setPrefWidth(97.0);
+        yes.setStyle("-fx-background-color: #adbce6; -fx-background-radius: 2000;");
+        yes.setText("No");
+        yes.setFont(new Font("System Bold", 29.0));
+
+        anchorPane0.setDisable(true);
+        anchorPane0.setLayoutX(295.0);
+        anchorPane0.setLayoutY(206.0);
+        anchorPane0.setPrefHeight(200.0);
+        anchorPane0.setPrefWidth(389.0);
+        anchorPane0.setVisible(false);
+
+        imageView.setFitHeight(200.0);
+        imageView.setFitWidth(406.0);
+        imageView.setLayoutX(-10.0);
+        imageView.setPickOnBounds(true);
+        imageView.setImage(new Image(getClass().getResource("../pic/Captu11re.PNG").toExternalForm()));
+
+        imageView.setEffect(gaussianBlur1);
+
+        player1label2.setAlignment(javafx.geometry.Pos.CENTER);
+        player1label2.setLayoutX(20.0);
+        player1label2.setLayoutY(22.0);
+        player1label2.setPrefHeight(49.0);
+        player1label2.setPrefWidth(346.0);
+        player1label2.setStyle("-fx-background-color: #d3d3d3; -fx-background-radius: 2000;");
+        player1label2.setText("Please Connect DataBase");
+        player1label2.setTextFill(javafx.scene.paint.Color.valueOf("#0a5b68"));
+        player1label2.setFont(new Font("Book Antiqua Bold Italic", 24.0));
+
+        button.setLayoutX(166.0);
+        button.setLayoutY(100.0);
+        button.setMnemonicParsing(false);
+        button.setStyle("-fx-background-radius: 2000; -fx-background-color: #90ee90;");
+        button.setText("OK");
+        button.setFont(new Font("System Bold", 24.0));
+
         plmark.setAlignment(javafx.geometry.Pos.CENTER);
         plmark.setLayoutX(260.0);
         plmark.setLayoutY(105.0);
         plmark.setPrefHeight(40.0);
         plmark.setPrefWidth(70.0);
         plmark.setStyle("-fx-background-color: #d3d3d3; -fx-background-radius: 2000;");
-        plmark.setText("X");
+        plmark.setText("0");
         plmark.setTextFill(javafx.scene.paint.Color.valueOf("#0a5b68"));
         plmark.setWrapText(true);
         plmark.setFont(new Font("Book Antiqua Bold Italic", 35.0));
@@ -382,7 +420,7 @@ public class GameUi extends AnchorPane {
         opmark.setPrefHeight(40.0);
         opmark.setPrefWidth(70.0);
         opmark.setStyle("-fx-background-color: #d3d3d3; -fx-background-radius: 2000;");
-        opmark.setText("O");
+        opmark.setText("0");
         opmark.setTextFill(javafx.scene.paint.Color.valueOf("#0a5b68"));
         opmark.setWrapText(true);
         opmark.setFont(new Font("Book Antiqua Bold Italic", 35.0));
@@ -419,7 +457,11 @@ public class GameUi extends AnchorPane {
         anchorPane.getChildren().add(no);
         anchorPane.getChildren().add(yes);
         getChildren().add(anchorPane);
-         getChildren().add(plmark);
+        anchorPane0.getChildren().add(imageView);
+        anchorPane0.getChildren().add(player1label2);
+        anchorPane0.getChildren().add(button);
+        getChildren().add(anchorPane0);
+        getChildren().add(plmark);
         getChildren().add(opmark);
 
     }

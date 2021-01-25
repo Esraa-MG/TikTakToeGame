@@ -18,4 +18,5 @@ public interface SETVIEW {
     public void runDrawAnimation();
     public void isMyTurn();
     public void isNotMyTurn();
+    default void hideRecordButton(){}
 }

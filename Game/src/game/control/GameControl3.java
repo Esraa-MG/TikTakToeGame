@@ -7,9 +7,16 @@ package game.control;
 
 import game.model.GameModel;
 import game.view.GameUi;
+import gameDB.GameDao;
+import gameDB.GameRecord;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.animation.RotateTransition;
 import javafx.animation.ScaleTransition;
 import javafx.animation.TranslateTransition;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -25,13 +32,19 @@ public class GameControl3 {
 
     public GameUi gameUi = new GameUi();
     GameModel GameMod = new GameModel();
+    public GameRecord gameRecord;
+    GameDao gameDao;
 
     char symbol;
-    boolean stopGame = false;
+    public boolean stopGame = false;
     String result;
 
     public int[] scoreArr = new int[2];
     public char[] SymbolArr = new char[2];
+
+    public String[] playersArr;
+
+    public boolean recordFlag = true;
 
     public GameControl3() {
         scoreArr[0] = 0;
@@ -39,6 +52,13 @@ public class GameControl3 {
 
         SymbolArr[0] = 'X';
         SymbolArr[1] = 'O';
+
+        playersArr = new String[2];
+        playersArr[0] = new String("Player1");
+        playersArr[1] = new String("Player2");
+
+        gameRecord = new GameRecord();
+        gameDao = new GameDao();
     }
 
     int[] buttonPressed = {0, 0, 0, 0, 0, 0, 0, 0, 0};
@@ -57,8 +77,10 @@ public class GameControl3 {
                     if (!stopGame) {
                         if (symbol == 'X') {
                             img[index].setImage(new Image(getClass().getClassLoader().getResource("game/pic/x.jpg").toExternalForm()));
+                            gameRecord.addGameMove(index + 1, 'X');
                         } else {
                             img[index].setImage(new Image(getClass().getClassLoader().getResource("game/pic/o.png").toExternalForm()));
+                            gameRecord.addGameMove(index + 1, 'O');
                         }
 
                         result = GameMod.selectCell(index + 1, symbol);
@@ -66,6 +88,7 @@ public class GameControl3 {
                         if (result == "Xwin" || result == "Owin" || result == "draw") {
                             showScore();
                             stopGame = true;
+                            gameUi.record.setVisible(true);
                         }
                         winAnimation();
                         changeSymbol();
@@ -81,9 +104,51 @@ public class GameControl3 {
 
             symbol = 'X';
             Reset();
+            gameRecord = new GameRecord();
+            recordFlag = true;
 
         });
 
+        gameUi.record.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+            if (recordFlag) {
+                if (SymbolArr[0] == 'X') {
+                    try {
+                        gameDao.insertGame(playersArr[0], playersArr[1], gameRecord);
+                        recordFlag = false;
+                    } catch (SQLException ex) {
+                        ex.printStackTrace();
+                        dataBaseConnectionAlert();
+                    } catch (ClassNotFoundException ex) {
+                        ex.printStackTrace();
+                        dataBaseConnectionAlert();
+                    }
+                } else {
+                    try {
+                        gameDao.insertGame(playersArr[1], playersArr[0], gameRecord);
+                        recordFlag = false;
+                    } catch (SQLException ex) {
+                        ex.printStackTrace();
+                        dataBaseConnectionAlert();
+                    } catch (ClassNotFoundException ex) {
+                        ex.printStackTrace();
+                        dataBaseConnectionAlert();
+                    }
+                }
+                gameUi.record.setVisible(false);
+                
+            }
+
+        });
+
+    }
+
+    void dataBaseConnectionAlert() {
+        Alert alert = new Alert(AlertType.ERROR);
+        alert.setTitle("DataBase Connection Failed");
+        alert.setHeaderText("Please connect to database");
+        alert.setContentText("Ooops, there was an error in database connection!");
+
+        alert.showAndWait();
     }
 
     public void Reset() {

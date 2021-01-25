@@ -8,6 +8,7 @@ package game.control;
 import game.model.Model;
 import game.model.SETVIEW;
 import game.view.GameUi;
+import java.util.Timer;
 import javafx.animation.RotateTransition;
 import javafx.animation.ScaleTransition;
 import javafx.animation.TranslateTransition;
@@ -24,6 +25,7 @@ public class AIControl implements SETVIEW {
 
     public GameUi gameUi = new GameUi();
     public Model mod = new Model();
+    Timer timer = new Timer();
 
     int i;
     public int[] scoreArr = new int[2];
@@ -45,6 +47,7 @@ public class AIControl implements SETVIEW {
                     gameUi.r1c1.setImage(new Image(getClass().
                             getClassLoader().getResource("game/pic/x.jpg").toExternalForm()));
                 } else {
+                    
                     gameUi.r1c1.setImage(new Image(getClass()
                             .getClassLoader().getResource("game/pic/o.png").toExternalForm()));
                 }
@@ -134,6 +137,7 @@ public class AIControl implements SETVIEW {
         for (i = 0; i < 9; i++) {
             img[i].setImage(null);
         }
+        gameUi.record.setVisible(false);
     }
 
     @Override
@@ -144,6 +148,7 @@ public class AIControl implements SETVIEW {
 
         scoreArr[0]++;
         gameUi.player1score.setText(String.valueOf(scoreArr[0]));
+        gameUi.record.setVisible(true);
     }
 
     @Override
@@ -154,12 +159,14 @@ public class AIControl implements SETVIEW {
         gameUi.cry.setVisible(true);
         scoreArr[1]++;
         gameUi.player2score.setText(String.valueOf(scoreArr[1]));
+        gameUi.record.setVisible(true);
     }
 
     @Override
     public void runDrawAnimation() {
         gameUi.draw.setVisible(true);
         drawAnimation();
+        gameUi.record.setVisible(true);
     }
 
     @Override
@@ -190,6 +197,12 @@ public class AIControl implements SETVIEW {
             gameUi.dance.setVisible(false);
             gameUi.draw.setVisible(false);
 
+        });
+        
+         gameUi.record.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+           mod.AI_saveGame();
+           gameUi.record.setVisible(false);
+            
         });
     }
 

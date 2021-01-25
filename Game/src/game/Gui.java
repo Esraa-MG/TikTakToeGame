@@ -14,19 +14,29 @@ import game.view.SelectModeXO;
 import game.view.StartPage;
 import game.model.SETVIEW;
 import game.view.AIConfig;
+import game.view.Archive;
 import game.view.EasyHardConfig;
 import game.view.NetworkJoin;
 import game.view.Replay;
+import gameDB.GameArchive;
+import gameDB.GameDao;
+import gameDB.GameRecord;
+import java.util.ArrayList;
 import javafx.util.Duration;
 import javafx.animation.*;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 /**
  *
@@ -42,19 +52,26 @@ public class Gui extends Application {
     EasyHardConfig easyHardConfig;
     AIConfig aiConfig;
     Replay replay;
+    Archive archive;
 
     GameControl3 gameCon3;
     AIControl aiControl;
-    String[] playersArr;
+
     String aiMode;
+    int i = 0;
 
     @Override
     public void start(Stage stage) throws Exception {
+
         stage.setTitle("Game Time");
 
-        playersArr = new String[2];
-        playersArr[0] = new String("Player1");
-        playersArr[1] = new String("Player2");
+        stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+            @Override
+            public void handle(WindowEvent event) {
+                Platform.exit();
+                System.exit(0);
+            }
+        });
 
         start = new StartPage();
         gameChoice = new GameChoicePage();
@@ -63,6 +80,7 @@ public class Gui extends Application {
         easyHardConfig = new EasyHardConfig();
         aiConfig = new AIConfig();
         replay = new Replay();
+        archive = new Archive();
 
         onlineControl = new OnlineControl();
         aiControl = new AIControl();
@@ -78,6 +96,7 @@ public class Gui extends Application {
         Scene onlineGameScene = new Scene(onlineControl.gameUi);
         Scene networkJoinScene = new Scene(onlineControl.networkJoin);
         Scene replayScene = new Scene(replay);
+        Scene archiveScene = new Scene(archive);
 
         Scene gameScene = new Scene(gameCon3.gameUi);
         Scene AIGameScene = new Scene(aiControl.gameUi);
@@ -153,6 +172,24 @@ public class Gui extends Application {
 
         }));
 
+        startXO.archive.setOnAction(((event) -> {
+
+            stage.setScene(archiveScene);
+            archiveControl(stage, replayScene, replay);
+
+        }));
+
+        archive.back.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+            stage.setScene(startXOScene);
+        });
+
+        replay.back.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+            stage.setScene(startXOScene);
+            for (int i = 0; i < 9; i++) {
+                replay.img[i].setImage(null);
+            }
+        });
+
         aiConfig.start.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
             if (aiMode.equals("Easy")) {
                 aiControl.mod.AI_startAIGame("Easy", aiControl);
@@ -166,6 +203,10 @@ public class Gui extends Application {
             aiControl.gameUi.player2label.setText("Robot");
             aiControl.gameUi.player1score.setText(String.valueOf(aiControl.scoreArr[0]));
             aiControl.gameUi.player2score.setText(String.valueOf(aiControl.scoreArr[1]));
+            String name = aiConfig.playername.getText();
+            // aiControl.mod.setPlayerName(name);
+            System.out.println("player name in ai " + name);
+            aiControl.mod.AI_setPlayerName(name);
 
         });
         aiConfig.back.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
@@ -181,12 +222,12 @@ public class Gui extends Application {
         easyHardConfig.normal.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
             aiMode = "Easy";
             stage.setScene(AIConfigScene);
-
         });
 
         easyHardConfig.hard.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
             aiMode = "Hard";
             stage.setScene(AIConfigScene);
+
         });
 
         aiControl.gameUi.back.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
@@ -203,8 +244,7 @@ public class Gui extends Application {
         }));
 
         aiControl.gameUi.no.setOnAction(((event) -> {
-            stage.setScene(startXOScene);
-            aiBack();
+
             aiControl.gameUi.anchorPane.setVisible(false);
             aiControl.gameUi.anchorPane.setDisable(true);
         }));
@@ -252,6 +292,14 @@ public class Gui extends Application {
             onlineControl.networkJoin.ip.setText(" ");
             onlineControl.networkJoin.start.setVisible(false);
             // onlineControl.networkJoin.start.setDisable(true);
+
+            onlineControl.gameUi.plmark.setText(onlineControl.mod.getPlayerMark());
+            if (onlineControl.gameUi.plmark.getText().equals("X")) {
+                onlineControl.gameUi.opmark.setText("O");
+            } else {
+                onlineControl.gameUi.opmark.setText("X");
+            }
+
         });
         onlineControl.gameUi.back.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
 
@@ -273,8 +321,6 @@ public class Gui extends Application {
             public void handle(ActionEvent event) {
                 onlineControl.gameUi.anchorPane.setVisible(false);
                 onlineControl.gameUi.anchorPane.setDisable(true);
-                stage.setScene(startXOScene);
-                onlineBack();
             }
         });
 
@@ -301,8 +347,8 @@ public class Gui extends Application {
         });
 
         playCon.start.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-            playersArr[0] = playCon.player1text.getText();
-            playersArr[1] = playCon.player2text.getText();
+            gameCon3.playersArr[0] = playCon.player1text.getText();
+            gameCon3.playersArr[1] = playCon.player2text.getText();
             if (playCon.palyer1x.isDisable()) {
                 gameCon3.SymbolArr[0] = 'O';
                 gameCon3.SymbolArr[1] = 'X';
@@ -319,12 +365,14 @@ public class Gui extends Application {
                 gameCon3.SymbolArr[0] = 'O';
                 gameCon3.SymbolArr[1] = 'X';
             }
+            gameCon3.gameUi.plmark.setText(String.valueOf(gameCon3.SymbolArr[0]));
+            gameCon3.gameUi.opmark.setText(String.valueOf(gameCon3.SymbolArr[1]));
 
             gameCon3.controlGame();
             stage.setScene(gameScene);
 
-            gameCon3.gameUi.player1label.setText(playersArr[0]);
-            gameCon3.gameUi.player2label.setText(playersArr[1]);
+            gameCon3.gameUi.player1label.setText(gameCon3.playersArr[0]);
+            gameCon3.gameUi.player2label.setText(gameCon3.playersArr[1]);
             gameCon3.gameUi.player1score.setText(String.valueOf(gameCon3.scoreArr[0]));
             gameCon3.gameUi.player2score.setText(String.valueOf(gameCon3.scoreArr[1]));
 
@@ -366,9 +414,13 @@ public class Gui extends Application {
 
         //back button control 
         gameCon3.gameUi.back.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-
-            gameCon3.gameUi.anchorPane.setVisible(true);
-            gameCon3.gameUi.anchorPane.setDisable(false);
+            if (!gameCon3.stopGame) {
+                gameCon3.gameUi.anchorPane.setVisible(true);
+                gameCon3.gameUi.anchorPane.setDisable(false);
+            } else {
+                stage.setScene(startXOScene);
+                twoPlayersBack();
+            }
         });
         gameCon3.gameUi.yes.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -383,8 +435,6 @@ public class Gui extends Application {
         gameCon3.gameUi.no.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                stage.setScene(startXOScene);
-                twoPlayersBack();
                 gameCon3.gameUi.anchorPane.setVisible(false);
                 gameCon3.gameUi.anchorPane.setDisable(true);
             }
@@ -427,12 +477,15 @@ public class Gui extends Application {
         playCon.palyer1o.setSelected(false);
         playCon.palyer2x.setSelected(false);
         playCon.palyer1x.setSelected(false);
+        gameCon3.gameRecord = new GameRecord();
+        gameCon3.recordFlag = true;
     }
 
     public void aiBack() {
         aiControl.resetScreen();
         aiControl.scoreArr[0] = 0;
         aiControl.scoreArr[1] = 0;
+        aiControl.mod.AI_resetGame();
         aiConfig.playername.setText("player 1 ");
         aiControl.gameUi.cry.setVisible(false);
         aiControl.gameUi.dance.setVisible(false);
@@ -451,5 +504,42 @@ public class Gui extends Application {
         onlineControl.gameUi.cry.setVisible(false);
         onlineControl.gameUi.dance.setVisible(false);
         onlineControl.gameUi.draw.setVisible(false);
+    }
+
+    public void archiveControl(final Stage stage, final Scene scene, final Replay replay) {
+
+        GameDao gameDao = new GameDao();
+        final ArrayList<GameArchive> gameArchives = gameDao.selectAllGameArchive();
+        if (gameArchives.size() != 0) {
+            archive.label.setVisible(false);
+        } else {
+            archive.scrollPane.setVisible(false);
+        }
+        for (i = 0; i < gameArchives.size(); i++) {
+            final int index = i;
+            final Button button;
+            button = new Button();
+            button.setMnemonicParsing(false);
+            button.setPrefHeight(73.0);
+            button.setPrefWidth(716.0);
+            button.setStyle("-fx-background-radius: 2000; -fx-background-color: #add8e6;");
+            button.setText(gameArchives.get(index).getPlayerX() + " - " + gameArchives.get(index)
+                    .getPlayerO() + "  " + gameArchives.get(index).getDate());
+            button.setFont(new Font("Bell MT", 32.0));
+            archive.vbox.setOpaqueInsets(new Insets(0.0));
+            archive.vbox.setPadding(new Insets(10.0, 0.0, 0.0, 0.0));
+            archive.scrollPane.setContent(archive.vbox);
+            archive.vbox.getChildren().add(button);
+
+            button.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    stage.setScene(scene);
+                    replay.player1label.setText(gameArchives.get(index).getPlayerX());
+                    replay.player2label.setText(gameArchives.get(index).getPlayerO());
+                    replay.gameRecord = gameDao.selectGameRecord(gameArchives.get(index).getId());
+                }
+            });
+        }
     }
 }

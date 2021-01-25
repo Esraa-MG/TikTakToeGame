@@ -163,5 +163,15 @@
             </Button>
          </children>
       </AnchorPane>
+      <Label fx:id="plmark" alignment="CENTER" layoutX="260.0" layoutY="105.0" prefHeight="40.0" prefWidth="70.0" style="-fx-background-color: #d3d3d3; -fx-background-radius: 2000;" text="0" textFill="#0a5b68" wrapText="true">
+         <font>
+            <Font name="Book Antiqua Bold Italic" size="35.0" />
+         </font>
+      </Label>
+      <Label fx:id="opmark" alignment="CENTER" layoutX="526.0" layoutY="105.0" prefHeight="40.0" prefWidth="70.0" style="-fx-background-color: #d3d3d3; -fx-background-radius: 2000;" text="0" textFill="#0a5b68" wrapText="true">
+         <font>
+            <Font name="Book Antiqua Bold Italic" size="35.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

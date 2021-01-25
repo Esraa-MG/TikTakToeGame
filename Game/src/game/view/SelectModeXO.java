@@ -16,7 +16,7 @@ public class SelectModeXO extends AnchorPane {
     public final Button online;
     public final Button single;
     public final Button twoplayer;
-    protected final Button archive;
+    public final Button archive;
     public final ImageView back;
     protected final DropShadow dropShadow0;
 

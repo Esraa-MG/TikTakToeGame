@@ -10,6 +10,9 @@ import gameDB.GameRecord;
 import java.util.ArrayList;
 import java.util.List;
 import java.awt.*;
+import java.sql.SQLException;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -31,23 +34,21 @@ class PointAndScore {
 }
 
 public class Board {
-    
-    
-    private boolean  playGame = true;
+
+    private boolean playGame = true;
     private static final int NO_PLAYER = 0;
     private static final int PLAYER_X = 1;
     private static final int PLAYER_O = 2;
     private final GameDao gameDao = new GameDao();
     private GameRecord gameRecord = new GameRecord();
-    
+
     //---------------------------------
-    private GameModel myModel; 
+    private GameModel myModel;
     private SETVIEW viewDelegate;
-    
-    
-    
-    public Board(SETVIEW delegate)
-    {
+    private Timer timer = new Timer();
+    private boolean isPlayerTurn = true;
+
+    public Board(SETVIEW delegate) {
         viewDelegate = delegate;
         myModel = new GameModel();
     }
@@ -55,6 +56,21 @@ public class Board {
 
     private static int[][] board = new int[3][3];
     private Point computerMove;
+    private String playerName;
+
+    public void setPlayerName(String name) {
+        playerName = name;
+    }
+
+    public void saveGame() {
+        try {
+            gameDao.insertGame(playerName, "Robot", gameRecord);
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } catch (ClassNotFoundException ex) {
+            ex.printStackTrace();
+        }
+    }
 
     private boolean isGameOver() {
         return hasPlayerWon(PLAYER_X) || hasPlayerWon(PLAYER_O) || getAvailabelCells().isEmpty();
@@ -101,76 +117,78 @@ public class Board {
         board[point.x][point.y] = player;
         return true;
     }
-    
-    
-    public void playerMove(int cell)
-    {
-        if(playGame)
-        {
+
+    public void playerMove(int cell) {
+        if (playGame && isPlayerTurn) {
             String status = myModel.selectCell(cell, 'X');
-            switch(status)
-            {
+            switch (status) {
                 case "Xwin":
                 case "Owin":
-                    Platform.runLater(()->{
+                    gameRecord.addGameMove(cell, 'X');
+                    Platform.runLater(() -> {
                         viewDelegate.setView(cell, 'X');
                         //win Animation.
                         viewDelegate.runWinnigAnimation("You");
                     });
                     playGame = false;
                     break;
-             
+
                 case "draw":
-                    Platform.runLater(()->{
+                    gameRecord.addGameMove(cell, 'X');
+                    Platform.runLater(() -> {
                         viewDelegate.setView(cell, 'X');
                         //draw Animation.
                         viewDelegate.runDrawAnimation();
                     });
                     playGame = false;
                     break;
-                
+
                 case "none":
-                    Platform.runLater(()->{
+                    gameRecord.addGameMove(cell, 'X');
+                    Platform.runLater(() -> {
                         viewDelegate.setView(cell, 'X');
                     });
                     Point playPoint = ReverseSetVal(cell);
                     PlaceMove(playPoint, PLAYER_X);
+                    isPlayerTurn = false;
                     CompMove();
                     break;
 
-                
                 case "isMarked":
                     break;
-                
-                default :
+
+                default:
                     break;
             }
         }
     }
-    
 
     private int SetVal(Point point) {
         int num = 0;
-        if (point.x == 0 && point.y == 0) {
-            return num = 1;
-        } else if (point.x == 0 && point.y == 1) {
-            return num = 2;
-        } else if (point.x == 0 && point.y == 2) {
-            return num = 3;
-        } else if (point.x == 1 && point.y == 0) {
-            return num = 4;
-        } else if (point.x == 1 && point.y == 1) {
-            return num = 5;
-        } else if (point.x == 1 && point.y == 2) {
-            return num = 6;
-        } else if (point.x == 2 && point.y == 0) {
-            return num = 7;
-        } else if (point.x == 2 && point.y == 1) {
-            return num = 8;
-        } else if (point.x == 2 && point.y == 2) {
-            return num = 9;
+        if (point != null) {
+            if (point.x == 0 && point.y == 0) {
+                return num = 1;
+            } else if (point.x == 0 && point.y == 1) {
+                return num = 2;
+            } else if (point.x == 0 && point.y == 2) {
+                return num = 3;
+            } else if (point.x == 1 && point.y == 0) {
+                return num = 4;
+            } else if (point.x == 1 && point.y == 1) {
+                return num = 5;
+            } else if (point.x == 1 && point.y == 2) {
+                return num = 6;
+            } else if (point.x == 2 && point.y == 0) {
+                return num = 7;
+            } else if (point.x == 2 && point.y == 1) {
+                return num = 8;
+            } else if (point.x == 2 && point.y == 2) {
+                return num = 9;
+            }
+            return num;
+        } else {
+            return 0;
         }
-        return num;
 
     }
 
@@ -214,7 +232,7 @@ public class Board {
                 break;
 
         }
-      return p;
+        return p;
     }
 
     private void displayBoard() {
@@ -295,7 +313,8 @@ public class Board {
         }
         return turn == PLAYER_X ? max : min;
     }
-/*
+
+    /*
     public int CompMove(int x, int y) {
         int z = 0;
 
@@ -314,97 +333,108 @@ public class Board {
 
         return z;
     }
-*/
-    
+     */
     //computer to easy game
-     
-      private void CompMove(){ 
-            //displayBoard(); 
-            minimax(0, Board.PLAYER_X);
-            //System.out.println("computer choose position : "+computerMove);
-            //System.out.println(computerMove);
-            int cell = SetVal(computerMove);
-            String status = myModel.selectCell(cell, 'O');
-            
+    private void CompMove() {
+        //displayBoard(); 
+        minimax(0, Board.PLAYER_X);
+        //System.out.println("computer choose position : "+computerMove);
+        //System.out.println(computerMove);
+        int cell = SetVal(computerMove);
+        String status = myModel.selectCell(cell, 'O');
+
 //            try {
 //                Thread.sleep(500);
 //            } catch (InterruptedException ex) {
 //                Logger.getLogger(Board.class.getName()).log(Level.SEVERE, null, ex);
 //            }
-            switch(status)
-            {
-                case "Xwin":
-                case "Owin":
-                    Platform.runLater(()->{
-                        viewDelegate.setView(cell, 'O');
-                        viewDelegate.runLosingAnimation("You");
-                    });
-                    playGame = false;
-                    break;
-             
-                case "draw":
-                    Platform.runLater(()->{
-                        viewDelegate.setView(cell, 'O');
-                        //draw Animation.
-                        viewDelegate.runDrawAnimation();
-                    });
-                    playGame = false;
-                    break;
-                
-                case "none":
-                    
-                    Platform.runLater(()->{
-                        viewDelegate.setView(cell, 'O');
-                    });
-                    PlaceMove(computerMove, PLAYER_O);
-                    break;
-                
-                case "isMarked":
-                    break;
-                
-                default :
-                    break;
-            }
-            
+        switch (status) {
+            case "Xwin":
+            case "Owin":
+                gameRecord.addGameMove(cell, 'O');
+                Platform.runLater(() -> {
+                    // Your database code here
+                    viewDelegate.setView(cell, 'O');
+                    viewDelegate.runLosingAnimation("You");
+                    isPlayerTurn = true;
+
+                });
+
+                playGame = false;
+                break;
+
+            case "draw":
+                gameRecord.addGameMove(cell, 'O');
+                Platform.runLater(() -> {
+
+                    // Your database code here
+                    viewDelegate.setView(cell, 'O');
+                    //draw Animation.
+                    viewDelegate.runDrawAnimation();
+                    isPlayerTurn = true;
+
+                });
+                playGame = false;
+                break;
+
+            case "none":
+                gameRecord.addGameMove(cell, 'O');
+                Platform.runLater(() -> {
+                    timer.schedule(new TimerTask() {
+                        @Override
+                        public void run() {
+                            // Your database code here
+                            viewDelegate.setView(cell, 'O');
+                            isPlayerTurn = true;
+                        }
+                    }, 1000);
+
+                });
+                PlaceMove(computerMove, PLAYER_O);
+                break;
+
+            case "isMarked":
+                break;
+
+            default:
+                break;
+        }
+
 //            PlaceMove(computerMove, Board.PLAYER_O);
-            //System.out.print(SetVal(computerMove));//to get the number of computer cell
-            displayBoard();
-            //numOfCompCell=SetVal(computerMove);
-            //return numOfCompCell;
-            
+        //System.out.print(SetVal(computerMove));//to get the number of computer cell
+        displayBoard();
+        //numOfCompCell=SetVal(computerMove);
+        //return numOfCompCell;
+
     }
-      
-    public void resetGame()
-    {
+
+    public void resetGame() {
         myModel.resetGame();
         board = new int[3][3];
         playGame = true;
-        Platform.runLater(()->{
+        Platform.runLater(() -> {
             viewDelegate.resetScreen();
         });
     }
-     
-     
+
 //computer hard game
     public void CompMove2(int m) {
         //int numOfCell = 0;
-        int x = (m-1)/3;
-        int y = (m-1)%3;
+        int x = (m - 1) / 3;
+        int y = (m - 1) % 3;
         String status;
         boolean allowAI = true;
-        
-        if(playGame)
-        {
+
+        if (playGame && isPlayerTurn) {
             Point userMove = new Point(x, y);
-            
+
             status = myModel.selectCell(m, 'X');
-            
-            
-            switch (status)
-            {
+
+            switch (status) {
                 case "Xwin":
                 case "Owin":
-                    Platform.runLater(()->{
+                    gameRecord.addGameMove(m, 'X');
+                    Platform.runLater(() -> {
                         viewDelegate.setView(m, 'X');
                         //win code
                         viewDelegate.runWinnigAnimation("You");
@@ -413,84 +443,99 @@ public class Board {
                     playGame = false;
                     allowAI = false;
                     break;
-                        
+
                 case "draw":
+                    gameRecord.addGameMove(m, 'X');
                     //draw code.
-                    Platform.runLater(()->{
+                    Platform.runLater(() -> {
                         viewDelegate.setView(m, 'X');
                         viewDelegate.runDrawAnimation();
                     });
                     playGame = false;
                     allowAI = false;
                     break;
-                        
+
                 case "none":
-                    Platform.runLater(()->{
+                    gameRecord.addGameMove(m, 'X');
+                    Platform.runLater(() -> {
                         viewDelegate.setView(m, 'X');
                     });
+                    allowAI = true;
+                    isPlayerTurn = false;
                     PlaceMove(userMove, Board.PLAYER_O);
                     break;
-                        
+
                 case "isMarked":
                     allowAI = false;
                     break;
-                
+
                 default:
                     break;
             }
-            
-                //PlaceMove(userMove, Board.PLAYER_O);
-            
-        
-        //System.out.println(b.SetVal(userMove));
-            if(allowAI)
-            {
+
+            //PlaceMove(userMove, Board.PLAYER_O);
+            //System.out.println(b.SetVal(userMove));
+            if (allowAI) {
                 minimax(0, Board.PLAYER_X);
                 System.out.println("computer choose position : " + computerMove);
                 int numOfCell = SetVal(computerMove);
                 status = myModel.selectCell(numOfCell, 'O');
-                switch (status)
-                {
+                switch (status) {
                     case "Xwin":
                     case "Owin":
-                        Platform.runLater(()->{
+                        gameRecord.addGameMove(m, 'O');
+                        Platform.runLater(() -> {
+
                             viewDelegate.setView(numOfCell, 'O');
-                            //lose code.
                             viewDelegate.runLosingAnimation("You");
+                            isPlayerTurn = true;
                         });
-                        
+
                         System.out.println("AI win");
                         playGame = false;
                         break;
-                        
+
                     case "draw":
+                        gameRecord.addGameMove(m, 'O');
                         //draw code.
-                        Platform.runLater(()->{
+                        Platform.runLater(() -> {
+
                             viewDelegate.setView(numOfCell, 'O');
                             viewDelegate.runDrawAnimation();
+                            isPlayerTurn = true;
+
                         });
                         playGame = false;
                         break;
-                        
+
                     case "none":
-                        Platform.runLater(()->{
-                            viewDelegate.setView(numOfCell, 'O');
+                        gameRecord.addGameMove(m, 'O');
+                        Platform.runLater(() -> {
+                            timer.schedule(new TimerTask() {
+                                @Override
+                                public void run() {
+                                    viewDelegate.setView(numOfCell, 'O');
+                                    isPlayerTurn = true;
+                                }
+
+                            }, 1000);
+
                         });
                         PlaceMove(computerMove, Board.PLAYER_X);
                         break;
-                        
+
                     case "isMarked":
                         break;
-                
+
                     default:
                         break;
                 }
-                
+
                 System.out.println(computerMove);
                 //PlaceMove(computerMove, Board.PLAYER_X);
-                
+
                 System.out.print(SetVal(computerMove));//to get the number of computer cell
-                
+
             }
             displayBoard();
             //return numOfCell;

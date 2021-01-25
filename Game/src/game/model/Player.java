@@ -15,6 +15,7 @@ import java.io.PrintStream;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.sql.SQLException;
 import java.util.StringTokenizer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -71,27 +72,59 @@ public class Player {
             return true;
             
         } catch (IOException ex) {
-            System.out.println("IN THE CATCH");
-            br = null;
-            ps = null;
-            //pSocket.close();
-            pSocket = null;
-            return false;
-            //ex.printStackTrace();
+            ex.printStackTrace();
+            try {
+                if(br !=null)
+                {
+                    br.close();
+                    br = null;
+                }
+
+                if(ps !=null)
+                {
+                    ps.close();
+                    ps = null;
+                }
+                if(pSocket !=null)
+                {
+                    pSocket.close();
+                    pSocket = null;
+                }
+            } catch (IOException ex1) {
+                ex.printStackTrace();
+            }finally{
+                return false;
+            }
+           
         }
     }
     
     
-    public void closeSocket()
+   public void closeSocket()
     {
-        br = null;
-        ps = null;
+
         try {
-            pSocket.close();
-            pSocket = null;
+            if(br !=null)
+            {
+                br.close();
+                br = null;
+            }
+
+            if(ps !=null)
+            {
+                ps.close();
+                ps = null;
+            }
+            if(pSocket !=null)
+            {
+                pSocket.close();
+                pSocket = null;
+            }
             System.out.println("socket closed");
         } catch (IOException ex) {
-            Logger.getLogger(Player.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
+        }finally{
+           // isConnected = false;
         }
     }
     
@@ -186,11 +219,26 @@ public class Player {
                                     //saving logic.
                                     if(playMark == "X")
                                     {
-                                        gameDao.insertGame(playerName,opName , gameRec);
+                                        try {
+                                            gameDao.insertGame(playerName,opName , gameRec);
+                                            
+                                        } catch (SQLException ex) {
+                                           ex.printStackTrace();
+                                        } catch (ClassNotFoundException ex) {
+                                            ex.printStackTrace();
+                                        }
                                     }else{
-                                        gameDao.insertGame(opName,playerName , gameRec);
+                                        try {
+                                            gameDao.insertGame(opName,playerName , gameRec);
+                                           
+                                        } catch (SQLException ex) {
+                                            ex.printStackTrace();
+                                        } catch (ClassNotFoundException ex) {
+                                            ex.printStackTrace();
+                                        }
                                     }    
                                 }
+                                delegate.hideRecordButton();
                                 break;
                                 
                             case "enterGame" :
@@ -216,7 +264,7 @@ public class Player {
                     }
                     
                 } catch (IOException ex) {
-                    //Logger.getLogger(Player.class.getName()).log(Level.SEVERE, null, ex);
+                    ex.printStackTrace();
                     break;
                 }
             }
@@ -344,7 +392,7 @@ public class Player {
         try {
             return InetAddress.getLocalHost().getHostAddress();
         } catch (UnknownHostException ex) {
-            Logger.getLogger(Player.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
         }
         return "notFound";
     }

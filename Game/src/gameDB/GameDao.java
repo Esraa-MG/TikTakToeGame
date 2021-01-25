@@ -28,22 +28,16 @@ public class GameDao {
         return gameArchives;
     }
 
-    public boolean insertGame(String playerX, String playerO, GameRecord gameRecord) {
+    public void insertGame(String playerX, String playerO, GameRecord gameRecord)
+            throws SQLException, ClassNotFoundException {
 
         GameArchiveDao gameArchiveDao = new GameArchiveDao();
         GameArchive gameArchive = new GameArchive(playerX, playerO);
         GameMoveDao gameMoveDao = new GameMoveDao();
-        try {
-            int idGame = gameArchiveDao.insertGameArchive(gameArchive);
-            gameRecord.setId(idGame);
-            gameMoveDao.insertGameMove(gameRecord);
-            return true;
-        } catch (SQLException sqlException) {
-            sqlException.printStackTrace();
-        } catch (ClassNotFoundException classNotFoundException) {
-            classNotFoundException.printStackTrace();
-        }
-        return false;
+
+        int idGame = gameArchiveDao.insertGameArchive(gameArchive);
+        gameRecord.setId(idGame);
+        gameMoveDao.insertGameMove(gameRecord);
     }
 
     public GameRecord selectGameRecord(int idGame) {

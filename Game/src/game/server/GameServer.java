@@ -42,9 +42,10 @@ public class GameServer {
                     System.out.println("ACCEPTED");
                 
                 } catch (IOException ex) {
-                    Logger.getLogger(GameServer.class.getName()).log(Level.SEVERE, null, ex);
+                    ex.printStackTrace();
                 }
             }
+            connected = 0;
             System.out.println("server down");
         }).start();
     }
@@ -113,6 +114,12 @@ class PlayerSocket extends Thread
             players.player2.send("playSecond");
             start();
         }else{}
+        if(players.player1 != null)
+        {
+            System.out.println("first Hand:"+players.player1.playerName);
+        }
+        if(players.player2 != null)
+        System.out.println("second Hand:"+players.player2.playerName);
         
     }
     
@@ -123,13 +130,35 @@ class PlayerSocket extends Thread
             try {
                 String str = br.readLine();
                 //System.out.println(str);
-                checkMsg(str);
+                if(str != null)
+                {
+                    checkMsg(str);
+                }
                 
             } catch (IOException ex) {
-                Logger.getLogger(PlayerSocket.class.getName()).log(Level.SEVERE, null, ex);
+                System.out.println("client alive exception");
+                ex.printStackTrace();
             } 
         }
         System.out.println(this.playerName+".client : out of while");
+        if(players.player1 == this)
+        {
+            try {
+                players.player1.br.close();
+                players.player1.ps.close();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+            players.player1 = null;
+        }else{
+            try {
+                players.player2.br.close();
+                players.player2.ps.close();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+            players.player2 = null;
+        }
     }
     
     private void checkMsg(String str)
@@ -183,18 +212,22 @@ class PlayerSocket extends Thread
                 break;
             
             case "closeChannel":
-                if(players.player1 == this)
-                {
-                    players.player1.send("closeGame");
-                    this.alive = false;
-                    players.player1 = null;
-                    System.out.println("server channel out");
-                }else{
+               // if(players.player1 == this)
+                //{
+                players.player1.send("closeGame");
+                players.player2.send("closeGame");
+                players.player1.alive = false;
+                players.player2.alive = false;
+                //players.player1 = null;
+                //players.player2 = null;
+                System.out.println("server channel out");
+                /*}else{
                     players.player2.send("closeGame");
                     this.alive = false;
                     players.player2 = null;
-                }
+                }*/
                 break;
+
                 
             default:
                 if(str.contains("Name1"))

@@ -1,6 +1,9 @@
 package game.view;
 
+import gameDB.GameMove;
+import gameDB.GameRecord;
 import java.lang.*;
+import javafx.event.EventType;
 import javafx.scene.control.*;
 import javafx.scene.effect.*;
 import javafx.scene.image.*;
@@ -11,31 +14,37 @@ import javafx.scene.effect.DropShadow;
 import javafx.scene.effect.GaussianBlur;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Font;
 
 public class Replay extends AnchorPane {
 
+    public GameRecord gameRecord;
+
     protected final ImageView background;
     protected final GaussianBlur gaussianBlur;
     protected final ImageView board;
-    protected final ImageView back;
+    public final ImageView back;
     protected final DropShadow dropShadow;
-    protected final ImageView r1c1;
-    protected final ImageView r2c1;
-    protected final ImageView r3c1;
-    protected final ImageView r1c2;
-    protected final ImageView r2c2;
-    protected final ImageView r3c2;
-    protected final ImageView r1c3;
-    protected final ImageView r2c3;
-    protected final ImageView r3c3;
+    public final ImageView r1c1;
+    public final ImageView r2c1;
+    public final ImageView r3c1;
+    public final ImageView r1c2;
+    public final ImageView r2c2;
+    public final ImageView r3c2;
+    public final ImageView r1c3;
+    public final ImageView r2c3;
+    public final ImageView r3c3;
     protected final ImageView player1icon;
     protected final ImageView player2icon;
-    protected final Label player1label;
-    protected final Label player2label;
-    protected final ImageView prev;
+    public final Label player1label;
+    public final Label player2label;
     protected final ImageView next;
+
+    GameMove gameMove;
+    int i = 0;
+    public final ImageView[] img;
 
     public Replay() {
 
@@ -57,8 +66,10 @@ public class Replay extends AnchorPane {
         player2icon = new ImageView();
         player1label = new Label();
         player2label = new Label();
-        prev = new ImageView();
         next = new ImageView();
+
+        ImageView[] img;
+        this.img = new ImageView[]{r1c1, r2c1, r3c1, r1c2, r2c2, r3c2, r1c3, r2c3, r3c3};
 
         setMaxHeight(USE_PREF_SIZE);
         setMaxWidth(USE_PREF_SIZE);
@@ -186,19 +197,106 @@ public class Replay extends AnchorPane {
         player2label.setTextFill(javafx.scene.paint.Color.valueOf("#0a5b68"));
         player2label.setFont(new Font("Book Antiqua Bold Italic", 32.0));
 
-        prev.setFitHeight(83.0);
-        prev.setFitWidth(106.0);
-        prev.setLayoutX(466.0);
-        prev.setLayoutY(501.0);
-        prev.setPickOnBounds(true);
-        prev.setImage(new Image(getClass().getClassLoader().getResource("game/pic/prev.jpeg").toExternalForm()));
-
         next.setFitHeight(83.0);
         next.setFitWidth(106.0);
         next.setLayoutX(712.0);
         next.setLayoutY(502.0);
         next.setPickOnBounds(true);
         next.setImage(new Image(getClass().getClassLoader().getResource("game/pic/next.jpeg").toExternalForm()));
+        next.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+            gameMove = gameRecord.getGameMove(i);
+            if (gameMove != null) {
+                switch (gameMove.getCellNumber()) {
+                    case 1:
+                        if (gameMove.getCellType() == 'X') {
+                            r1c1.setImage(new Image(getClass().
+                                    getClassLoader().getResource("game/pic/x.jpg").toExternalForm()));
+                        } else {
+                            r1c1.setImage(new Image(getClass()
+                                    .getClassLoader().getResource("game/pic/o.png").toExternalForm()));
+                        }
+
+                        break;
+
+                    case 2:
+                        if (gameMove.getCellType() == 'X') {
+                            r2c1.setImage(new Image(getClass().
+                                    getClassLoader().getResource("game/pic/x.jpg").toExternalForm()));
+                        } else {
+                            r2c1.setImage(new Image(getClass()
+                                    .getClassLoader().getResource("game/pic/o.png").toExternalForm()));
+                        }
+                        break;
+                    case 3:
+                        if (gameMove.getCellType() == 'X') {
+                            r3c1.setImage(new Image(getClass().
+                                    getClassLoader().getResource("game/pic/x.jpg").toExternalForm()));
+                        } else {
+                            r3c1.setImage(new Image(getClass()
+                                    .getClassLoader().getResource("game/pic/o.png").toExternalForm()));
+                        }
+                        break;
+                    case 4:
+                        if (gameMove.getCellType() == 'X') {
+                            r1c2.setImage(new Image(getClass().
+                                    getClassLoader().getResource("game/pic/x.jpg").toExternalForm()));
+                        } else {
+                            r1c2.setImage(new Image(getClass()
+                                    .getClassLoader().getResource("game/pic/o.png").toExternalForm()));
+                        }
+                        break;
+                    case 5:
+                        if (gameMove.getCellType() == 'X') {
+                            r2c2.setImage(new Image(getClass().
+                                    getClassLoader().getResource("game/pic/x.jpg").toExternalForm()));
+                        } else {
+                            r2c2.setImage(new Image(getClass()
+                                    .getClassLoader().getResource("game/pic/o.png").toExternalForm()));
+                        }
+                        break;
+                    case 6:
+                        if (gameMove.getCellType() == 'X') {
+                            r3c2.setImage(new Image(getClass().
+                                    getClassLoader().getResource("game/pic/x.jpg").toExternalForm()));
+                        } else {
+                            r3c2.setImage(new Image(getClass()
+                                    .getClassLoader().getResource("game/pic/o.png").toExternalForm()));
+                        }
+                        break;
+                    case 7:
+                        if (gameMove.getCellType() == 'X') {
+                            r1c3.setImage(new Image(getClass().
+                                    getClassLoader().getResource("game/pic/x.jpg").toExternalForm()));
+                        } else {
+                            r1c3.setImage(new Image(getClass()
+                                    .getClassLoader().getResource("game/pic/o.png").toExternalForm()));
+                        }
+                        break;
+                    case 8:
+                        if (gameMove.getCellType() == 'X') {
+                            r2c3.setImage(new Image(getClass().
+                                    getClassLoader().getResource("game/pic/x.jpg").toExternalForm()));
+                        } else {
+                            r2c3.setImage(new Image(getClass()
+                                    .getClassLoader().getResource("game/pic/o.png").toExternalForm()));
+                        }
+                        break;
+                    case 9:
+                        if (gameMove.getCellType() == 'X') {
+                            r3c3.setImage(new Image(getClass().
+                                    getClassLoader().getResource("game/pic/x.jpg").toExternalForm()));
+                        } else {
+                            r3c3.setImage(new Image(getClass()
+                                    .getClassLoader().getResource("game/pic/o.png").toExternalForm()));
+                        }
+                        break;
+                    default:
+                        break;
+                }
+                i++;
+            }
+
+        });
 
         getChildren().add(background);
         getChildren().add(board);
@@ -216,7 +314,6 @@ public class Replay extends AnchorPane {
         getChildren().add(player2icon);
         getChildren().add(player1label);
         getChildren().add(player2label);
-        getChildren().add(prev);
         getChildren().add(next);
 
     }

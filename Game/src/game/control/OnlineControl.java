@@ -26,12 +26,11 @@ public class OnlineControl implements SETVIEW {
 
     public GameUi gameUi = new GameUi();
     public Model mod = new Model();
-    public NetworkJoin networkJoin ;
+    public NetworkJoin networkJoin;
     public String localIP = "127.0.0.1";
 
     int i;
     public int[] scoreArr = new int[2];
-   
 
     ImageView[] img = {gameUi.r1c1, gameUi.r2c1, gameUi.r3c1,
         gameUi.r1c2, gameUi.r2c2, gameUi.r3c2, gameUi.r1c3, gameUi.r2c3, gameUi.r3c3};
@@ -40,8 +39,7 @@ public class OnlineControl implements SETVIEW {
         scoreArr[0] = 0;
         scoreArr[1] = 0;
         networkJoin = new NetworkJoin();
-        
-        
+
     }
 
     @Override
@@ -143,57 +141,65 @@ public class OnlineControl implements SETVIEW {
             gameUi.dance.setVisible(false);
             gameUi.cry.setVisible(false);
             gameUi.draw.setVisible(false);
+            gameUi.record.setVisible(false);
+
+            String temp = gameUi.plmark.getText();
+            gameUi.plmark.setText(gameUi.opmark.getText());
+            gameUi.opmark.setText(temp);
         }
+    }
+
+    @Override
+    public void hideRecordButton() {
+        gameUi.record.setVisible(false);
     }
 
     @Override
     public void enterGame() {
         networkJoin.start.setVisible(true);
-        
+
     }
 
     @Override
     public void isMyTurn() {
-      gameUi.player1label1.setVisible(true);
-      gameUi.player1label1.setText("Your Turn");
-      
+        gameUi.player1label1.setVisible(true);
+        gameUi.player1label1.setText("Your Turn");
+
     }
 
     @Override
     public void isNotMyTurn() {
         gameUi.player1label1.setVisible(true);
-      gameUi.player1label1.setText("Waiting");
+        gameUi.player1label1.setText("Waiting");
     }
-    
-    
-    
+
     @Override
-    public void runWinnigAnimation(String name)
-    {
+    public void runWinnigAnimation(String name) {
         gameUi.dance.setVisible(true);
-       
-         scoreArr[0] ++;
-         gameUi.player1score.setText(String.valueOf(scoreArr[0]));
-       
-        
+
+        scoreArr[0]++;
+        gameUi.player1score.setText(String.valueOf(scoreArr[0]));
+        gameUi.record.setVisible(true);
+
     }
-    
+
     @Override
-    public void  runLosingAnimation(String name)
-    {
+    public void runLosingAnimation(String name) {
         gameUi.cry.setVisible(true);
-        scoreArr[1] ++;
-            gameUi.player2score.setText(String.valueOf(scoreArr[1]));
+        scoreArr[1]++;
+        gameUi.player2score.setText(String.valueOf(scoreArr[1]));
+        gameUi.record.setVisible(true);
     }
-    
+
     @Override
-    public void runDrawAnimation()
-    {
+    public void runDrawAnimation() {
         gameUi.draw.setVisible(true);
-            drawAnimation();
+        drawAnimation();
+        gameUi.record.setVisible(true);
     }
 
     public void controlGame() {
+
         for (i = 0; i < 9; i++) {
             final int index = i;
             img[index].addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
@@ -202,19 +208,22 @@ public class OnlineControl implements SETVIEW {
         }
 
         gameUi.reset.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-           // resetScreen();
+            // resetScreen();
             mod.resetGame();
             gameUi.cry.setVisible(false);
             gameUi.dance.setVisible(false);
             gameUi.draw.setVisible(false);
-            
+
         });
-        
+
+        gameUi.record.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+            mod.requestSave();
+
+        });
 
     }
-    
-    
-     public void drawAnimation() {
+
+    public void drawAnimation() {
         //game time animation
         //psition 
         TranslateTransition transition = new TranslateTransition();

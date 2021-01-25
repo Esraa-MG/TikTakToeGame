@@ -37,6 +37,14 @@ public class GameRecord {
     public GameMove[] getGameMove() {
         return gameMove;
     }
+    
+    public GameMove getGameMove(int i) {
+        if (i < this.i ) {
+            return gameMove[i];
+        } else {
+            return null;
+        }
+    }
 
 
     public void addGameMove(int cellNumber, char cellType) {
