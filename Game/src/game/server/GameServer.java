@@ -147,9 +147,10 @@ class PlayerSocket extends Thread
             } catch (IOException ex) {
                 System.out.println("client alive exception");
                 ex.printStackTrace();
+                break;
             } 
         }
-        System.out.println(this.playerName+".client : out of while");
+        System.out.println(this.playerName+".client :<<<< out of while");
         if(players.player1 == this)
         {
             try {

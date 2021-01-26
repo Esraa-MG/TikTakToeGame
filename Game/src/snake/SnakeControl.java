@@ -37,8 +37,8 @@ import javafx.util.Duration;
  */
 public class SnakeControl {
     
-     final int[] boardX = new int[484];
-    final int[] boardY = new int[484];
+     final int[] boardX = new int[700];
+    final int[] boardY = new int[596];
     public Button back = new Button();
     public Pane root;
     public GraphicsContext gc;
@@ -70,7 +70,7 @@ public class SnakeControl {
     int[] fruitYPos = {20, 40, 60, 80, 100, 120, 140, 160, 200, 220, 240, 260, 280, 300, 320, 340, 360, 380, 400, 420, 440, 460};
 
     
-    Timeline timeline = new Timeline();
+    public Timeline timeline = new Timeline();
 
    
     public int moves = 0;
@@ -150,23 +150,23 @@ public class SnakeControl {
 
      
         gc.setFill(Color.LIGHTGREY);
-        gc.fillRect(0, 0, 750, 500);
+        gc.fillRect(0, 0, 900, 600);
 
        
         gc.setFill(Color.color(0.2, 0.2, 0.2));
-        for (int i = 6; i <= 482; i += 17) {
-            for (int j = 6; j <= 482; j += 17) {
+        for (int i = 6; i <= 594; i += 17) {
+            for (int j = 6; j <= 594; j += 17) {
                 gc.fillRect(i, j, 13, 13);
             }
         }
  
         gc.setFill(Color.BLACK);
-        gc.fillRect(20, 20, 460, 460);
+        gc.fillRect(20, 20, 562, 562);
 
         
         gc.setFill(Color.BLUE);
         gc.setFont(Font.font("Arial", FontWeight.BOLD, 26));
-        gc.fillText("Snake ~~~~> ", 560, 60);
+        gc.fillText("Snake ~~~~> ", 680, 60);
 
        
         gc.setFill(Color.BLACK);
@@ -175,38 +175,38 @@ public class SnakeControl {
         gc.setFont(Font.font("Arial", FontWeight.NORMAL, 18));
 
         
-        gc.fillText("Best Score", 576, 110);
-        gc.fillRect(550, 120, 140, 30);
+        gc.fillText("Best Score", 696, 110);
+        gc.fillRect(670, 120, 140, 30);
         gc.setFill(Color.RED);
-        gc.fillRect(551, 121, 138, 28);
+        gc.fillRect(671, 121, 138, 28);
         gc.setFill(Color.BLACK);
-        gc.fillText(bestScore + "", 550 + (142 - new Text(bestScore + "").getLayoutBounds().getWidth()) / 2, 142);
+        gc.fillText(bestScore + "", 670 + (142 - new Text(bestScore + "").getLayoutBounds().getWidth()) / 2, 142);
 
       
-        gc.fillText("Total Score", 573, 190);
-        gc.fillRect(550, 200, 140, 30);
+        gc.fillText("Total Score", 693, 190);
+        gc.fillRect(670, 200, 140, 30);
         gc.setFill(Color.RED);
-        gc.fillRect(551, 201, 138, 28);
+        gc.fillRect(671, 201, 138, 28);
         gc.setFill(Color.BLACK);
-        gc.fillText(totalScore + "", 550 + (142 - new Text(totalScore + "").getLayoutBounds().getWidth()) / 2, 222);
+        gc.fillText(totalScore + "", 670 + (142 - new Text(totalScore + "").getLayoutBounds().getWidth()) / 2, 222);
 
        
-        gc.fillText("Fruit Eaten", 575, 270);
-        gc.fillRect(550, 280, 140, 30);
+        gc.fillText("Fruit Eaten", 695, 270);
+        gc.fillRect(670, 280, 140, 30);
         gc.setFill(Color.RED);
-        gc.fillRect(551, 281, 138, 28);
+        gc.fillRect(671, 281, 138, 28);
         gc.setFill(Color.BLACK);
-        gc.fillText(fruitEaten + "", 550 + (142 - new Text(fruitEaten + "").getLayoutBounds().getWidth()) / 2, 302);
+        gc.fillText(fruitEaten + "", 670 + (142 - new Text(fruitEaten + "").getLayoutBounds().getWidth()) / 2, 302);
 
         
         gc.setFont(Font.font("Arial", FontWeight.BOLD, 16));
-        gc.fillText("Controls", 550, 360);
+        gc.fillText("Controls", 670, 360);
 
        
         gc.setFont(Font.font("Arial", FontWeight.NORMAL, 14));
-        gc.fillText("Pause / Start : Space", 550, 385);
+        gc.fillText("Pause / Start : Space", 670, 385);
         back.setText("Back");
-        back.setLayoutX(550);
+        back.setLayoutX(670);
         back.setLayoutY(400);
         back.setPrefHeight(63.0);
         back.setPrefWidth(120.0);
@@ -316,7 +316,7 @@ public class SnakeControl {
                     boardX[i] = boardX[i - 1];
                 
 
-                if (boardX[i] > 460) 
+                if (boardX[i] > 560) 
                     boardX[i] = 20;
             }
         } 
@@ -333,7 +333,7 @@ public class SnakeControl {
                     boardX[i] = boardX[i - 1];
 
                 if (boardX[i] < 20)
-                    boardX[i] = 460;
+                    boardX[i] = 560;
             }
         }
         else if (up)
@@ -349,7 +349,7 @@ public class SnakeControl {
                     boardY[i] = boardY[i - 1];
 
                 if (boardY[i] < 20)
-                    boardY[i] = 460;
+                    boardY[i] = 560;
             }
         } 
         else if (down)
@@ -364,7 +364,7 @@ public class SnakeControl {
                 else
                     boardY[i] = boardY[i - 1];
 
-                if (boardY[i] > 460)
+                if (boardY[i] > 560)
                     boardY[i] = 20;
             }
         }
@@ -374,7 +374,7 @@ public class SnakeControl {
    
     public void snakeScene(Stage stage)
     {
-        canvas = new Canvas(750, 500);
+        canvas = new Canvas(900, 600);
         
         
         gc = canvas.getGraphicsContext2D();
@@ -436,7 +436,7 @@ public class SnakeControl {
                             totalScore = 0;
                             fruitEaten = 0;
                             lengthOfSnake = 3;
-                           right = true;
+                            right = true;
                             left = false;
                             xPos = random.nextInt(22);
                             yPos = 5 + random.nextInt(17);

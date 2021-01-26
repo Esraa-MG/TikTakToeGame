@@ -150,11 +150,13 @@ public class OnlineControl implements SETVIEW {
     @Override
     public void hideRecordButton() {
         gameUi.record.setVisible(false);
+        gameUi.reset.setVisible(false);
     }
 
     @Override
     public void enterGame() {
         networkJoin.start.setVisible(true);
+        gameUi.reset.setVisible(false);
 
     }
 
@@ -176,6 +178,7 @@ public class OnlineControl implements SETVIEW {
         scoreArr[0]++;
         gameUi.player1score.setText(String.valueOf(scoreArr[0]));
         gameUi.record.setVisible(true);
+        gameUi.reset.setVisible(true);
 
     }
 
@@ -185,6 +188,7 @@ public class OnlineControl implements SETVIEW {
         scoreArr[1]++;
         gameUi.player2score.setText(String.valueOf(scoreArr[1]));
         gameUi.record.setVisible(true);
+        gameUi.reset.setVisible(true);
     }
 
     @Override
@@ -192,6 +196,7 @@ public class OnlineControl implements SETVIEW {
         gameUi.draw.setVisible(true);
         drawAnimation();
         gameUi.record.setVisible(true);
+        gameUi.reset.setVisible(true);
     }
 
     public void controlGame() {
@@ -208,7 +213,6 @@ public class OnlineControl implements SETVIEW {
             gameUi.cry.setVisible(false);
             gameUi.dance.setVisible(false);
             gameUi.draw.setVisible(false);
-
         });
 
         gameUi.record.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {

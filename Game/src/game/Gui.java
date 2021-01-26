@@ -70,6 +70,8 @@ public class Gui extends Application {
         stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
             @Override
             public void handle(WindowEvent event) {
+                onlineControl.mod.exitNetworkMode();
+                onlineControl.mod.closeServer();
                 Platform.exit();
                 System.exit(0);
             }
@@ -150,7 +152,7 @@ public class Gui extends Application {
         //game choice page control
         gameChoice.snake.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
             snakeControl.moves = 0;
-            snakeControl.right = true;
+            snakeControl.right = false;
             snakeControl.left = false;
             snakeControl.up = false;
             snakeControl.down = false;
@@ -158,6 +160,9 @@ public class Gui extends Application {
             snakeControl.totalScore = 0;
             snakeControl.snakeScene(stage);
         });
+
+        snakeControl.back.setCancelButton(true);
+        snakeControl.back.setFocusTraversable(false);
 
         snakeControl.back.setOnAction(new EventHandler<ActionEvent>() {
             @Override

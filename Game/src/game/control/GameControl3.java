@@ -63,12 +63,14 @@ public class GameControl3 {
 
     public void controlGame() {
         symbol = 'X';
-
+        gameUi.reset.setVisible(false);
+        gameUi.record.setVisible(false);
         for (i = 0; i < 9; i++) {
             final int index = i;
             img[i].addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
                 if (buttonPressed[index] == 0) {
                     if (!stopGame) {
+                        
                         if (symbol == 'X') {
                             img[index].setImage(new Image(getClass().getClassLoader().getResource("game/pic/x.jpg").toExternalForm()));
                             gameRecord.addGameMove(index + 1, 'X');
@@ -99,6 +101,8 @@ public class GameControl3 {
             Reset();
             gameRecord = new GameRecord();
             recordFlag = true;
+            gameUi.reset.setVisible(false);
+            gameUi.record.setVisible(false);
         });
 
         gameUi.record.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
@@ -214,6 +218,7 @@ public class GameControl3 {
             gameUi.xwins.setVisible(false);
 
         });
+        gameUi.reset.setVisible(true);
     }
 
     public void owinAnimation() {
@@ -248,6 +253,7 @@ public class GameControl3 {
             }
             gameUi.owins.setVisible(false);
         });
+        gameUi.reset.setVisible(true);
     }
 
     public void drawAnimation() {
@@ -275,6 +281,7 @@ public class GameControl3 {
         transition.play();
         scaleTransition.play();
         rotateTransition.play();
+        gameUi.reset.setVisible(true);
 
     }
 

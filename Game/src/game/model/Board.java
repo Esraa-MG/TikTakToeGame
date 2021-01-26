@@ -9,13 +9,9 @@ import gameDB.GameDao;
 import gameDB.GameRecord;
 import java.util.ArrayList;
 import java.util.List;
-import java.awt.*;
 import java.sql.SQLException;
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.concurrent.TimeUnit;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.scene.control.Alert;
 

@@ -185,6 +185,7 @@ public class Player {
                                 break;
                             case "doReset" :
                                 doResetGame();
+                                delegate.hideRecordButton();
                                 break;
                             case "closeGame" :
                                 thContinue = false;
