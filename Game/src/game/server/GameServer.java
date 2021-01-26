@@ -28,6 +28,7 @@ public class GameServer {
     {
         try {
             serverSocket = new ServerSocket(13135);
+            this.isOn = true;
         } catch (IOException ex) {
             ex.printStackTrace();
         }
@@ -46,6 +47,11 @@ public class GameServer {
                 }
             }
             connected = 0;
+            try {
+                serverSocket.close();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
             System.out.println("server down");
         }).start();
     }
@@ -53,12 +59,15 @@ public class GameServer {
     public void shutDown()
     {
         this.isOn = false;
-        try {
-            serverSocket.close();
+        try{
+            if(serverSocket != null)
+            {
+                serverSocket.close();
+            }
             serverSocket = null;
             System.out.println("serverSocket out");
         } catch (IOException ex) {
-            Logger.getLogger(GameServer.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
         }
     }
 }

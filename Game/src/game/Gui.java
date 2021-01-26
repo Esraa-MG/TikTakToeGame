@@ -28,11 +28,15 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
+import snake.SnakeControl;
 
 /**
  *
@@ -50,6 +54,7 @@ public class Gui extends Application {
     AIConfig aiConfig;
     Replay replay;
     Archive archive;
+    SnakeControl snakeControl = new SnakeControl();
 
     GameControl3 gameCon3; //two-player mode contrl
     AIControl aiControl;
@@ -144,7 +149,21 @@ public class Gui extends Application {
 //------------------------------------------------------------------------------     
         //game choice page control
         gameChoice.snake.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+            snakeControl.moves = 0;
+            snakeControl.right = true;
+            snakeControl.left = false;
+            snakeControl.up = false;
+            snakeControl.down = false;
+            snakeControl.fruitEaten = 0;
+            snakeControl.totalScore = 0;
+            snakeControl.snakeScene(stage);
+        });
 
+        snakeControl.back.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                stage.setScene(gameChoiceScene);
+            }
         });
 
         gameChoice.xo.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
@@ -498,6 +517,7 @@ public class Gui extends Application {
         onlineControl.scoreArr[0] = 0;
         onlineControl.scoreArr[1] = 0;
         onlineControl.networkJoin.player.setText("player ");
+        onlineControl.networkJoin.ip.setText("");
         onlineControl.gameUi.cry.setVisible(false);
         onlineControl.gameUi.dance.setVisible(false);
         onlineControl.gameUi.draw.setVisible(false);
@@ -535,7 +555,7 @@ public class Gui extends Application {
                     replay.player1label.setText(gameArchives.get(index).getPlayerX());
                     replay.player2label.setText(gameArchives.get(index).getPlayerO());
                     replay.gameRecord = gameDao.selectGameRecord(gameArchives.get(index).getId());
-                    replay.i=0;
+                    replay.i = 0;
                 }
             });
         }

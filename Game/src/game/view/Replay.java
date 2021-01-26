@@ -34,6 +34,8 @@ public class Replay extends AnchorPane {
     public final Label player1label;
     public final Label player2label;
     protected final ImageView next;
+    protected final Label x;
+    protected final Label o;
 
     GameMove gameMove;
     public int i = 0;
@@ -60,6 +62,8 @@ public class Replay extends AnchorPane {
         player1label = new Label();
         player2label = new Label();
         next = new ImageView();
+        x = new Label();
+        o = new Label();
 
         this.img = new ImageView[]{r1c1, r2c1, r3c1, r1c2, r2c2, r3c2, r1c3, r2c3, r3c3};
 
@@ -288,6 +292,28 @@ public class Replay extends AnchorPane {
                 i++;
             }
         });
+        
+        
+        x.setAlignment(javafx.geometry.Pos.CENTER);
+        x.setLayoutX(83.0);
+        x.setLayoutY(97.0);
+        x.setPrefHeight(49.0);
+        x.setPrefWidth(78.0);
+        x.setStyle("-fx-background-color: #d3d3d3; -fx-background-radius: 2000;");
+        x.setText("X");
+        x.setTextFill(javafx.scene.paint.Color.valueOf("#0a5b68"));
+        x.setFont(new Font("Book Antiqua Bold Italic", 35.0));
+
+        o.setAlignment(javafx.geometry.Pos.CENTER);
+        o.setLayoutX(704.0);
+        o.setLayoutY(97.0);
+        o.setPrefHeight(49.0);
+        o.setPrefWidth(78.0);
+        o.setStyle("-fx-background-color: #d3d3d3; -fx-background-radius: 2000;");
+        o.setText("O");
+        o.setTextFill(javafx.scene.paint.Color.valueOf("#0a5b68"));
+        o.setFont(new Font("Book Antiqua Bold Italic", 35.0));
+
 
         getChildren().add(background);
         getChildren().add(board);
@@ -306,6 +332,8 @@ public class Replay extends AnchorPane {
         getChildren().add(player1label);
         getChildren().add(player2label);
         getChildren().add(next);
+        getChildren().add(x);
+        getChildren().add(o);
 
     }
 }

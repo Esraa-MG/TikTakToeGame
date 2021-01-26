@@ -2,6 +2,16 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
+        <group>
+            <file>file:/E:/ITI%20Mobile%20Intake/java/Project/git%20last%20isa/TikTakToeGame/Game/src/game/model/Model.java</file>
+            <file>file:/E:/ITI%20Mobile%20Intake/java/Project/git%20last%20isa/TikTakToeGame/Game/src/game/model/Player.java</file>
+            <file>file:/E:/ITI%20Mobile%20Intake/java/Project/git%20last%20isa/TikTakToeGame/Game/src/game/view/Replay.java</file>
+            <file>file:/E:/ITI%20Mobile%20Intake/java/Project/git%20last%20isa/TikTakToeGame/Game/src/game/Gui.java</file>
+            <file>file:/E:/ITI%20Mobile%20Intake/java/Project/git%20last%20isa/TikTakToeGame/Game/src/snake/Position.java</file>
+            <file>file:/E:/ITI%20Mobile%20Intake/java/Project/git%20last%20isa/TikTakToeGame/Game/src/snake/SnakeControl.java</file>
+            <file>file:/E:/ITI%20Mobile%20Intake/java/Project/git%20last%20isa/TikTakToeGame/Game/src/game/control/OnlineControl.java</file>
+            <file>file:/E:/ITI%20Mobile%20Intake/java/Project/git%20last%20isa/TikTakToeGame/Game/src/game/server/GameServer.java</file>
+            <file>file:/E:/ITI%20Mobile%20Intake/java/Project/git%20last%20isa/TikTakToeGame/Game/src/game/view/GameUi.java</file>
+        </group>
     </open-files>
 </project-private>

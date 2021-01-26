@@ -1,0 +1,34 @@
+Tic-Tac-Toe 
+
+this game allow user to play in three modes:
+1/single mode --> play with computer and we have to choose the difficulty level
+	we afford two level easy (normal) or hard
+	user will be always X and start the game
+2/two-plater mode --> two players play locally on the same machine
+	before starting the game, each one chosses the mark that he'd like to play with (x or o)
+	x always start the game
+3/online mode --> two players play on the network from different machines 
+	one player creates the connection and the other joins 
+	when the first player hosts the game and start server it recieves his ip and tell the other player about it
+	the second player will join the game using that ip
+	each game they will repalce their marks
+
+
+there is an option to save the game and use the archive to watch the game after saving it.
+
+
+Snake 
+moves in four directions using arrows for control
+it dies when it collides with itself
+the score panel on the right of the screen calculates the total score
+
+
+Team members:
+1/Habiba Hafez
+2/Kirolos Malak
+3/Mohamed Sabry
+4/Moutaz Hegazy
+5/Esraa Gohar
+
+
+  

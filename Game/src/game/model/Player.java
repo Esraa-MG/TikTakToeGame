@@ -64,8 +64,7 @@ public class Player {
     
     public boolean connectToIP(String ip)
     {
-        try {
-            pSocket = new Socket(ip,13135);
+        try {            pSocket = new Socket(ip,13135);
             System.out.println(ip);
             ps = new PrintStream(pSocket.getOutputStream());
             br = new BufferedReader(new InputStreamReader(pSocket.getInputStream()));
@@ -75,22 +74,29 @@ public class Player {
         } catch (IOException ex) {
             ex.printStackTrace();
             try {
-                if(br !=null)
-                {
-                    br.close();
-                    br = null;
-                }
-
+                
                 if(ps !=null)
                 {
                     ps.close();
                     ps = null;
+                    System.out.println("here1");
                 }
+                System.out.println("here4");
+                if(br !=null)
+                {
+                    br.close();
+                    br = null;
+                    System.out.println("here2");
+                }
+                System.out.println("here5");
+
                 if(pSocket !=null)
                 {
                     pSocket.close();
                     pSocket = null;
+                    System.out.println("here3");
                 }
+                System.out.println("here6");
             } catch (IOException ex1) {
                 ex.printStackTrace();
             }finally{
@@ -182,10 +188,7 @@ public class Player {
                                 break;
                             case "closeGame" :
                                 thContinue = false;
-                                br = null;
-                                ps = null;
-                                pSocket.close();
-                                pSocket = null;
+                                closeSocket();
                                 break;
                             case "startToken" :
                                 inTurn = true; 
@@ -270,6 +273,7 @@ public class Player {
                     
                 } catch (IOException ex) {
                     ex.printStackTrace();
+                    closeSocket();
                     break;
                 }
             }
@@ -342,7 +346,10 @@ public class Player {
     }
     private void sendMsg(String msg)
     {
-        ps.println(msg);
+        if(ps != null)
+        {
+            ps.println(msg);
+        }
     }
     
     private void checkGame(String str)

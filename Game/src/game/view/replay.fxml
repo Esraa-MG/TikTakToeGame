@@ -56,7 +56,7 @@
             <Image url="@../pic/person.png" />
          </image>
       </ImageView>
-      <Label fx:id="player1label" alignment="CENTER" layoutX="83.0" layoutY="36.0" prefHeight="45.0" prefWidth="250.0" style="-fx-background-color: #d3d3d3; -fx-background-radius: 2000;" text="Player 1" textFill="#0a5b68">
+      <Label fx:id="player1label" alignment="CENTER" layoutX="83.0" layoutY="36.0" prefHeight="49.0" prefWidth="250.0" style="-fx-background-color: #d3d3d3; -fx-background-radius: 2000;" text="Player 1" textFill="#0a5b68">
          <font>
             <Font name="Book Antiqua Bold Italic" size="35.0" />
          </font>
@@ -76,5 +76,15 @@
             <Image url="@../pic/next.jpeg" />
          </image>
       </ImageView>
+      <Label alignment="CENTER" layoutX="83.0" layoutY="97.0" prefHeight="49.0" prefWidth="78.0" style="-fx-background-color: #d3d3d3; -fx-background-radius: 2000;" text="X" textFill="#0a5b68" fx:id="x">
+         <font>
+            <Font name="Book Antiqua Bold Italic" size="35.0" />
+         </font>
+      </Label>
+      <Label fx:id="o" alignment="CENTER" layoutX="704.0" layoutY="97.0" prefHeight="49.0" prefWidth="78.0" style="-fx-background-color: #d3d3d3; -fx-background-radius: 2000;" text="O" textFill="#0a5b68">
+         <font>
+            <Font name="Book Antiqua Bold Italic" size="35.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>
